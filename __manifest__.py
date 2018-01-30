@@ -10,6 +10,7 @@
     'data': [
 
         'views/res_partner_view.xml',
+        'static/src/xml/template.xml'
     ],
     'installable': True,
 }

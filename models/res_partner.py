@@ -13,15 +13,17 @@ class Partner(models.Model):
 
     stage_id = fields.Many2one('crm.stage', string='Status', index=True, track_visibility='onchange' , group_expand='_read_group_all_states' , default=lambda self: self._default_stage_id())
 
-    state_contact= fields.Many2one('crm.stage', related='stage_id' ,string='Status', index=True,
-         group_expand='_read_group_contact_states', store=True)
-    state_target = fields.Many2one('crm.stage', related='stage_id', string='Status', index=True,
-         group_expand='_read_group_target_states', store=True)
+    state_contact= fields.Many2one('crm.stage', related='stage_id' ,string='Status',
+         group_expand='_read_group_contact_states', store=True, track_visibility=False)
+    state_target = fields.Many2one('crm.stage', related='stage_id', string='Status',
+         group_expand='_read_group_target_states', store=True, track_visibility=False)
 
-    state_account = fields.Many2one('crm.stage', related='stage_id', string='Status', index=True,
-         group_expand='_read_group_account_states', store=True)
+    state_account = fields.Many2one('crm.stage', related='stage_id', string='Status',
+         group_expand='_read_group_account_states', store=True, track_visibility=False)
 
     stage_sequence = fields.Integer(related='stage_id.sequence', string='Status Sequence',   store=True)
+
+
 
     @api.model
     def _read_group_contact_states(self, stages, domain, order):

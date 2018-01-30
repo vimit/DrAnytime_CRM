@@ -1,0 +1,7 @@
+.oe_tooltip_string{
+background-image:url(/DrAnytime_CRM/static/src/img/info-icon.png);
+background-repeat: no-repeat;
+background-size: 17px 17px;
+background-position: 6px 50%;
+padding-left: 27px !important;
+}
