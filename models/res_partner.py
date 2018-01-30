@@ -31,14 +31,14 @@ class Partner(models.Model):
 
     @api.model
     def _read_group_target_states(self, stages, domain, order):
-        search_domain = [('sequence', 'in',(6,7,8,9,10,11,12,13))]
+        search_domain = [('sequence', 'in',(6,7,8,9,10,11,12,13,14))]
         stage_ids = stages._search(search_domain, order=order, access_rights_uid=SUPERUSER_ID)
 
         return stages.browse(stage_ids)
 
     @api.model
     def _read_group_account_states(self, stages, domain, order):
-        search_domain = [('sequence', 'in', (13,14,15))]
+        search_domain = [('sequence', 'in', (14,15,16))]
         stage_ids = stages._search(search_domain, order=order, access_rights_uid=SUPERUSER_ID)
 
         return stages.browse(stage_ids)
