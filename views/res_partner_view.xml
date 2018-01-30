@@ -240,7 +240,7 @@
             <field name="res_model">res.partner</field>
             <field name="view_type">form</field>
             <field name="view_mode">kanban,tree,form</field>
-            <field name="domain">[('stage_sequence', 'in', (6,7,8,9,10,11,12,13))]</field>
+            <field name="domain">[('stage_sequence', 'in', (6,7,8,9,10,11,12,13,14))]</field>
             <field name="context">{"search_default_customer":1}</field>
             <field name="search_view_id" ref="base.view_res_partner_filter"/>
             <field name="help" type="html">
@@ -350,7 +350,7 @@
             <field name="res_model">res.partner</field>
             <field name="view_type">form</field>
             <field name="view_mode">kanban,tree,form</field>
-            <field name="domain">[('stage_sequence','in',(13,14,5))]</field>
+            <field name="domain">[('stage_sequence','in',(14,15,16))]</field>
             <field name="context">{"search_default_customer":1}</field>
             <field name="search_view_id" ref="base.view_res_partner_filter"/>
             <field name="help" type="html">
