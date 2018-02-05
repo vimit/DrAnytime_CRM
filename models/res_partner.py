@@ -28,10 +28,10 @@ class Stage(models.Model):
 
         return res
 
-    @api.multi
-    def create(self, vals):
-        res = super(Stage, self).create(vals)
-        vals.update(self._onchange_restrict_access(vals.get('stage_id')))
+    @api.model
+    def create(self, values):
+        res = super(Stage, self).create(values)
+        values.update(self._onchange_restrict_access(values.get('stage_id')))
 
         return res
 
