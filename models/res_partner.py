@@ -14,7 +14,6 @@ class Stage(models.Model):
     def _onchange_restrict_access(self, stage_id):
         """ returns the new values when stage_id has changed """
         print('----------',self.env.uid)
-        print('okkkk', self)
         if self.env.uid != 1 :
             raise exceptions.Warning('You are not allowed to change the stages, Please contact the Administrator')
             return  True
@@ -25,6 +24,13 @@ class Stage(models.Model):
     @api.multi
     def write(self, vals):
         res = super(Stage, self).write(vals)
+        vals.update(self._onchange_restrict_access(vals.get('stage_id')))
+
+        return res
+
+    @api.multi
+    def create(self, vals):
+        res = super(Stage, self).create(vals)
         vals.update(self._onchange_restrict_access(vals.get('stage_id')))
 
         return res
