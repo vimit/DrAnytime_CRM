@@ -99,7 +99,7 @@ class Partner(models.Model):
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Date (attempt of contact) '))
 
-        elif self.stage_id.id == 3 and self.x_studio_field_8wWZX == False  and self.x_studio_JqT0t == False:
+        elif self.stage_id.id == 3 and self.x_studio_field_8wWZX == False  and self.x_studio_field_JqT0t == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Secretary or Doctor'))
 
