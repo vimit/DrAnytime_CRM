@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
 
+<odoo>
 <record id="view_partner_form_inherit" model="ir.ui.view">
         <field name="inherit_id" ref="base.view_partner_form" />
         <field name="model">res.partner</field>
         <field type="xml" name="arch">
         <xpath expr="//form[1]/sheet[1]" position="before">
-            <header> <field name="stage_id" widget="statusbar" clickable="True"  /></header>
+            <header>
+               <!-- <field name="stage_id" widget="statusbar" clickable="True"  /> -->
+                <!-- <field name="stage_id" widget="statusbar" clickable="True" options="{'fold_field': 'fold'}"  attrs="{'readonly': ['|','|','|','|','&amp;',('stage_id', '=',2),('x_studio_field_WDmu0', '=',False),'&amp;',('stage_id', '=',3),('x_studio_field_eLcYs', '=',False),'&amp;',('stage_id', '=',9),('x_studio_field_5CWT8', '=',False),'&amp;',('stage_id', '=',10),('x_studio_field_v6GZl', '=',False),'&amp;',('stage_id', '=',6),('x_studio_field_WP1ro', '=',False),'&amp;',('stage_id', 'in',(8,16)),'|','|','|','|','|','|','|','|','|','|','|','|','|','|','|','|','|','|','|','|','|','|','|','|','|','|','|',('x_studio_field_g1zcu','=',False),('x_studio_field_HnDpa','=',False),('x_studio_field_EBPqm','=',False),('x_studio_field_EfIaw','=',False),('x_studio_field_ZilCW','=',False),('x_studio_field_kYZ1u','=',False),('x_studio_field_K3GQ1','=',False),('x_studio_field_6bUX9','=',False),('x_studio_field_cBgxC','=',False),('x_studio_field_GDsEM','=',False),('x_studio_field_igtTt','=',False),('x_studio_field_iYdhZ','=',False),('x_studio_field_RYaI5','=',False),('x_studio_field_kQZyr','=',False),('x_studio_field_mtzLz','=',False),('x_studio_field_zjMCR','=',False),('x_studio_field_c3DX2','=',False),('x_studio_field_6G6rb','=',False),('x_studio_field_Ca1DT','=',False),('x_studio_field_233D3','=',False),('x_studio_field_bIOcq','=',False),('x_studio_field_3X7xo','=',False),('x_studio_field_dBDfP','=',False),('x_studio_field_kc22X','=',False),('x_studio_field_16Eot','=',False),('x_studio_field_xVtps','=',False),('x_studio_field_puqZa','=',False),('x_studio_field_m3ZmH','=',False) ]}"/>
+-->
+                 <field name="stage_id" widget="statusbar" clickable="True" options="{'fold_field': 'fold'}" />
+
+
+            </header>
         </xpath>
             <field name="function" position="before">
                 <field name="state_contact" invisible="1"/>
@@ -49,7 +56,7 @@
             <field name="model">res.partner</field>
             <field name="arch" type="xml">
                 <kanban default_group_by="state_contact" class="o_res_partner_kanban o_kanban_small_column o_opportunity_kanban" >
-                    <field name="state_contact" options='{"group_by_tooltip": {"requirements": "Description", "legend_priority": "Use of stars"}}'/>
+                    <field name="state_contact" options="{&quot;group_by_tooltip&quot;: {&quot;requirements&quot;: &quot;Description&quot;, &quot;legend_priority&quot;: &quot;Use of stars&quot;}}"  />
 
                      <field name="stage_sequence"  invisible="1"/>
                     <field name="id"/>
@@ -117,10 +124,10 @@
             </field>
         </record>
 
-    <!-- Contact Action view -->
+    <!-- TARGET Action view -->
 
     <record id="action_partner_contact_form" model="ir.actions.act_window">
-            <field name="name">Contact</field>
+            <field name="name">TARGET</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">res.partner</field>
             <field name="view_type">form</field>
@@ -151,20 +158,20 @@
 
     <menuitem
             id="menu_contact"
-            name="Contact"
+            name="TARGET"
             parent="menu_workflow"
             sequence="1"
             action="action_partner_contact_form"/>
 
-    <!-- TARGET -->
+    <!-- CRM -->
 
- <!-- Target Kanban view -->
+ <!-- CRM Kanban view -->
         <record model="ir.ui.view" id="res_partner_target_kanban_view">
             <field name="name">res.partner.kanban</field>
             <field name="model">res.partner</field>
             <field name="arch" type="xml">
                 <kanban default_group_by="state_target" class="o_res_partner_kanban o_kanban_small_column o_opportunity_kanban" >
-                    <field name="state_target" options='{"group_by_tooltip": {"requirements": "Description", "legend_priority": "Use of stars"}}'/>
+                    <field name="state_target" options="{&quot;group_by_tooltip&quot;: {&quot;requirements&quot;: &quot;Description&quot;, &quot;legend_priority&quot;: &quot;Use of stars&quot;}}" />
 
                 <field name="stage_sequence"  invisible="1"/>
                     <field name="id"/>
@@ -232,10 +239,10 @@
             </field>
         </record>
 
-    <!-- Target Action view -->
+    <!-- CRM Action view -->
 
     <record id="action_partner_target_form" model="ir.actions.act_window">
-            <field name="name">Target</field>
+            <field name="name">CRM</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">res.partner</field>
             <field name="view_type">form</field>
@@ -261,14 +268,14 @@
 
     <menuitem
             id="menu_target"
-            name="Target"
+            name="CRM"
             parent="menu_workflow"
             sequence="2"
             action="action_partner_target_form"/>
 
-    <!-- Account -->
+    <!-- ACCOUNT MANAGEMENT -->
 
- <!-- Account Kanban view -->
+ <!-- ACCOUNT MANAGEMENT Kanban view -->
         <record model="ir.ui.view" id="res_partner_account_kanban_view">
             <field name="name">res.partner.kanban</field>
             <field name="model">res.partner</field>
@@ -342,10 +349,10 @@
             </field>
         </record>
 
-    <!-- Account Action view -->
+    <!-- ACCOUNT MANAGEMENT Action view -->
 
     <record id="action_partner_account_form" model="ir.actions.act_window">
-            <field name="name">Account</field>
+            <field name="name">ACCOUNT MANAGEMENT</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">res.partner</field>
             <field name="view_type">form</field>
@@ -371,7 +378,7 @@
 
     <menuitem
             id="menu_account"
-            name="Account"
+            name="ACCOUNT MANAGEMENT"
             parent="menu_workflow"
             sequence="3"
             action="action_partner_account_form"/>
