@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="stage_track_report_view_graph" model="ir.ui.view">
+            <field name="name">stage.track.report.graph</field>
+            <field name="model">stage.track.report</field>
+            <field name="arch" type="xml">
+                <graph string="Activities Analysis" stacked="True">
+                    <field name="date" type="col"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="stage_track_report_view_pivot" model="ir.ui.view">
+            <field name="name">stage.track.report.pivot</field>
+            <field name="model">stage.track.report</field>
+            <field name="arch" type="xml">
+                <pivot string="Activities Analysis" disable_linking="True">
+                    <field name="author_id" type="col"/>
+                    <field name="stage_signed"  type="row"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="stage_track_report_view_search" model="ir.ui.view">
+            <field name="name">stage.track.report.search</field>
+            <field name="model">stage.track.report</field>
+            <field name="arch" type="xml">
+                <search string="Activities Analysis">
+                    <!--<filter string="My Activities" name="activities_my" domain="[('author_id', '=', uid)]"/>-->
+                    <separator/>
+                    <field name="author_id" string="Created By"/>
+                    <group expand="1" string="Group By">
+                        <filter string="Modified By" name="group_by_salesperson" context="{'group_by':'author_id'}"/>
+                        <filter string="Country" context="{'group_by':'country_id'}" />
+                        <filter string="Company" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
+                        <filter string="Stage" context="{'group_by':'stage_id'}"/>
+                        <filter string="Customer" name="group_by_contact" context="{'group_by':'partner_id'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
+       <record id="stage_track_report_action" model="ir.actions.act_window">
+           <field name="name">Activities Analysis</field>
+           <field name="res_model">stage.track.report</field>
+           <field name="view_type">form</field>
+           <field name="view_mode">graph,pivot</field>
+           <field name="context">{'search_default_activities_my': True}</field>
+           <field name="domain">[]</field>
+       </record>
+
+       <menuitem
+            id="stage_track_report_menu"
+            name="Track Contact stage"
+            groups="sales_team.group_sale_manager"
+            parent="crm.crm_menu_report"
+            action="stage_track_report_action"
+            sequence="6"/>
+
+       <record id="stage_track_report_action_team" model="ir.actions.act_window">
+           <field name="name">Activities Analysis</field>
+           <field name="res_model">stage.track.report</field>
+           <field name="view_type">form</field>
+           <field name="view_mode">graph,pivot</field>
+           <field name="context">{}</field>
+           <field name="domain">[]</field>
+       </record>
+
+</odoo>

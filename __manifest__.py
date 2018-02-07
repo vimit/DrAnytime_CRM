@@ -11,6 +11,8 @@
 
         'views/res_partner_view.xml',
         'static/src/xml/template.xml',
+        'report/partner_activity_report_views.xml',
+        'report/stage_track_report_views.xml',
 
     ],
     'installable': True,

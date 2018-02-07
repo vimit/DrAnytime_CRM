@@ -44,16 +44,35 @@ class Partner(models.Model):
     def _default_stage_id(self):
         return self.env['crm.stage'].search([], limit=1).id
 
+    @api.onchange('stage_id')
+    @api.multi
+    def onchange_contact_stage_id(self):
+        self.state_contact = self.stage_id.id
+        self.state_target = self.stage_id.id
+        self.state_account = self.stage_id.id
 
-    stage_id = fields.Many2one('crm.stage', string='Status', index=True, track_visibility='onchange' , group_expand='_read_group_all_states' , default=lambda self: self._default_stage_id())
 
-    state_contact= fields.Many2one('crm.stage', related='stage_id' ,string='Status',
-         group_expand='_read_group_contact_states', store=True, track_visibility=False)
-    state_target = fields.Many2one('crm.stage', related='stage_id', string='Status',
-         group_expand='_read_group_target_states', store=True, track_visibility=False)
 
-    state_account = fields.Many2one('crm.stage', related='stage_id', string='Status',
-         group_expand='_read_group_account_states', store=True, track_visibility=False)
+    @api.multi
+    def _onchange_contact_stage_id(self,stage):
+        if not stage:
+            return {}
+
+        self.stage_id = stage
+        return {}
+
+    stage_id = fields.Many2one('crm.stage', string='Status', index=True, track_visibility='onchange' ,
+        group_expand='_read_group_all_states' , default=lambda self: self._default_stage_id())
+
+    stage  = fields.Many2one('crm.stage', string='Status')
+    state_contact= fields.Many2one('crm.stage' ,string='Status',
+         group_expand='_read_group_contact_states', track_visibility=False)
+
+    state_target = fields.Many2one('crm.stage',  string='Status',
+         group_expand='_read_group_target_states',track_visibility=False)
+
+    state_account = fields.Many2one('crm.stage',  string='Status',
+         group_expand='_read_group_account_states',  track_visibility=False)
 
     stage_sequence = fields.Integer(related='stage_id.sequence', string='Status Sequence',   store=True)
 
@@ -209,6 +228,18 @@ class Partner(models.Model):
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Competitors software'))
 
+        elif self.stage_id.id == 17 and self.x_studio_field_v6GZl == False:
+            raise exceptions.Warning(
+                _('To move to this step you first need to fill field Date (meeting set)'))
+
+        elif self.stage_id.id == 17 and self.x_studio_field_v6GZl == False:
+            raise exceptions.Warning(
+                _('To move to this step you first need to fill field Date (meeting set)'))
+
+        elif self.stage_id.id == 17 and self.x_studio_field_v6GZl == False:
+            raise exceptions.Warning(
+                _('To move to this step you first need to fill field Date (meeting set)'))
+
         if not self.env.user.has_group('sales_team.group_sale_manager') and self.stage_id.id == 16 :
             raise exceptions.Warning(
                 _('You are not allowed to pass to Stage Activated, Please contact Administrator'))
@@ -227,6 +258,13 @@ class Partner(models.Model):
         res = super(Partner, self).write(vals)
         if vals.get('stage_id'):
             vals.update(self._onchange_stage_id_values(vals.get('stage_id')))
+        if vals.get('state_contact'):
+            vals.update(self._onchange_contact_stage_id(vals.get('state_contact')))
+        elif vals.get('state_target'):
+            vals.update(self._onchange_contact_stage_id(vals.get('state_target')))
+        elif vals.get('state_account'):
+            vals.update(self._onchange_contact_stage_id(vals.get('state_account')))
+
 
         return res
 
