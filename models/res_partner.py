@@ -64,7 +64,6 @@ class Partner(models.Model):
     stage_id = fields.Many2one('crm.stage', string='Status', index=True, track_visibility='onchange' ,
         group_expand='_read_group_all_states' , default=lambda self: self._default_stage_id())
 
-    stage  = fields.Many2one('crm.stage', string='Status')
     state_contact= fields.Many2one('crm.stage' ,string='Status',
          group_expand='_read_group_contact_states', track_visibility=False)
 
