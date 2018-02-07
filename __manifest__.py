@@ -6,7 +6,7 @@
     'category': 'Customization',
     'license': 'AGPL-3',
     'author': "RealDev ",
-    'depends': ['base', 'crm','web'],
+    'depends': ['base', 'crm','web','sale_subscription'],
     'data': [
 
         'views/res_partner_view.xml',
