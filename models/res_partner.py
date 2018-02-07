@@ -150,7 +150,7 @@ class Partner(models.Model):
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Services'))
 
-        elif self.stage_id.id in (8,16) and self.x_studio_field_EfIaw == False:
+        elif self.stage_id.id in (8,16) and self.business_developer_id == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Business Developer'))
 

@@ -23,7 +23,7 @@
             </field>
 
              <field name="lang" position="after">
-                <field name="business_developer_id" />
+                <field name="business_developer_id" attrs="{'required': ['|',['stage_id','=',8],['stage_id','=',16]]}"/>
              </field>
     </field>
 </record>
