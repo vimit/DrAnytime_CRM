@@ -52,7 +52,7 @@
 
        <menuitem
             id="stage_track_report_menu"
-            name="Track Contact stage"
+            name="Contact Signed"
             groups="sales_team.group_sale_manager"
             parent="crm.crm_menu_report"
             action="stage_track_report_action"
