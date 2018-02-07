@@ -21,6 +21,10 @@
                  <field name="state_account" invisible="1"/>
                 <field name="stage_sequence"  invisible="1"/>
             </field>
+
+             <field name="lang" position="after">
+                <field name="business_developer_id" />
+             </field>
     </field>
 </record>
 

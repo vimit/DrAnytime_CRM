@@ -65,7 +65,7 @@ class ContactActivityReport(models.Model):
                 l.country_id,
                 l.company_id,
                 l.stage_id,
-                l.x_studio_field_EfIaw as business_developer_id
+                l.business_developer_id
  
                 
                 
