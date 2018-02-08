@@ -41,3 +41,36 @@ class sale_subscription_report(models.Model):
         '''
 
         return select_str
+
+    def _group_by(self):
+        group_by_str = '''
+                    GROUP BY    l.product_id,
+                                l.uom_id,
+                                t.categ_id,
+                                sub.analytic_account_id,
+                                sub.date_start,
+                                sub.date,
+                                sub.partner_id,     
+                                sub.user_id,
+                                recurring_price,
+                                quantity,
+                                sub.company_id,
+                                sub.state,
+                                sub.name,
+                                sub.template_id,
+                                sub.pricelist_id,
+                                p.product_tmpl_id,
+                                partner.country_id,
+                                partner.commercial_partner_id,
+                                partner.industry_id,
+                                sub.close_reason_id,
+                                sub.sub_type
+
+
+                                                        
+
+        
+        
+        
+        '''
+        return   group_by_str
