@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
 from odoo import fields, models, tools, api
 
+class SaleSubscription (models.Model):
+    _inherit = "sale.subscription"
+
+    sub_type = fields.Selection([('full_subscription', 'Full subscription'), ('directory', 'Directory')],
+                                'Subscription Type')
+
 
 class sale_subscription_report(models.Model):
     _inherit = "sale.subscription.report"
@@ -30,7 +36,7 @@ class sale_subscription_report(models.Model):
                 partner.commercial_partner_id as commercial_partner_id,
                 partner.industry_id as industry_id,
                 sub.close_reason_id as close_reason_id,
-                sub.x_studio_field_q2r2T as sub_type
+                sub.sub_type
 
         '''
 

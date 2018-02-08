@@ -13,6 +13,7 @@
         'static/src/xml/template.xml',
         'report/partner_activity_report_views.xml',
         'report/stage_track_report_views.xml',
+        'views/sale_subscription_view.xml',
 
     ],
     'installable': True,
