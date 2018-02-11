@@ -75,8 +75,6 @@ class Partner(models.Model):
 
     stage_sequence = fields.Integer(related='stage_id.sequence', string='Status Sequence',   store=True)
 
-    business_developer_id = fields.Many2one('res.users', 'Business Developer')
-
 
     @api.model
     def _read_group_contact_states(self, stages, domain, order):

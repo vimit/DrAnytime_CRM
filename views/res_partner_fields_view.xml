@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+        <record id="view_partner_fields_form_inherit" model="ir.ui.view">
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="model">res.partner</field>
+            <field type="xml" name="arch">
+                 <xpath expr="//form[1]/sheet[1]/group[1]" position="after">
+                     <group>
+                         <group>
+                              <field name="inami" />
+                              <field name="subscription_type" />
+                              <field name="business_developer_id" />
+                         </group>
+                         <group>
+                             <field name="specialization"  widget="many2many_tags"  />
+                              <field name="personnality" />
+                              <field name="happiness"  widget="priority"  />
+                         </group>
+                     </group>
+                 </xpath>
+
+                 <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+                    <page name="prospection" string="Prospection Process">
+                        <group>
+                            <group string="Attempt of contact">
+                                  <field name="date_attempt_contact1" />
+                                  <field name="bd_attempt_contact1" />
+
+                            </group>
+                            <group string="2d Attempt of contact">
+                                <field name="date_attempt_contact2" />
+                                  <field name="bd_attempt_contact2" />
+
+                            </group>
+                        </group>
+                        <group>
+                            <group string="3d Attempt of contact">
+                                <field name="date_attempt_contact3" />
+                                <field name="bd_attempt_contact3" />
+                            </group>
+                            <group string="4th Attempt of contact">
+                                 <field name="date_attempt_contact4" />
+                                 <field name="bd_attempt_contact4" />
+
+                            </group>
+                        </group>
+                        <separator/>
+                        <group>
+                            <group string="Call Pitch">
+                                <field name="secretary_call_pitch1" />
+                                <field name="doctor_call_pitch1" />
+                                <field name="date_call_pitch1" />
+                                <field name="bd_call_pitch1" />
+                                <field name="comment_call_pitch1" />
+
+                            </group>
+                            <group string="2d Call Pitch">
+
+                                <field name="secretary_call_pitch2" />
+                                <field name="doctor_call_pitch2" />
+                                <field name="date_call_pitch2" />
+                                <field name="bd_call_pitch2" />
+                                <field name="comment_call_pitch2" />
+
+                            </group>
+                        </group>
+                        <group>
+                            <group string="3d Call Pitch">
+                                <field name="secretary_call_pitch3" />
+                                <field name="doctor_call_pitch3" />
+                                <field name="date_call_pitch3" />
+                                <field name="bd_call_pitch3" />
+                                <field name="comment_call_pitch3" />
+                            </group>
+                            <group string="4th Call Pitch">
+                                <field name="secretary_call_pitch4" />
+                                <field name="doctor_call_pitch4" />
+                                <field name="date_call_pitch4" />
+                                <field name="bd_call_pitch4" />
+                                <field name="comment_call_pitch4" />
+                            </group>
+                        </group>
+                        <separator/>
+                        <group>
+                            <group string="Call back">
+                                <field name="date_call_back1" />
+                                <field name="bd_call_back1" />
+                                <field name="comment_call_back1" />
+                            </group>
+                            <group string="2d Call back">
+                                <field name="date_call_back2" />
+                                <field name="bd_call_back2" />
+                                <field name="comment_call_back2" />
+                            </group>
+                            <group string="3d Call back">
+                                <field name="date_call_back3" />
+                                <field name="bd_call_back3" />
+                                <field name="comment_call_back3" />
+                            </group>
+                        </group>
+                        <separator/>
+                        <group>
+                            <group string="Email Sent">
+
+                                <field name="date_email_sent" />
+                                <field name="bd_email_sent" />
+                                <field name="comment_email_sent" />
+                            </group>
+
+                        </group>
+                        <separator/>
+                        <group>
+                            <group string="Interested">
+                                <field name="date_interested" />
+                                <field name="bd_interested" />
+                                <field name="comment_interested" />
+                                <field name="crm_visibility"  widget="many2many_tags" />
+                            </group>
+                            <group string="Not Interested">
+                                <field name="date_notinterested" />
+                                <field name="bd_notinterested" />
+                                <field name="reason_notinterested" />
+                            </group>
+                        </group>
+                        <separator/>
+                        <group>
+                            <group string="Meeting Set">
+                                <field name="date_meeting_set" />
+                                <field name="bd_meeting_set" />
+                                <field name="comment_meeting_set" />
+                            </group>
+                        </group>
+                        <separator/>
+                        <group>
+                            <group string="Meeting">
+                                <field name="date_meeting1" />
+                                <field name="bd_meeting1" />
+                                <field name="comment_meeting1" />
+                            </group>
+                            <group string="2d Meeting">
+                                <field name="date_meeting2" />
+                                <field name="bd_meeting2" />
+                                <field name="comment_meeting2" />
+                            </group>
+                            <group string="3d Meeting">
+                                <field name="date_meeting3" />
+                                <field name="bd_meeting3" />
+                                <field name="comment_meeting3" />
+                            </group>
+                        </group>
+                        <separator/>
+                        <group>
+                            <group string="Offer">
+                                <field name="date_offer" />
+                                <field name="bd_offer" />
+                                <field name="offer_details" />
+                            </group>
+                        </group>
+                        <separator/>
+                        <group>
+                            <group string="Pre-Agreement">
+                                <field name="date_preagreement" />
+                                <field name="bd_preagreement" />
+                                <field name="comment_preagreement" />
+                            </group>
+                        </group>
+                        <separator/>
+                        <group>
+                            <group string="Signed">
+                                <field name="date_signed" />
+                                <field name="bd_signed" />
+                                <field name="comment_signed" />
+                            </group>
+                        </group>
+
+                    </page>
+
+                    <page name="account" string="Account Management">
+                        <group>
+                            <group>
+                                <field name="first_email" />
+                            </group>
+                            <group>
+                                <field name="comment_first_email" />
+                            </group>
+                            <group>
+                                <field name="service_completed" />
+                            </group>
+                            <group>
+                                <field name="comment_service_completed" />
+                            </group>
+                            <group>
+                                <field name="price_completed" />
+                            </group>
+                            <group>
+                                <field name="comment_price_completed" />
+                            </group>
+                            <group>
+                                <field name="cv_completed" />
+                            </group>
+                            <group>
+                                <field name="comment_cv_completed" />
+                            </group>
+                            <group>
+                                <field name="duration_completed" />
+                            </group>
+                            <group>
+                                <field name="comment_duration_completed" />
+                            </group>
+                            <group>
+                                <field name="personal_message_completed" />
+                            </group>
+                            <group>
+                                <field name="comment_personal_message_completed" />
+                            </group>
+                            <group>
+                                <field name="profile_picture" />
+                            </group>
+                            <group>
+                                <field name="comment_profile_picture" />
+                            </group>
+                            <group>
+                                <field name="photo_practice" />
+                            </group>
+                            <group>
+                                <field name="comment_photo_practice" />
+                            </group>
+                            <group>
+                                <field name="marketing_kit" />
+                            </group>
+                            <group>
+                                <field name="comment_marketing_kit" />
+                            </group>
+                            <group>
+                                <field name="synchronisation_completed" />
+                            </group>
+                            <group>
+                                <field name="comment_synchronisation_completed" />
+                            </group>
+                            <group>
+                                <field name="backlink" />
+                            </group>
+                            <group>
+                                <field name="comment_backlink" />
+                            </group>
+                            <group>
+                                <field name="google_profile" />
+                            </group>
+                            <group>
+                                <field name="comment_google_profile" />
+                            </group>
+                            <group>
+                                <field name="voicemail" />
+                            </group>
+                            <group>
+                                <field name="comment_voicemail" />
+                            </group>
+                            <group>
+                                <field name="mail_signature" />
+                            </group>
+                            <group>
+                                <field name="comment_mail_signature" />
+                            </group>
+                            <group>
+                                <field name="email_to_patient" />
+                            </group>
+                            <group>
+                                <field name="comment_email_to_patient" />
+                            </group>
+                            <group>
+                                <field name="translation" />
+                            </group>
+                            <group>
+                                <field name="comment_translation" />
+                            </group>
+                            <group>
+                                <field name="business_card" />
+                            </group>
+                            <group>
+                                <field name="comment_business_card" />
+                            </group>
+                        </group>
+                    </page>
+                 </xpath>
+
+            </field>
+        </record>
+</data>
+</odoo>

@@ -11,7 +11,7 @@ class SaleSubscription (models.Model):
 class sale_subscription_report(models.Model):
     _inherit = "sale.subscription.report"
 
-    sub_type = fields.Selection([('Full subscription', 'Full subscription'), ('Directory', 'Directory')], 'Subscription Type')
+    sub_type = fields.Selection([('full_subscription', 'Full subscription'), ('directory', 'Directory')], 'Subscription Type')
 
     def _select(self):
         select_str ='''
