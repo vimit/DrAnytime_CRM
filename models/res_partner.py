@@ -106,28 +106,30 @@ class Partner(models.Model):
     bd_attempt_contact_four = fields.Many2one('res.users', 'Business Developer')
 
     # group call pitch
-    secretary_call_pitch_one = fields.Boolean('Secraty')
+    secretary_call_pitch_one = fields.Boolean('Secretary')
     doctor_call_pitch_one = fields.Boolean('Doctor')
     date_call_pitch_one = fields.Date('Date')
     bd_call_pitch_one = fields.Many2one('res.users', 'Business Developer')
     comment_call_pitch_one = fields.Char('Comment')
 
     # group _twond call pitch
-    secretary_call_pitch_two = fields.Boolean('Secraty')
+
+    secretary_call_pitch_two = fields.Boolean('Secretary')
     doctor_call_pitch_two = fields.Boolean('Doctor')
     date_call_pitch_two = fields.Date('Date')
     bd_call_pitch_two = fields.Many2one('res.users', 'Business Developer')
     comment_call_pitch_two = fields.Char('Comment')
 
     # group _threerd call pitch
-    secretary_call_pitch_three = fields.Boolean('Secraty')
+
+    secretary_call_pitch_three = fields.Boolean('Secretary')
     doctor_call_pitch_three = fields.Boolean('Doctor')
     date_call_pitch_three = fields.Date('Date')
     bd_call_pitch_three = fields.Many2one('res.users', 'Business Developer')
     comment_call_pitch_three = fields.Char('Comment')
 
     # group _fourth call pitch
-    secretary_call_pitch_four = fields.Boolean('Secraty')
+    secretary_call_pitch_four = fields.Boolean('Secretary')
     doctor_call_pitch_four = fields.Boolean('Doctor')
     date_call_pitch_four = fields.Date('Date')
     bd_call_pitch_four = fields.Many2one('res.users', 'Business Developer')
@@ -201,7 +203,7 @@ class Partner(models.Model):
     comment_signed = fields.Char('Comment')
 
     # Tab Account Management
-    first_email = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], '_onest email (activation)')
+    first_email = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], '1st email (activation)')
     comment_first_email = fields.Char('Comment')
     #
     service_completed = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], 'Services completed')
@@ -330,6 +332,7 @@ class Partner(models.Model):
         if not stage_id:
             return {}
         stage = self.env['crm.stage'].browse(stage_id)
+
         if self.stage_id.id == 2 and self.x_studio_field_WDmu0 == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Date (attempt of contact) '))
@@ -347,15 +350,15 @@ class Partner(models.Model):
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Date (callback)'))
 
-        elif self.stage_id.id == _one0 and self.x_studio_field_v6GZl == False:
+        elif self.stage_id.id == 10 and self.x_studio_field_v6GZl == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Date (meeting set)'))
 
-        elif self.stage_id.id == 6 and self.x_studio_field_WP_onero == False:
+        elif self.stage_id.id == 6 and self.x_studio_field_WP1ro == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Date (pre_agreement) '))
 
-        elif self.stage_id.id in (8,16) and self.x_studio_field_g_onezcu == False:
+        elif self.stage_id.id in (8,16) and self.x_studio_field_g1zcu == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Specialisation'))
         elif self.stage_id.id in (8, 16) and self.x_studio_field_HnDpa == False:
@@ -374,11 +377,11 @@ class Partner(models.Model):
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Account manager'))
 
-        elif self.stage_id.id in (8,16) and self.x_studio_field_kYZ_oneu == False:
+        elif self.stage_id.id in (8,16) and self.x_studio_field_kYZ1u == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field CRM / VISIBILITY   '))
 
-        elif self.stage_id.id in (8,16) and self.x_studio_field_K_threeGQ_one == False:
+        elif self.stage_id.id in (8,16) and self.x_studio_field_K3GQ1 == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field User Manuel sent'))
 
@@ -429,11 +432,11 @@ class Partner(models.Model):
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Availability'))
 
-        elif self.stage_id.id in (8,16) and self.x_studio_field_kc_two_twoX == False:
+        elif self.stage_id.id in (8,16) and self.x_studio_field_kc22X == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Agenda Synchro'))
 
-        elif self.stage_id.id in (8,16) and self.x_studio_field__one6Eot == False:
+        elif self.stage_id.id in (8,16) and self.x_studio_field_16Eot == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Expertise'))
 
@@ -461,12 +464,6 @@ class Partner(models.Model):
                 _('You are not allowed to pass to Stage Activated, Please contact Administrator'))
 
         return {}
-
-    # @api.onchange('stage_id')
-    # def _onchange_stage_id(self):
-    #     print('------_one')
-    #     values = self._onchange_stage_id_values(self.stage_id.id)
-    #     self.update(values)
 
 
     @api.multi
