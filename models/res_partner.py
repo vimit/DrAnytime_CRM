@@ -14,7 +14,7 @@ class Stage(models.Model):
     def _onchange_restrict_access(self, stage_id):
         """ returns the new values when stage_id has changed """
         print('----------',self.env.uid)
-        if self.env.uid != _one :
+        if self.env.uid != 1 :
             raise exceptions.Warning('You are not allowed to change the stages, Please contact the Administrator')
             return  True
         return {}
@@ -272,7 +272,6 @@ class Partner(models.Model):
         self.state_account = self.stage_id.id
 
 
-
     @api.multi
     def _onchange_contact_stage_id(self,stage):
         if not stage:
@@ -293,7 +292,7 @@ class Partner(models.Model):
     state_account = fields.Many2one('crm.stage',  string='Status',
          group_expand='_read_group_account_states',  track_visibility=False)
 
-    stage_sequence = fields.Integer(related='stage_id.sequence', string='Status Sequence',   store=True)
+    stage_sequence = fields.Integer(related='stage_id.sequence', string='Status Sequence', store=True, readonly=True)
 
 
     @api.model
@@ -328,103 +327,82 @@ class Partner(models.Model):
     @api.model
     def _onchange_stage_id_values(self, stage_id):
         """ returns the new values when stage_id has changed """
-        print('------2')
         if not stage_id:
             return {}
         stage = self.env['crm.stage'].browse(stage_id)
 
-        if self.stage_id.id == 2 and self.x_studio_field_WDmu0 == False:
+        if self.stage_id.id == 28 and self.date_attempt_contact_one == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Date (attempt of contact) '))
 
-        elif self.stage_id.id == 3 and self.x_studio_field_8wWZX == False  and self.x_studio_field_JqT0t == False:
+        elif self.stage_id.id == 3 and self.secretary_call_pitch_one == False  and self.doctor_call_pitch_one == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Secretary or Doctor'))
 
-        elif self.stage_id.id == 3 and self.x_studio_field_eLcYs == False:
+        elif self.stage_id.id == 3 and self.date_call_pitch_one == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Date (pitched)'))
 
-
-        elif self.stage_id.id == 9 and self.x_studio_field_5CWT8 == False:
+        elif self.stage_id.id == 9 and self.date_call_back_one == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Date (callback)'))
 
-        elif self.stage_id.id == 10 and self.x_studio_field_v6GZl == False:
+        elif self.stage_id.id == 10 and self.date_meeting_set == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Date (meeting set)'))
 
-        elif self.stage_id.id == 6 and self.x_studio_field_WP1ro == False:
+        elif self.stage_id.id == 6 and self.date_preagreement == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Date (pre_agreement) '))
 
-        elif self.stage_id.id in (8,16) and self.x_studio_field_g1zcu == False:
+        elif self.stage_id.id in (8,16) and self.specialization == False:
             raise exceptions.Warning(
-                _('To move to this step you first need to fill field Specialisation'))
-        elif self.stage_id.id in (8, 16) and self.x_studio_field_HnDpa == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Skills'))
+                _('To move to this step you first need to fill field Specialization'))
 
-        elif self.stage_id.id in (8,16) and self.x_studio_field_EBPqm == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Services'))
 
         elif self.stage_id.id in (8,16) and self.business_developer_id == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Business Developer'))
 
-        elif self.stage_id.id in (8,16) and self.x_studio_field_ZilCW == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Account manager'))
-
-        elif self.stage_id.id in (8,16) and self.x_studio_field_kYZ1u == False:
+        elif self.stage_id.id in (8,16) and self.crm_visibility == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field CRM / VISIBILITY   '))
 
-        elif self.stage_id.id in (8,16) and self.x_studio_field_K3GQ1 == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field User Manuel sent'))
-
-        elif self.stage_id.id in (8,16) and self.x_studio_field_6bUX9 == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field URL BACKEND'))
-
-        elif self.stage_id.id in (8,16) and self.x_studio_field_cBgxC == False:
+        elif self.stage_id.id in (8,16) and self.backlink == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Website backlink'))
 
-        elif self.stage_id.id in (8,16) and self.x_studio_field_igtTt == False:
+        elif self.stage_id.id in (8,16) and self.voicemail == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Voicemail'))
 
-        elif self.stage_id.id in (8,16) and self.x_studio_field_iYdhZ == False:
+        elif self.stage_id.id in (8,16) and self.mail_signature == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Email signature '))
 
-        elif self.stage_id.id in (8,16) and self.x_studio_field_RYaI5 == False:
+        elif self.stage_id.id in (8,16) and self.translation == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Translation'))
 
-        elif self.stage_id.id in (8,16) and self.x_studio_field_kQZyr == False:
+        elif self.stage_id.id in (8,16) and self.business_card == False:
             raise exceptions.Warning(
-                _('To move to this step you first need to fill field Visit card '))
+                _('To move to this step you first need to fill field Business card '))
 
-        elif self.stage_id.id in (8,16) and self.x_studio_field_zjMCR == False:
+        elif self.stage_id.id in (8,16) and self.marketing_kit == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Marketing kit'))
-        elif self.stage_id.id in (8,16) and self.x_studio_field_XiNDd == False:
+
+        elif self.stage_id.id in (8,16) and self.google_profile == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Google profile'))
 
-        elif self.stage_id.id in (8,16) and self.x_studio_field_6G6rb == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Google backlink'))
 
-        elif self.stage_id.id in (8,16) and self.x_studio_field_Ca_oneDT == False:
+
+        elif self.stage_id.id in (8,16) and self.happiness == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Happy doctor '))
 
-        elif self.stage_id.id in (8,16) and self.x_studio_field_bIOcq == False:
+        elif self.stage_id.id in (8,16) and self.personnality == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Personality'))
 
@@ -446,18 +424,27 @@ class Partner(models.Model):
         elif self.stage_id.id in (8,16) and self.x_studio_field_puqZa == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Competitors software'))
-
-        elif self.stage_id.id == 17 and self.x_studio_field_v6GZl == False:
+        elif self.stage_id.id in (8,16) and self.x_studio_field_6G6rb == False:
             raise exceptions.Warning(
-                _('To move to this step you first need to fill field Date (meeting set)'))
-
-        elif self.stage_id.id == 17 and self.x_studio_field_v6GZl == False:
+                _('To move to this step you first need to fill field Google backlink'))
+        elif self.stage_id.id in (8,16) and self.x_studio_field_K3GQ1 == False:
             raise exceptions.Warning(
-                _('To move to this step you first need to fill field Date (meeting set)'))
+                _('To move to this step you first need to fill field User Manuel sent'))
 
-        elif self.stage_id.id == 17 and self.x_studio_field_v6GZl == False:
+        elif self.stage_id.id in (8,16) and self.x_studio_field_6bUX9 == False:
             raise exceptions.Warning(
-                _('To move to this step you first need to fill field Date (meeting set)'))
+                _('To move to this step you first need to fill field URL BACKEND'))
+        elif self.stage_id.id in (8, 16) and self.x_studio_field_ZilCW == False:
+            raise exceptions.Warning(
+                _('To move to this step you first need to fill field Account manager'))
+        elif self.stage_id.id in (8, 16) and self.x_studio_field_HnDpa == False:
+            raise exceptions.Warning(
+                _('To move to this step you first need to fill field Skills'))
+
+        elif self.stage_id.id in (8, 16) and self.x_studio_field_EBPqm == False:
+            raise exceptions.Warning(
+                _('To move to this step you first need to fill field Services'))
+
 
         if not self.env.user.has_group('sales_team.group_sale_manager') and self.stage_id.id == 16 :
             raise exceptions.Warning(

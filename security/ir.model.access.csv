@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_specialization_root,partner.specialization.root,DrAnytime_CRM.model_partner_specialization,,1,1,1,1
+access_crm_visibility_root,crm.visibility.root,DrAnytime_CRM.model_crm_visibility,,1,1,1,1
+access_reason_notinterested_root,reason.notinterested.root,DrAnytime_CRM.model_reason_notinterested,,1,1,1,1

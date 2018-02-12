@@ -15,12 +15,12 @@
 
             </header>
         </xpath>
-            <field name="function" position="before">
+            <xpath expr="//form[1]/sheet[1]/group[1]" position="after">
                 <field name="state_contact" invisible="1"/>
                  <field name="state_target" invisible="1"/>
                  <field name="state_account" invisible="1"/>
                 <field name="stage_sequence"  invisible="1"/>
-            </field>
+            </xpath>
 
              <field name="lang" position="after">
                 <field name="business_developer_id" attrs="{'required': ['|',['stage_id','=',8],['stage_id','=',16]]}"/>
