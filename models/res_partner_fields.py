@@ -2,11 +2,13 @@
 
 from odoo import api, fields, models, SUPERUSER_ID, exceptions, _
 
+
 class Specialization(models.Model):
     _name = 'partner.specialization'
 
     name = fields.Char('Name')
     description = fields.Char('Description')
+
 
 class CrmVisibility(models.Model):
     _name = 'crm.visibility'
@@ -14,38 +16,38 @@ class CrmVisibility(models.Model):
     name = fields.Char('Name')
     description = fields.Char('Description')
 
+
 class ReasonNotInterested(models.Model):
     _name = 'reason.notinterested'
 
     name = fields.Char('Name')
     description = fields.Char('Description')
-    # partner_id = fields.Many2one('res.partner','Contact')
-
 
 
 class Partner(models.Model):
-
     _inherit = 'res.partner'
 
-    #### principal doctor information ##############################
+    # principal doctor information
     inami = fields.Char('INAMI / RIZIV')
-    subscription_type = fields.Selection([('none','None'),
-                                          ('free_directory','Free Directory'),
-                                          ('free_trial','Free Trial'),
-                                          ('paying_patient','Paying / Patient'),
-                                          ('paying_directoty','Paying Directory'),
-                                          ('basic_paying','Basic Paying'),
-                                          ('premium_paying','Premium Paying')
-                                          ],'Subscription Type'
+    subscription_type = fields.Selection([('none', 'None'),
+                                          ('free_directory', 'Free Directory'),
+                                          ('free_trial', 'Free Trial'),
+                                          ('paying_patient', 'Paying / Patient'),
+                                          ('paying_directoty', 'Paying Directory'),
+                                          ('basic_paying', 'Basic Paying'),
+                                          ('premium_paying', 'Premium Paying')
+                                          ], 'Subscription Type'
                                          )
-    specialization = fields.Many2many('partner.specialization','partner_specialization_rel','partner_id','specialization_id', string='Specialization')
-
+    specialization = fields.Many2many('partner.specialization', 'partner_specialization_rel', 'partner_id',
+                                      'specialization_id', string='Specialization')
 
     business_developer_id = fields.Many2one('res.users', 'Business Developer')
 
-    personnality = fields.Selection([('analytical', 'Analytical'),('driving', 'Driving'),('amiable', 'Amiable'),('expressive', 'Expressive')], string='Doctor personnality')
+    personnality = fields.Selection(
+        [('analytical', 'Analytical'), ('driving', 'Driving'), ('amiable', 'Amiable'), ('expressive', 'Expressive')],
+        string='Doctor personnality')
 
-    happiness = fields.Selection([('0','0'),
+    happiness = fields.Selection([('0', '0'),
                                   ('1', '1'),
                                   ('2', '2'),
                                   ('3', '3'),
@@ -123,7 +125,8 @@ class Partner(models.Model):
     date_interested = fields.Date('Date')
     bd_interested = fields.Many2one('res.users', 'Business Developer')
     comment_interested = fields.Char('Comment')
-    crm_visibility = fields.Many2many('crm.visibility','partner_crm_visibilty_rel','partner_id','crm_visibilty_id',string='CRM / Visibility')
+    crm_visibility = fields.Many2many('crm.visibility', 'partner_crm_visibilty_rel', 'partner_id', 'crm_visibilty_id',
+                                      string='CRM / Visibility')
 
     # group not interested
     date_notinterested = fields.Date('Date')
@@ -155,12 +158,10 @@ class Partner(models.Model):
     bd_offer = fields.Many2one('res.users', 'Business Developer')
     offer_details = fields.Char('Offer Details')
 
-
     # group preagreement
     date_preagreement = fields.Date('Date')
     bd_preagreement = fields.Many2one('res.users', 'Business Developer')
     comment_preagreement = fields.Char('Comment')
-
 
     # group signed
     date_signed = fields.Date('Date')
@@ -168,7 +169,7 @@ class Partner(models.Model):
     comment_signed = fields.Char('Comment')
 
     # Tab Account Management
-    first_email = fields.Selection([('yes','Yes'),('no','No'),('on_going','On Going')],'1st email (activation)')
+    first_email = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], '1st email (activation)')
     comment_first_email = fields.Char('Comment')
     #
     service_completed = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], 'Services completed')
@@ -177,13 +178,16 @@ class Partner(models.Model):
     price_completed = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], 'Prices completed')
     comment_price_completed = fields.Char('Comment')
     #
-    cv_completed = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], 'CV/experiences completed')
+    cv_completed = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')],
+                                    'CV/experiences completed')
     comment_cv_completed = fields.Char('Comment')
     #
-    duration_completed = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], 'Duration completed')
+    duration_completed = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')],
+                                          'Duration completed')
     comment_duration_completed = fields.Char('Comment')
     #
-    personal_message_completed = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], 'Personal message completed')
+    personal_message_completed = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')],
+                                                  'Personal message completed')
     comment_personal_message_completed = fields.Char('Comment')
     #
     profile_picture = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], 'Profile picture')
@@ -193,15 +197,17 @@ class Partner(models.Model):
     comment_photo_practice = fields.Char('Comment')
     #
     marketing_kit = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], 'Marketing kit')
-    comment_marketing_kit= fields.Char('Comment')
+    comment_marketing_kit = fields.Char('Comment')
     #
-    synchronisation_completed = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going'),('not_possible','Not Possible')], 'Synchronisation')
+    synchronisation_completed = fields.Selection(
+        [('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going'), ('not_possible', 'Not Possible')], 'Synchronisation')
     comment_synchronisation_completed = fields.Char('Comment')
     #
     backlink = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], 'Backlink')
     comment_backlink = fields.Char('Comment')
     #
-    google_profile = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going'),('already_one','Already One')], 'Google profile')
+    google_profile = fields.Selection(
+        [('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going'), ('already_one', 'Already One')], 'Google profile')
     comment_google_profile = fields.Char('Comment')
     #
     voicemail = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], 'Voicemail')
@@ -218,6 +224,3 @@ class Partner(models.Model):
     #
     business_card = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], 'Business cards')
     comment_business_card = fields.Char('Comment')
-
-
-
