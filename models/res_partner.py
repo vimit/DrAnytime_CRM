@@ -14,7 +14,7 @@ class Stage(models.Model):
     def _onchange_restrict_access(self, stage_id):
         """ returns the new values when stage_id has changed """
         print('----------',self.env.uid)
-        if self.env.uid != 1 :
+        if self.env.uid != _one :
             raise exceptions.Warning('You are not allowed to change the stages, Please contact the Administrator')
             return  True
         return {}
@@ -90,63 +90,63 @@ class Partner(models.Model):
     # Prospection Process Tab
 
     # group attemp of contcat
-    date_attempt_contact1 = fields.Date('Date')
-    bd_attempt_contact1 = fields.Many2one('res.users', 'Business Developer')
+    date_attempt_contact_one = fields.Date('Date')
+    bd_attempt_contact_one = fields.Many2one('res.users', 'Business Developer')
 
-    # group 2nd attemp of contcat
-    date_attempt_contact2 = fields.Date('Date')
-    bd_attempt_contact2 = fields.Many2one('res.users', 'Business Developer')
+    # group _twond attemp of contcat
+    date_attempt_contact_two = fields.Date('Date')
+    bd_attempt_contact_two = fields.Many2one('res.users', 'Business Developer')
 
-    # group 3rd attemp of contcat
-    date_attempt_contact3 = fields.Date('Date')
-    bd_attempt_contact3 = fields.Many2one('res.users', 'Business Developer')
+    # group _threerd attemp of contcat
+    date_attempt_contact_three = fields.Date('Date')
+    bd_attempt_contact_three = fields.Many2one('res.users', 'Business Developer')
 
-    # group 4th attemp of contcat
-    date_attempt_contact4 = fields.Date('Date')
-    bd_attempt_contact4 = fields.Many2one('res.users', 'Business Developer')
+    # group _fourth attemp of contcat
+    date_attempt_contact_four = fields.Date('Date')
+    bd_attempt_contact_four = fields.Many2one('res.users', 'Business Developer')
 
     # group call pitch
-    secretary_call_pitch1 = fields.Boolean('Secraty')
-    doctor_call_pitch1 = fields.Boolean('Doctor')
-    date_call_pitch1 = fields.Date('Date')
-    bd_call_pitch1 = fields.Many2one('res.users', 'Business Developer')
-    comment_call_pitch1 = fields.Char('Comment')
+    secretary_call_pitch_one = fields.Boolean('Secraty')
+    doctor_call_pitch_one = fields.Boolean('Doctor')
+    date_call_pitch_one = fields.Date('Date')
+    bd_call_pitch_one = fields.Many2one('res.users', 'Business Developer')
+    comment_call_pitch_one = fields.Char('Comment')
 
-    # group 2nd call pitch
-    secretary_call_pitch2 = fields.Boolean('Secraty')
-    doctor_call_pitch2 = fields.Boolean('Doctor')
-    date_call_pitch2 = fields.Date('Date')
-    bd_call_pitch2 = fields.Many2one('res.users', 'Business Developer')
-    comment_call_pitch2 = fields.Char('Comment')
+    # group _twond call pitch
+    secretary_call_pitch_two = fields.Boolean('Secraty')
+    doctor_call_pitch_two = fields.Boolean('Doctor')
+    date_call_pitch_two = fields.Date('Date')
+    bd_call_pitch_two = fields.Many2one('res.users', 'Business Developer')
+    comment_call_pitch_two = fields.Char('Comment')
 
-    # group 3rd call pitch
-    secretary_call_pitch3 = fields.Boolean('Secraty')
-    doctor_call_pitch3 = fields.Boolean('Doctor')
-    date_call_pitch3 = fields.Date('Date')
-    bd_call_pitch3 = fields.Many2one('res.users', 'Business Developer')
-    comment_call_pitch3 = fields.Char('Comment')
+    # group _threerd call pitch
+    secretary_call_pitch_three = fields.Boolean('Secraty')
+    doctor_call_pitch_three = fields.Boolean('Doctor')
+    date_call_pitch_three = fields.Date('Date')
+    bd_call_pitch_three = fields.Many2one('res.users', 'Business Developer')
+    comment_call_pitch_three = fields.Char('Comment')
 
-    # group 4th call pitch
-    secretary_call_pitch4 = fields.Boolean('Secraty')
-    doctor_call_pitch4 = fields.Boolean('Doctor')
-    date_call_pitch4 = fields.Date('Date')
-    bd_call_pitch4 = fields.Many2one('res.users', 'Business Developer')
-    comment_call_pitch4 = fields.Char('Comment')
+    # group _fourth call pitch
+    secretary_call_pitch_four = fields.Boolean('Secraty')
+    doctor_call_pitch_four = fields.Boolean('Doctor')
+    date_call_pitch_four = fields.Date('Date')
+    bd_call_pitch_four = fields.Many2one('res.users', 'Business Developer')
+    comment_call_pitch_four = fields.Char('Comment')
 
     # group call back
-    date_call_back1 = fields.Datetime('Date Time')
-    bd_call_back1 = fields.Many2one('res.users', 'Business Developer')
-    comment_call_back1 = fields.Char('Comment')
+    date_call_back_one = fields.Datetime('Date Time')
+    bd_call_back_one = fields.Many2one('res.users', 'Business Developer')
+    comment_call_back_one = fields.Char('Comment')
 
-    # group 2nd call back
-    date_call_back2 = fields.Datetime('Date Time')
-    bd_call_back2 = fields.Many2one('res.users', 'Business Developer')
-    comment_call_back2 = fields.Char('Comment')
+    # group _twond call back
+    date_call_back_two = fields.Datetime('Date Time')
+    bd_call_back_two = fields.Many2one('res.users', 'Business Developer')
+    comment_call_back_two = fields.Char('Comment')
 
-    # group 3rd call back
-    date_call_back3 = fields.Datetime('Date Time')
-    bd_call_back3 = fields.Many2one('res.users', 'Business Developer')
-    comment_call_back3 = fields.Char('Comment')
+    # group _threerd call back
+    date_call_back_three = fields.Datetime('Date Time')
+    bd_call_back_three = fields.Many2one('res.users', 'Business Developer')
+    comment_call_back_three = fields.Char('Comment')
 
     # group Email sent
     date_email_sent = fields.Date('Date')
@@ -170,20 +170,20 @@ class Partner(models.Model):
     bd_meeting_set = fields.Many2one('res.users', 'Business Developer')
     comment_meeting_set = fields.Char('Comment')
 
-    # group 1st meeting
-    date_meeting1 = fields.Date('Date')
-    bd_meeting1 = fields.Many2one('res.users', 'Business Developer')
-    comment_meeting1 = fields.Char('Comment')
+    # group _onest meeting
+    date_meeting_one = fields.Date('Date')
+    bd_meeting_one = fields.Many2one('res.users', 'Business Developer')
+    comment_meeting_one = fields.Char('Comment')
 
-    # group 2nd meeting
-    date_meeting2 = fields.Date('Date')
-    bd_meeting2 = fields.Many2one('res.users', 'Business Developer')
-    comment_meeting2 = fields.Char('Comment')
+    # group _twond meeting
+    date_meeting_two = fields.Date('Date')
+    bd_meeting_two = fields.Many2one('res.users', 'Business Developer')
+    comment_meeting_two = fields.Char('Comment')
 
-    # group 3rd meeting
-    date_meeting3 = fields.Date('Date')
-    bd_meeting3 = fields.Many2one('res.users', 'Business Developer')
-    comment_meeting3 = fields.Char('Comment')
+    # group _threerd meeting
+    date_meeting_three = fields.Date('Date')
+    bd_meeting_three = fields.Many2one('res.users', 'Business Developer')
+    comment_meeting_three = fields.Char('Comment')
 
     # group offer
     date_offer = fields.Date('Date')
@@ -201,7 +201,7 @@ class Partner(models.Model):
     comment_signed = fields.Char('Comment')
 
     # Tab Account Management
-    first_email = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], '1st email (activation)')
+    first_email = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], '_onest email (activation)')
     comment_first_email = fields.Char('Comment')
     #
     service_completed = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], 'Services completed')
@@ -347,15 +347,15 @@ class Partner(models.Model):
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Date (callback)'))
 
-        elif self.stage_id.id == 10 and self.x_studio_field_v6GZl == False:
+        elif self.stage_id.id == _one0 and self.x_studio_field_v6GZl == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Date (meeting set)'))
 
-        elif self.stage_id.id == 6 and self.x_studio_field_WP1ro == False:
+        elif self.stage_id.id == 6 and self.x_studio_field_WP_onero == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Date (pre_agreement) '))
 
-        elif self.stage_id.id in (8,16) and self.x_studio_field_g1zcu == False:
+        elif self.stage_id.id in (8,16) and self.x_studio_field_g_onezcu == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Specialisation'))
         elif self.stage_id.id in (8, 16) and self.x_studio_field_HnDpa == False:
@@ -374,11 +374,11 @@ class Partner(models.Model):
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Account manager'))
 
-        elif self.stage_id.id in (8,16) and self.x_studio_field_kYZ1u == False:
+        elif self.stage_id.id in (8,16) and self.x_studio_field_kYZ_oneu == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field CRM / VISIBILITY   '))
 
-        elif self.stage_id.id in (8,16) and self.x_studio_field_K3GQ1 == False:
+        elif self.stage_id.id in (8,16) and self.x_studio_field_K_threeGQ_one == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field User Manuel sent'))
 
@@ -417,7 +417,7 @@ class Partner(models.Model):
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Google backlink'))
 
-        elif self.stage_id.id in (8,16) and self.x_studio_field_Ca1DT == False:
+        elif self.stage_id.id in (8,16) and self.x_studio_field_Ca_oneDT == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Happy doctor '))
 
@@ -429,11 +429,11 @@ class Partner(models.Model):
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Availability'))
 
-        elif self.stage_id.id in (8,16) and self.x_studio_field_kc22X == False:
+        elif self.stage_id.id in (8,16) and self.x_studio_field_kc_two_twoX == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Agenda Synchro'))
 
-        elif self.stage_id.id in (8,16) and self.x_studio_field_16Eot == False:
+        elif self.stage_id.id in (8,16) and self.x_studio_field__one6Eot == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Expertise'))
 
@@ -464,7 +464,7 @@ class Partner(models.Model):
 
     # @api.onchange('stage_id')
     # def _onchange_stage_id(self):
-    #     print('------1')
+    #     print('------_one')
     #     values = self._onchange_stage_id_values(self.stage_id.id)
     #     self.update(values)
 

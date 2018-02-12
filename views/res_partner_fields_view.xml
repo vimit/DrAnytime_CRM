@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-<data>
         <record id="view_partner_fields_form_inherit" model="ir.ui.view">
             <field name="inherit_id" ref="base.view_partner_form" />
             <field name="model">res.partner</field>
@@ -24,79 +23,79 @@
                     <page name="prospection" string="Prospection Process">
                         <group>
                             <group string="Attempt of contact">
-                                  <field name="date_attempt_contact1" />
-                                  <field name="bd_attempt_contact1" />
+                                  <field name="date_attempt_contact_one" />
+                                  <field name="bd_attempt_contact_one" />
 
                             </group>
-                            <group string="2d Attempt of contact">
-                                <field name="date_attempt_contact2" />
-                                  <field name="bd_attempt_contact2" />
+                            <group string="2nd Attempt of contact">
+                                <field name="date_attempt_contact_two" />
+                                  <field name="bd_attempt_contact_two" />
 
                             </group>
                         </group>
                         <group>
-                            <group string="3d Attempt of contact">
-                                <field name="date_attempt_contact3" />
-                                <field name="bd_attempt_contact3" />
+                            <group string="3rd Attempt of contact">
+                                <field name="date_attempt_contact_three" />
+                                <field name="bd_attempt_contact_three" />
                             </group>
                             <group string="4th Attempt of contact">
-                                 <field name="date_attempt_contact4" />
-                                 <field name="bd_attempt_contact4" />
+                                 <field name="date_attempt_contact_four" />
+                                 <field name="bd_attempt_contact_four" />
 
                             </group>
                         </group>
                         <separator/>
                         <group>
                             <group string="Call Pitch">
-                                <field name="secretary_call_pitch1" />
-                                <field name="doctor_call_pitch1" />
-                                <field name="date_call_pitch1" />
-                                <field name="bd_call_pitch1" />
-                                <field name="comment_call_pitch1" />
+                                <field name="secretary_call_pitch_one" />
+                                <field name="doctor_call_pitch_one" />
+                                <field name="date_call_pitch_one" />
+                                <field name="bd_call_pitch_one" />
+                                <field name="comment_call_pitch_one" />
 
                             </group>
-                            <group string="2d Call Pitch">
+                            <group string="2nd Call Pitch">
 
-                                <field name="secretary_call_pitch2" />
-                                <field name="doctor_call_pitch2" />
-                                <field name="date_call_pitch2" />
-                                <field name="bd_call_pitch2" />
-                                <field name="comment_call_pitch2" />
+                                <field name="secretary_call_pitch_two" />
+                                <field name="doctor_call_pitch_two" />
+                                <field name="date_call_pitch_two" />
+                                <field name="bd_call_pitch_two" />
+                                <field name="comment_call_pitch_two" />
 
                             </group>
                         </group>
                         <group>
-                            <group string="3d Call Pitch">
-                                <field name="secretary_call_pitch3" />
-                                <field name="doctor_call_pitch3" />
-                                <field name="date_call_pitch3" />
-                                <field name="bd_call_pitch3" />
-                                <field name="comment_call_pitch3" />
+                            <group string="3rd Call Pitch">
+                                <field name="secretary_call_pitch_three" />
+                                <field name="doctor_call_pitch_three" />
+                                <field name="date_call_pitch_three" />
+                                <field name="bd_call_pitch_three" />
+                                <field name="comment_call_pitch_three" />
                             </group>
                             <group string="4th Call Pitch">
-                                <field name="secretary_call_pitch4" />
-                                <field name="doctor_call_pitch4" />
-                                <field name="date_call_pitch4" />
-                                <field name="bd_call_pitch4" />
-                                <field name="comment_call_pitch4" />
+                                <field name="secretary_call_pitch_four" />
+                                <field name="doctor_call_pitch_four" />
+                                <field name="date_call_pitch_four" />
+                                <field name="bd_call_pitch_four" />
+                                <field name="comment_call_pitch_four" />
                             </group>
                         </group>
                         <separator/>
                         <group>
                             <group string="Call back">
-                                <field name="date_call_back1" />
-                                <field name="bd_call_back1" />
-                                <field name="comment_call_back1" />
+                                <field name="date_call_back_one" />
+                                <field name="bd_call_back_one" />
+                                <field name="comment_call_back_one" />
                             </group>
-                            <group string="2d Call back">
-                                <field name="date_call_back2" />
-                                <field name="bd_call_back2" />
-                                <field name="comment_call_back2" />
+                            <group string="2nd Call back">
+                                <field name="date_call_back_two" />
+                                <field name="bd_call_back_two" />
+                                <field name="comment_call_back_two" />
                             </group>
-                            <group string="3d Call back">
-                                <field name="date_call_back3" />
-                                <field name="bd_call_back3" />
-                                <field name="comment_call_back3" />
+                            <group string="3rd Call back">
+                                <field name="date_call_back_three" />
+                                <field name="bd_call_back_three" />
+                                <field name="comment_call_back_three" />
                             </group>
                         </group>
                         <separator/>
@@ -134,19 +133,19 @@
                         <separator/>
                         <group>
                             <group string="Meeting">
-                                <field name="date_meeting1" />
-                                <field name="bd_meeting1" />
-                                <field name="comment_meeting1" />
+                                <field name="date_meeting_one" />
+                                <field name="bd_meeting_one" />
+                                <field name="comment_meeting_one" />
                             </group>
-                            <group string="2d Meeting">
-                                <field name="date_meeting2" />
-                                <field name="bd_meeting2" />
-                                <field name="comment_meeting2" />
+                            <group string="2nd Meeting">
+                                <field name="date_meeting_two" />
+                                <field name="bd_meeting_two" />
+                                <field name="comment_meeting_two" />
                             </group>
-                            <group string="3d Meeting">
-                                <field name="date_meeting3" />
-                                <field name="bd_meeting3" />
-                                <field name="comment_meeting3" />
+                            <group string="3rd Meeting">
+                                <field name="date_meeting_three" />
+                                <field name="bd_meeting_three" />
+                                <field name="comment_meeting_three" />
                             </group>
                         </group>
                         <separator/>
@@ -286,5 +285,4 @@
 
             </field>
         </record>
-</data>
 </odoo>
