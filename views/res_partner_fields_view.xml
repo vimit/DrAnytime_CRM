@@ -6,20 +6,6 @@
             <field type="xml" name="arch">
                  <xpath expr="//form[1]/sheet[1]/group[1]" position="after">
                      <group>
-                         <group>
-                              <field name="inami" />
-                              <field name="subscription_type" />
-                              <field name="business_developer_id" />
-                         </group>
-                         <group>
-                             <field name="specialization"  widget="many2many_tags"  />
-                              <field name="personnality" />
-                              <field name="happiness"  widget="priority"  />
-                         </group>
-                     </group>
-                 </xpath>
-                <xpath expr="//form[1]/sheet[1]/group[1]" position="replace">
-                <group>
                     <group>
                             <field name="function" placeholder="e.g. Sales Director" attrs="{'invisible': [('is_company','=', True)]}"/>
                             <field name="phone" widget="phone"/>
@@ -49,6 +35,23 @@
                         </group>
 
                     </group>
+                     <group>
+                         <group>
+                              <field name="inami" />
+                              <field name="subscription_type" />
+                              <field name="business_developer_id" />
+                         </group>
+                         <group>
+                             <field name="specialization"  widget="many2many_tags"  />
+                              <field name="personnality" />
+                              <field name="happiness"  widget="priority"  />
+                         </group>
+                     </group>
+
+
+               </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]" position="attributes">
+                    <attribute name="invisible">1</attribute>
                 </xpath>
 
                  <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]" position="before">
