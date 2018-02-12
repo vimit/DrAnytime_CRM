@@ -43,7 +43,7 @@ class Partner(models.Model):
 
     business_developer_id = fields.Many2one('res.users', 'Business Developer')
 
-    personnality = fields.Selection(	[['analytical', 'Analytical'], ['driving', 'Driving'], ['amiable', 'Amiable'], ['expressive', 'Expressive']],'Doctor personnality')
+    personnality = fields.Selection([('analytical', 'Analytical'),('driving', 'Driving'),('amiable', 'Amiable'),('expressive', 'Expressive')], string='Doctor personnality')
 
     happiness = fields.Selection([('0','0'),
                                   ('1', '1'),
