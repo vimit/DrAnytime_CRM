@@ -49,6 +49,9 @@ class ContactActivityReport(models.Model):
         ('overdue', 'Overdue'),
         ('today', 'Today'),
         ('planned', 'Planned')], 'State')
+    category = fields.Selection([
+        ('default', 'Other')], default='default',
+        string='Category')
 
 
     def _select(self):
@@ -60,6 +63,7 @@ class ContactActivityReport(models.Model):
                 m.date_deadline,
                 m.summary,
                 m.state,
+                t.category,
                 l.id as partner_id,
                 l.create_uid as user_id,
                 l.country_id,
@@ -80,6 +84,7 @@ class ContactActivityReport(models.Model):
     def _join(self):
         return """
             JOIN res_partner AS l ON m.res_id = l.id
+            JOIN mail_activity_type AS t ON m.activity_type_id = t.id
         """
 
     def _where(self):
