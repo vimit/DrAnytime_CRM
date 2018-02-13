@@ -55,6 +55,27 @@ class ReasonNotInterested(models.Model):
     name = fields.Char('Name')
     description = fields.Char('Description')
 
+class Skills(models.Model):
+    _name = 'partner.skills'
+    name = fields.Char('Name')
+    description = fields.Char('Description')
+class Services(models.Model):
+    _name = 'partner.services'
+    name = fields.Char('Name')
+    description = fields.Char('Description')
+class Expertise(models.Model):
+    _name = 'partner.expertise'
+    name = fields.Char('Name')
+    description = fields.Char('Description')
+class Studies(models.Model):
+    _name = 'partner.studies'
+    name = fields.Char('Name')
+    description = fields.Char('Description')
+class Experience(models.Model):
+    _name = 'partner.experience'
+    name = fields.Char('Name')
+    description = fields.Char('Description')
+
 class Partner(models.Model):
 
     _inherit = 'res.partner'
@@ -258,8 +279,24 @@ class Partner(models.Model):
     #
     business_card = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], 'Business cards')
     comment_business_card = fields.Char('Comment')
-
-
+    ## tab DA Profile
+    skills = fields.Many2many('partner.skills', 'partner_skills_rel', 'partner_id', 'skills_id',
+                                      string='Skills')
+    services = fields.Many2many('partner.services', 'partner_services_rel', 'partner_id', 'services_id',
+                              string='Services')
+    availability = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], 'Availability')
+    expertise = fields.Many2many('partner.expertise', 'partner_expertise_rel', 'partner_id', 'expertise_id',
+                                string='Expertise')
+    facebook_link = fields.Char('Facebook')
+    linkedin_link = fields.Char('LinkedIn')
+    message_patient = fields.Text('Message to patient')
+    studies = fields.Many2many('partner.studies', 'partner_studies_rel', 'partner_id', 'studies_id',
+                                 string='Studies')
+    experience = fields.Many2many('partner.experience', 'partner_experience_rel', 'partner_id', 'experience_id',
+                               string='Professional experiences')
+    conference_participation = fields.Char('Participation in conferences')
+    asociation_member = fields.Char('Member to associations')
+    academic_pub = fields.Char('Academic research / Publications')
 
     def _default_stage_id(self):
         return self.env['crm.stage'].search([], limit=1).id
@@ -331,7 +368,7 @@ class Partner(models.Model):
             return {}
         stage = self.env['crm.stage'].browse(stage_id)
 
-        if self.stage_id.id == 28 and self.date_attempt_contact_one == False:
+        if self.stage_id.id == 2 and self.date_attempt_contact_one == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Date (attempt of contact) '))
 
@@ -396,8 +433,6 @@ class Partner(models.Model):
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Google profile'))
 
-
-
         elif self.stage_id.id in (8,16) and self.happiness == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Happy doctor '))
@@ -406,42 +441,45 @@ class Partner(models.Model):
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Personality'))
 
-        elif self.stage_id.id in (8,16) and self.x_studio_field_dBDfP == False:
+        ######
+
+        elif self.stage_id.id in (8,16) and self.availability == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Availability'))
-
-        elif self.stage_id.id in (8,16) and self.x_studio_field_kc22X == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Agenda Synchro'))
-
-        elif self.stage_id.id in (8,16) and self.x_studio_field_16Eot == False:
+        #
+        # elif self.stage_id.id in (8,16) and self.x_studio_field_kc22X == False:
+        #     raise exceptions.Warning(
+        #         _('To move to this step you first need to fill field Agenda Synchro'))
+        #
+        elif self.stage_id.id in (8,16) and self.expertise == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Expertise'))
+        #
+        # elif self.stage_id.id in (8,16) and self.x_studio_field_xVtps == False:
+        #     raise exceptions.Warning(
+        #         _('To move to this step you first need to fill field Current CRM'))
+        # elif self.stage_id.id in (8,16) and self.x_studio_field_puqZa == False:
+        #     raise exceptions.Warning(
+        #         _('To move to this step you first need to fill field Competitors software'))
+        # elif self.stage_id.id in (8,16) and self.x_studio_field_6G6rb == False:
+        #     raise exceptions.Warning(
+        #         _('To move to this step you first need to fill field Google backlink'))
+        # elif self.stage_id.id in (8,16) and self.x_studio_field_K3GQ1 == False:
+        #     raise exceptions.Warning(
+        #         _('To move to this step you first need to fill field User Manuel sent'))
+        #
+        # elif self.stage_id.id in (8,16) and self.x_studio_field_6bUX9 == False:
+        #     raise exceptions.Warning(
+        #         _('To move to this step you first need to fill field URL BACKEND'))
+        # elif self.stage_id.id in (8, 16) and self.x_studio_field_ZilCW == False:
+        #     raise exceptions.Warning(
+        #         _('To move to this step you first need to fill field Account manager'))
 
-        elif self.stage_id.id in (8,16) and self.x_studio_field_xVtps == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Current CRM'))
-        elif self.stage_id.id in (8,16) and self.x_studio_field_puqZa == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Competitors software'))
-        elif self.stage_id.id in (8,16) and self.x_studio_field_6G6rb == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Google backlink'))
-        elif self.stage_id.id in (8,16) and self.x_studio_field_K3GQ1 == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field User Manuel sent'))
-
-        elif self.stage_id.id in (8,16) and self.x_studio_field_6bUX9 == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field URL BACKEND'))
-        elif self.stage_id.id in (8, 16) and self.x_studio_field_ZilCW == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Account manager'))
-        elif self.stage_id.id in (8, 16) and self.x_studio_field_HnDpa == False:
+        elif self.stage_id.id in (8, 16) and self.skills == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Skills'))
 
-        elif self.stage_id.id in (8, 16) and self.x_studio_field_EBPqm == False:
+        elif self.stage_id.id in (8, 16) and self.services == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Services'))
 

@@ -1,4 +1,9 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_specialization_root,partner.specialization.root,DrAnytime_CRM.model_partner_specialization,,1,1,1,1
-access_crm_visibility_root,crm.visibility.root,DrAnytime_CRM.model_crm_visibility,,1,1,1,1
-access_reason_notinterested_root,reason.notinterested.root,DrAnytime_CRM.model_reason_notinterested,,1,1,1,1
+access_specialization_root,partner.specialization.root,DrAnytime_CRM.model_partner_specialization,sales_team.group_sale_manager,1,1,1,1
+access_crm_visibility_root,crm.visibility.root,DrAnytime_CRM.model_crm_visibility,sales_team.group_sale_manager,1,1,1,1
+access_reason_notinterested_root,reason.notinterested.root,DrAnytime_CRM.model_reason_notinterested,sales_team.group_sale_manager,1,1,1,1
+access_skills_root,partner.skills.root,DrAnytime_CRM.model_partner_skills,sales_team.group_sale_manager,1,1,1,1
+access_services_root,partner.services.root,DrAnytime_CRM.model_partner_services,sales_team.group_sale_manager,1,1,1,1
+access_expertise_root,partner.expertise.root,DrAnytime_CRM.model_partner_expertise,sales_team.group_sale_manager,1,1,1,1
+access_studies_root,partner.studies.root,DrAnytime_CRM.model_partner_studies,sales_team.group_sale_manager,1,1,1,1
+access_experience_root,partner.experience.root,DrAnytime_CRM.model_partner_experience,sales_team.group_sale_manager,1,1,1,1

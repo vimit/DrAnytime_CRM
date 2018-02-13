@@ -159,7 +159,7 @@
                                 <field name="date_interested" />
                                 <field name="bd_interested" />
                                 <field name="comment_interested" />
-                                <field name="crm_visibility"  widget="many2many_tags" />
+                                <field name="crm_visibility"  widget="many2many_checkboxes" />
                             </group>
 
                             <group string="Not Interested"  attrs="{'invisible': [('stage_sequence', '&lt;',5)]}">
@@ -343,6 +343,26 @@
                             </group>
                         </group>
                     </page>
+                     <page name="da_profile" string="DA Profile">
+                         <group>
+                             <group>
+                                 <field name="academic_pub" />
+                                 <field name="asociation_member" />
+                                 <field name="conference_participation" />
+                                 <field name="experience"  widget="many2many_tags"/>
+                                 <field name="studies"  widget="many2many_tags"/>
+                                 <field name="message_patient" />
+                             </group>
+                             <group>
+                                 <field name="linkedin_link" />
+                                 <field name="facebook_link" />
+                                 <field name="expertise"  widget="many2many_tags"/>
+                                 <field name="availability" />
+                                 <field name="services"  widget="many2many_tags"/>
+                                 <field name="skills"  widget="many2many_tags"/>
+                             </group>
+                         </group>
+                     </page>
                  </xpath>
 
             </field>

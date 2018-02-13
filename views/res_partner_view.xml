@@ -1,125 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <odoo>
-<record id="view_partner_form_inherit" model="ir.ui.view">
-        <field name="inherit_id" ref="base.view_partner_form" />
+    <record id="view_partner_form_inherit" model="ir.ui.view">
+        <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="model">res.partner</field>
         <field type="xml" name="arch">
-        <xpath expr="//form[1]/sheet[1]" position="before">
-            <header>
-               <!-- <field name="stage_id" widget="statusbar" clickable="True"  /> -->
-                <!-- <field name="stage_id" widget="statusbar" clickable="True" options="{'fold_field': 'fold'}"  attrs="{'readonly': ['|','|','|','|','&amp;',('stage_id', '=',2),('x_studio_field_WDmu0', '=',False),'&amp;',('stage_id', '=',3),('x_studio_field_eLcYs', '=',False),'&amp;',('stage_id', '=',9),('x_studio_field_5CWT8', '=',False),'&amp;',('stage_id', '=',10),('x_studio_field_v6GZl', '=',False),'&amp;',('stage_id', '=',6),('x_studio_field_WP1ro', '=',False),'&amp;',('stage_id', 'in',(8,16)),'|','|','|','|','|','|','|','|','|','|','|','|','|','|','|','|','|','|','|','|','|','|','|','|','|','|','|',('x_studio_field_g1zcu','=',False),('x_studio_field_HnDpa','=',False),('x_studio_field_EBPqm','=',False),('x_studio_field_EfIaw','=',False),('x_studio_field_ZilCW','=',False),('x_studio_field_kYZ1u','=',False),('x_studio_field_K3GQ1','=',False),('x_studio_field_6bUX9','=',False),('x_studio_field_cBgxC','=',False),('x_studio_field_GDsEM','=',False),('x_studio_field_igtTt','=',False),('x_studio_field_iYdhZ','=',False),('x_studio_field_RYaI5','=',False),('x_studio_field_kQZyr','=',False),('x_studio_field_mtzLz','=',False),('x_studio_field_zjMCR','=',False),('x_studio_field_c3DX2','=',False),('x_studio_field_6G6rb','=',False),('x_studio_field_Ca1DT','=',False),('x_studio_field_233D3','=',False),('x_studio_field_bIOcq','=',False),('x_studio_field_3X7xo','=',False),('x_studio_field_dBDfP','=',False),('x_studio_field_kc22X','=',False),('x_studio_field_16Eot','=',False),('x_studio_field_xVtps','=',False),('x_studio_field_puqZa','=',False),('x_studio_field_m3ZmH','=',False) ]}"/>
--->
-                 <field name="stage_id" widget="statusbar" clickable="True" options="{'fold_field': 'fold'}" />
-
-
-            </header>
-        </xpath>
+            <xpath expr="//form[1]/sheet[1]" position="before">
+                <header>
+                    <field name="stage_id" widget="statusbar" clickable="True" options="{'fold_field': 'fold'}"/>
+                </header>
+            </xpath>
             <xpath expr="//form[1]/sheet[1]/group[1]" position="after">
                 <field name="state_contact" invisible="1"/>
-                 <field name="state_target" invisible="1"/>
-                 <field name="state_account" invisible="1"/>
-                <field name="stage_sequence"  invisible="1"/>
+                <field name="state_target" invisible="1"/>
+                <field name="state_account" invisible="1"/>
+                <field name="stage_sequence" invisible="1"/>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/div[1]/field[@name='phone']" position="attributes">
+                <attribute name="attrs">{"required": ["|",["stage_id","=",8],["stage_id","=",16]]}</attribute>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='email']" position="attributes">
+                <attribute name="attrs">{"required": ["&amp;",["user_ids","!=",[]],"|",["stage_id","=",8],["stage_id","=",16]]}</attribute>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/group[1]/group[1]/div[1]/field[@name='street']" position="attributes">
+                <attribute name="attrs">{"readonly": [["type","=","contact"],["parent_id","!=",False]]}</attribute>
+                <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/group[1]/group[1]/div[1]/field[@name='city']" position="attributes">
+                <attribute name="attrs">{"readonly": [["type","=","contact"],["parent_id","!=",False]]}</attribute>
+                <attribute name="required">1</attribute>
             </xpath>
 
-             <field name="lang" position="after">
+            <field name="lang" position="after">
                 <field name="business_developer_id" attrs="{'required': ['|',['stage_id','=',8],['stage_id','=',16]]}"/>
-             </field>
+            </field>
 
             <page name="sales_purchases" position="attributes">
                 <attribute name="invisible">1</attribute>
             </page>
-    </field>
-</record>
+            <!--<xpath expr="//button[hasclass('o_res_partner_tip_opp')]" position="attributes">-->
+            <!--<attribute name="invisible">1</attribute>-->
+            <!--</xpath>-->
+        </field>
+    </record>
 
     <record id="view_res_partner_filter_inherit" model="ir.ui.view">
-        <field name="inherit_id" ref="base.view_res_partner_filter" />
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
         <field name="model">res.partner</field>
         <field type="xml" name="arch">
             <group name="group_by" position="inside">
-            <filter name="stage" string="Stage" domain="[]" context="{'group_by' : 'stage_id'}"/>
-            <filter name="stage_contact" string="Contact Stage" domain="[]" context="{'group_by' : 'state_contact'}"/>
-            <filter name="stage_target" string="Target Stage" domain="[]" context="{'group_by' : 'state_target'}"/>
-            <filter name="stage_account" string="Account Stage" domain="[]" context="{'group_by' : 'state_account'}"/>
+                <filter name="stage" string="Stage" domain="[]" context="{'group_by' : 'stage_id'}"/>
+                <filter name="stage_contact" string="Contact Stage" domain="[]"
+                        context="{'group_by' : 'state_contact'}"/>
+                <filter name="stage_target" string="Target Stage" domain="[]" context="{'group_by' : 'state_target'}"/>
+                <filter name="stage_account" string="Account Stage" domain="[]"
+                        context="{'group_by' : 'state_account'}"/>
             </group>
-    </field>
-</record>
+        </field>
+    </record>
 
 
     <!-- Contact Kanban view -->
-        <record model="ir.ui.view" id="res_partner_contact_kanban_view">
-            <field name="name">res.partner.kanban</field>
-            <field name="model">res.partner</field>
-            <field name="arch" type="xml">
-                <kanban default_group_by="state_contact" class="o_res_partner_kanban o_kanban_small_column o_opportunity_kanban" >
-                    <field name="state_contact" options="{&quot;group_by_tooltip&quot;: {&quot;requirements&quot;: &quot;Description&quot;, &quot;legend_priority&quot;: &quot;Use of stars&quot;}}"  />
+    <record model="ir.ui.view" id="res_partner_contact_kanban_view">
+        <field name="name">res.partner.kanban</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state_contact"
+                    class="o_res_partner_kanban o_kanban_small_column o_opportunity_kanban">
+                <field name="state_contact"
+                       options="{&quot;group_by_tooltip&quot;: {&quot;requirements&quot;: &quot;Description&quot;, &quot;legend_priority&quot;: &quot;Use of stars&quot;}}"/>
 
-                     <field name="stage_sequence"  invisible="1"/>
-                    <field name="id"/>
-                    <field name="color"/>
-                    <field name="display_name"/>
-                    <field name="title"/>
-                    <field name="email"/>
-                    <field name="parent_id"/>
-                    <field name="is_company"/>
-                    <field name="function"/>
-                    <field name="phone"/>
-                    <field name="street"/>
-                    <field name="street2"/>
-                    <field name="zip"/>
-                    <field name="city"/>
-                    <field name="country_id"/>
-                    <field name="mobile"/>
-                    <field name="state_id"/>
-                    <field name="category_id"/>
-                    <field name="image_small"/>
-                    <field name="type"/>
-                    <templates>
-                        <t t-name="kanban-box">
-                            <div class="oe_kanban_global_click_edit o_res_partner_kanban">
-                                <div class="oe_kanban_details">
-                                    <strong class="o_kanban_record_title oe_partner_heading"><field name="display_name"/></strong>
-                                    <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
-                                    <ul>
-                                        <li t-if="!record.parent_id.raw_value and record.specialization.raw_value"><field name="specialization"/></li>
-                                        <li t-if="record.phone.raw_value"><field name="phone"/></li>
-                                    </ul>
-                                    <div class="oe_kanban_partner_links"/>
-                                </div>
+                <field name="stage_sequence" invisible="1"/>
+                <field name="id"/>
+                <field name="color"/>
+                <field name="display_name"/>
+                <field name="title"/>
+                <field name="email"/>
+                <field name="parent_id"/>
+                <field name="is_company"/>
+                <field name="function"/>
+                <field name="phone"/>
+                <field name="street"/>
+                <field name="street2"/>
+                <field name="zip"/>
+                <field name="city"/>
+                <field name="country_id"/>
+                <field name="mobile"/>
+                <field name="state_id"/>
+                <field name="category_id"/>
+                <field name="image_small"/>
+                <field name="type"/>
+                <templates>
+                    <t t-name="kanban-box" color="color">
+                        <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click_edit">
+                            <div class="o_dropdown_kanban dropdown">
+                                <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">
+                                    <span class="fa fa-bars fa-lg"/>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <t t-if="widget.editable">
+                                        <li>
+                                            <a type="delete">Delete</a>
+                                            <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                        </li>
+                                    </t>
+                                    <t t-if="widget.deletable">
+                                        <li/>
+                                    </t>
+                                    <li/>
+                                </ul>
                             </div>
-                        </t>
-                    </templates>
-                </kanban>
-            </field>
-        </record>
+                            <div class="oe_kanban_details">
+                                <strong class="o_kanban_record_title oe_partner_heading">
+                                    <field name="display_name"/>
+                                </strong>
+                                <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
+                                <ul>
+                                    <li t-if="!record.parent_id.raw_value and record.specialization.raw_value">
+                                        <field name="specialization"/>
+                                    </li>
+                                    <li t-if="record.phone.raw_value">
+                                        <field name="phone"/>
+                                    </li>
+                                </ul>
+                                <div class="oe_kanban_partner_links"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
 
     <!-- TARGET Action view -->
 
     <record id="action_partner_contact_form" model="ir.actions.act_window">
-            <field name="name">TARGET</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">res.partner</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">kanban,tree,form</field>
-            <field name="domain">[('stage_sequence', 'in', (0,1,2,3,4,5,6))]</field>
-            <field name="context">{"search_default_customer":1}</field>
-            <field name="search_view_id" ref="base.view_res_partner_filter"/>
-            <field name="help" type="html">
-              <p class="oe_view_nocontent_create">
+        <field name="name">TARGET</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[('stage_sequence', 'in', (0,1,2,3,4,5,6))]</field>
+        <field name="context">{"search_default_customer":1}</field>
+        <field name="search_view_id" ref="base.view_res_partner_filter"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
                 Click to add a contact in your address book.
-              </p><p>
+            </p>
+            <p>
 
-              </p>
-            </field>
-        </record>
-        <record id="action_partner_contact_kanban_view2" model="ir.actions.act_window.view">
-            <field eval="2" name="sequence"/>
-            <field name="view_mode">kanban</field>
-            <field name="view_id" ref="res_partner_contact_kanban_view"/>
-            <field name="act_window_id" ref="action_partner_contact_form"/>
-        </record>
+            </p>
+        </field>
+    </record>
+    <record id="action_partner_contact_kanban_view2" model="ir.actions.act_window.view">
+        <field eval="2" name="sequence"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="res_partner_contact_kanban_view"/>
+        <field name="act_window_id" ref="action_partner_contact_form"/>
+    </record>
 
-<menuitem
+    <menuitem
             id="menu_workflow"
             name="Workflow"
             parent="crm.crm_menu_root"
@@ -134,78 +174,104 @@
 
     <!-- CRM -->
 
- <!-- CRM Kanban view -->
-        <record model="ir.ui.view" id="res_partner_target_kanban_view">
-            <field name="name">res.partner.kanban</field>
-            <field name="model">res.partner</field>
-            <field name="arch" type="xml">
-                <kanban default_group_by="state_target" class="o_res_partner_kanban o_kanban_small_column o_opportunity_kanban" >
-                    <field name="state_target" options="{&quot;group_by_tooltip&quot;: {&quot;requirements&quot;: &quot;Description&quot;, &quot;legend_priority&quot;: &quot;Use of stars&quot;}}" />
+    <!-- CRM Kanban view -->
+    <record model="ir.ui.view" id="res_partner_target_kanban_view">
+        <field name="name">res.partner.kanban</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state_target"
+                    class="o_res_partner_kanban o_kanban_small_column o_opportunity_kanban">
+                <field name="state_target"
+                       options="{&quot;group_by_tooltip&quot;: {&quot;requirements&quot;: &quot;Description&quot;, &quot;legend_priority&quot;: &quot;Use of stars&quot;}}"/>
 
-                <field name="stage_sequence"  invisible="1"/>
-                    <field name="id"/>
-                    <field name="color"/>
-                    <field name="display_name"/>
-                    <field name="title"/>
-                    <field name="email"/>
-                    <field name="parent_id"/>
-                    <field name="is_company"/>
-                    <field name="function"/>
-                    <field name="phone"/>
-                    <field name="street"/>
-                    <field name="street2"/>
-                    <field name="zip"/>
-                    <field name="city"/>
-                    <field name="country_id"/>
-                    <field name="mobile"/>
-                    <field name="state_id"/>
-                    <field name="category_id"/>
-                    <field name="image_small"/>
-                    <field name="type"/>
-                    <templates>
-                        <t t-name="kanban-box">
-                            <div class="oe_kanban_global_click_edit o_res_partner_kanban">
-                                <div class="oe_kanban_details">
-                                    <strong class="o_kanban_record_title oe_partner_heading"><field name="display_name"/></strong>
-                                    <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
-                                    <ul>
-                                        <li t-if="!record.parent_id.raw_value and record.specialization.raw_value"><field name="specialization"/></li>
-                                        <li t-if="record.phone.raw_value"><field name="phone"/></li>
-                                    </ul>
-                                    <div class="oe_kanban_partner_links"/>
-                                </div>
+                <field name="stage_sequence" invisible="1"/>
+                <field name="id"/>
+                <field name="color"/>
+                <field name="display_name"/>
+                <field name="title"/>
+                <field name="email"/>
+                <field name="parent_id"/>
+                <field name="is_company"/>
+                <field name="function"/>
+                <field name="phone"/>
+                <field name="street"/>
+                <field name="street2"/>
+                <field name="zip"/>
+                <field name="city"/>
+                <field name="country_id"/>
+                <field name="mobile"/>
+                <field name="state_id"/>
+                <field name="category_id"/>
+                <field name="image_small"/>
+                <field name="type"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click_edit">
+                            <div class="o_dropdown_kanban dropdown">
+                                <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">
+                                    <span class="fa fa-bars fa-lg"/>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <t t-if="widget.editable">
+                                        <li>
+                                            <a type="delete">Delete</a>
+                                            <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                        </li>
+                                    </t>
+                                    <t t-if="widget.deletable">
+                                        <li/>
+                                    </t>
+                                    <li/>
+                                </ul>
                             </div>
-                        </t>
-                    </templates>
-                </kanban>
-            </field>
-        </record>
+                            <div class="oe_kanban_details">
+                                <strong class="o_kanban_record_title oe_partner_heading">
+                                    <field name="display_name"/>
+                                </strong>
+                                <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
+                                <ul>
+                                    <li t-if="!record.parent_id.raw_value and record.specialization.raw_value">
+                                        <field name="specialization"/>
+                                    </li>
+                                    <li t-if="record.phone.raw_value">
+                                        <field name="phone"/>
+                                    </li>
+                                </ul>
+                                <div class="oe_kanban_partner_links"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
 
     <!-- CRM Action view -->
 
     <record id="action_partner_target_form" model="ir.actions.act_window">
-            <field name="name">CRM</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">res.partner</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">kanban,tree,form</field>
-            <field name="domain">[('stage_sequence', 'in', (6,7,8,9,10,11,12,13,14))]</field>
-            <field name="context">{"search_default_customer":1}</field>
-            <field name="search_view_id" ref="base.view_res_partner_filter"/>
-            <field name="help" type="html">
-              <p class="oe_view_nocontent_create">
+        <field name="name">CRM</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[('stage_sequence', 'in', (6,7,8,9,10,11,12,13,14))]</field>
+        <field name="context">{"search_default_customer":1}</field>
+        <field name="search_view_id" ref="base.view_res_partner_filter"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
                 Click to add a contact in your address book.
-              </p><p>
+            </p>
+            <p>
 
-              </p>
-            </field>
-        </record>
-        <record id="action_partner_target_kanban_view2" model="ir.actions.act_window.view">
-            <field eval="2" name="sequence"/>
-            <field name="view_mode">kanban</field>
-            <field name="view_id" ref="res_partner_target_kanban_view"/>
-            <field name="act_window_id" ref="action_partner_target_form"/>
-        </record>
+            </p>
+        </field>
+    </record>
+    <record id="action_partner_target_kanban_view2" model="ir.actions.act_window.view">
+        <field eval="2" name="sequence"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="res_partner_target_kanban_view"/>
+        <field name="act_window_id" ref="action_partner_target_form"/>
+    </record>
 
 
     <menuitem
@@ -217,78 +283,104 @@
 
     <!-- ACCOUNT MANAGEMENT -->
 
- <!-- ACCOUNT MANAGEMENT Kanban view -->
-        <record model="ir.ui.view" id="res_partner_account_kanban_view">
-            <field name="name">res.partner.kanban</field>
-            <field name="model">res.partner</field>
-            <field name="arch" type="xml">
-                <kanban default_group_by="state_account" class="o_res_partner_kanban o_kanban_small_column o_opportunity_kanban" >
-                    <field name="state_account" options='{"group_by_tooltip": {"requirements": "Description", "legend_priority": "Use of stars"}}'/>
+    <!-- ACCOUNT MANAGEMENT Kanban view -->
+    <record model="ir.ui.view" id="res_partner_account_kanban_view">
+        <field name="name">res.partner.kanban</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state_account"
+                    class="o_res_partner_kanban o_kanban_small_column o_opportunity_kanban">
+                <field name="state_account"
+                       options='{"group_by_tooltip": {"requirements": "Description", "legend_priority": "Use of stars"}}'/>
 
-                <field name="stage_sequence"  invisible="1"/>
-                    <field name="id"/>
-                    <field name="color"/>
-                    <field name="display_name"/>
-                    <field name="title"/>
-                    <field name="email"/>
-                    <field name="parent_id"/>
-                    <field name="is_company"/>
-                    <field name="function"/>
-                    <field name="phone"/>
-                    <field name="street"/>
-                    <field name="street2"/>
-                    <field name="zip"/>
-                    <field name="city"/>
-                    <field name="country_id"/>
-                    <field name="mobile"/>
-                    <field name="state_id"/>
-                    <field name="category_id"/>
-                    <field name="image_small"/>
-                    <field name="type"/>
-                    <templates>
-                        <t t-name="kanban-box">
-                            <div class="oe_kanban_global_click_edit o_res_partner_kanban">
-                                <div class="oe_kanban_details">
-                                    <strong class="o_kanban_record_title oe_partner_heading"><field name="display_name"/></strong>
-                                    <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
-                                    <ul>
-                                        <li t-if="!record.parent_id.raw_value and record.specialization.raw_value"><field name="specialization"/></li>
-                                        <li t-if="record.phone.raw_value"><field name="phone"/></li>
-                                    </ul>
-                                    <div class="oe_kanban_partner_links"/>
-                                </div>
+                <field name="stage_sequence" invisible="1"/>
+                <field name="id"/>
+                <field name="color"/>
+                <field name="display_name"/>
+                <field name="title"/>
+                <field name="email"/>
+                <field name="parent_id"/>
+                <field name="is_company"/>
+                <field name="function"/>
+                <field name="phone"/>
+                <field name="street"/>
+                <field name="street2"/>
+                <field name="zip"/>
+                <field name="city"/>
+                <field name="country_id"/>
+                <field name="mobile"/>
+                <field name="state_id"/>
+                <field name="category_id"/>
+                <field name="image_small"/>
+                <field name="type"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click_edit">
+                            <div class="o_dropdown_kanban dropdown">
+                                <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">
+                                    <span class="fa fa-bars fa-lg"/>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <t t-if="widget.editable">
+                                        <li>
+                                            <a type="delete">Delete</a>
+                                            <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                        </li>
+                                    </t>
+                                    <t t-if="widget.deletable">
+                                        <li/>
+                                    </t>
+                                    <li/>
+                                </ul>
                             </div>
-                        </t>
-                    </templates>
-                </kanban>
-            </field>
-        </record>
+                            <div class="oe_kanban_details">
+                                <strong class="o_kanban_record_title oe_partner_heading">
+                                    <field name="display_name"/>
+                                </strong>
+                                <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
+                                <ul>
+                                    <li t-if="!record.parent_id.raw_value and record.specialization.raw_value">
+                                        <field name="specialization"/>
+                                    </li>
+                                    <li t-if="record.phone.raw_value">
+                                        <field name="phone"/>
+                                    </li>
+                                </ul>
+                                <div class="oe_kanban_partner_links"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
 
     <!-- ACCOUNT MANAGEMENT Action view -->
 
     <record id="action_partner_account_form" model="ir.actions.act_window">
-            <field name="name">ACCOUNT MANAGEMENT</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">res.partner</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">kanban,tree,form</field>
-            <field name="domain">[('stage_sequence','in',(14,15,16))]</field>
-            <field name="context">{"search_default_customer":1}</field>
-            <field name="search_view_id" ref="base.view_res_partner_filter"/>
-            <field name="help" type="html">
-              <p class="oe_view_nocontent_create">
+        <field name="name">ACCOUNT MANAGEMENT</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[('stage_sequence','in',(14,15,16))]</field>
+        <field name="context">{"search_default_customer":1}</field>
+        <field name="search_view_id" ref="base.view_res_partner_filter"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
                 Click to add a contact in your address book.
-              </p><p>
+            </p>
+            <p>
 
-              </p>
-            </field>
-        </record>
-        <record id="action_partner_account_kanban_view2" model="ir.actions.act_window.view">
-            <field eval="2" name="sequence"/>
-            <field name="view_mode">kanban</field>
-            <field name="view_id" ref="res_partner_account_kanban_view"/>
-            <field name="act_window_id" ref="action_partner_account_form"/>
-        </record>
+            </p>
+        </field>
+    </record>
+    <record id="action_partner_account_kanban_view2" model="ir.actions.act_window.view">
+        <field eval="2" name="sequence"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="res_partner_account_kanban_view"/>
+        <field name="act_window_id" ref="action_partner_account_form"/>
+    </record>
 
 
     <menuitem
@@ -297,7 +389,6 @@
             parent="menu_workflow"
             sequence="3"
             action="action_partner_account_form"/>
-
 
 
 </odoo>
