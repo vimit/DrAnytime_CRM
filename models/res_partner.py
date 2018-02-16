@@ -290,7 +290,6 @@ class Partner(models.Model):
     @api.onchange('stage_id')
     @api.multi
     def onchange_contact_stage_id(self):
-        # self.state_contact = self.stage_id.id
         self.state_target = self.stage_id.id
         self.state_account = self.stage_id.id
 
@@ -311,6 +310,7 @@ class Partner(models.Model):
 
     state_account = fields.Many2one('crm.stage',  string='Status',
          group_expand='_read_group_account_states',  track_visibility=False)
+    state_contact = fields.Many2one('crm.stage', string='Status',track_visibility=False)
 
     stage_sequence = fields.Integer(related='stage_id.sequence', string='Status Sequence', store=True, readonly=True)
 
