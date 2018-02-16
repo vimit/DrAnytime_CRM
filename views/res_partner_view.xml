@@ -11,7 +11,6 @@
                 </header>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/group[1]" position="after">
-                <field name="state_contact" invisible="1"/>
                 <field name="state_target" invisible="1"/>
                 <field name="state_account" invisible="1"/>
                 <field name="stage_sequence" invisible="1"/>
@@ -38,9 +37,6 @@
             <page name="sales_purchases" position="attributes">
                 <attribute name="invisible">1</attribute>
             </page>
-            <!--<xpath expr="//button[hasclass('o_res_partner_tip_opp')]" position="attributes">-->
-            <!--<attribute name="invisible">1</attribute>-->
-            <!--</xpath>-->
         </field>
     </record>
 
@@ -50,8 +46,6 @@
         <field type="xml" name="arch">
             <group name="group_by" position="inside">
                 <filter name="stage" string="Stage" domain="[]" context="{'group_by' : 'stage_id'}"/>
-                <filter name="stage_contact" string="Contact Stage" domain="[]"
-                        context="{'group_by' : 'state_contact'}"/>
                 <filter name="stage_target" string="Target Stage" domain="[]" context="{'group_by' : 'state_target'}"/>
                 <filter name="stage_account" string="Account Stage" domain="[]"
                         context="{'group_by' : 'state_account'}"/>
@@ -60,121 +54,16 @@
     </record>
 
 
-    <!-- Contact Kanban view -->
-    <record model="ir.ui.view" id="res_partner_contact_kanban_view">
-        <field name="name">res.partner.kanban</field>
-        <field name="model">res.partner</field>
-        <field name="arch" type="xml">
-            <kanban default_group_by="state_contact"
-                    class="o_res_partner_kanban o_kanban_small_column o_opportunity_kanban">
-                <field name="state_contact"
-                       options="{&quot;group_by_tooltip&quot;: {&quot;requirements&quot;: &quot;Description&quot;, &quot;legend_priority&quot;: &quot;Use of stars&quot;}}"/>
+    <!-- WORKFLOW -->
+        <menuitem
+    id="menu_workflow"
+    name="Workflow"
+    parent="crm.crm_menu_root"
+    sequence="0"/>
 
-                <field name="stage_sequence" invisible="1"/>
-                <field name="id"/>
-                <field name="color"/>
-                <field name="display_name"/>
-                <field name="title"/>
-                <field name="email"/>
-                <field name="parent_id"/>
-                <field name="is_company"/>
-                <field name="function"/>
-                <field name="phone"/>
-                <field name="street"/>
-                <field name="street2"/>
-                <field name="zip"/>
-                <field name="city"/>
-                <field name="country_id"/>
-                <field name="mobile"/>
-                <field name="state_id"/>
-                <field name="category_id"/>
-                <field name="image_small"/>
-                <field name="type"/>
-                <templates>
-                    <t t-name="kanban-box" color="color">
-                        <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click_edit">
-                            <div class="o_dropdown_kanban dropdown">
-                                <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">
-                                    <span class="fa fa-bars fa-lg"/>
-                                </a>
-                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                    <t t-if="widget.editable">
-                                        <li>
-                                            <a type="delete">Delete</a>
-                                            <ul class="oe_kanban_colorpicker" data-field="color"/>
-                                        </li>
-                                    </t>
-                                    <t t-if="widget.deletable">
-                                        <li/>
-                                    </t>
-                                    <li/>
-                                </ul>
-                            </div>
-                            <div class="oe_kanban_details">
-                                <strong class="o_kanban_record_title oe_partner_heading">
-                                    <field name="display_name"/>
-                                </strong>
-                                <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
-                                <ul>
-                                    <li t-if="!record.parent_id.raw_value and record.specialization.raw_value">
-                                        <field name="specialization"/>
-                                    </li>
-                                    <li t-if="record.phone.raw_value">
-                                        <field name="phone"/>
-                                    </li>
-                                </ul>
-                                <div class="oe_kanban_partner_links"/>
-                            </div>
-                        </div>
-                    </t>
-                </templates>
-            </kanban>
-        </field>
-    </record>
+    <!-- TARGET -->
 
-    <!-- TARGET Action view -->
-
-    <record id="action_partner_contact_form" model="ir.actions.act_window">
-        <field name="name">TARGET</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">res.partner</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">kanban,tree,form</field>
-        <field name="domain">[('stage_sequence', 'in', (0,1,2,3,4,5,6))]</field>
-        <field name="context">{"search_default_customer":1}</field>
-        <field name="search_view_id" ref="base.view_res_partner_filter"/>
-        <field name="help" type="html">
-            <p class="oe_view_nocontent_create">
-                Click to add a contact in your address book.
-            </p>
-            <p>
-
-            </p>
-        </field>
-    </record>
-    <record id="action_partner_contact_kanban_view2" model="ir.actions.act_window.view">
-        <field eval="2" name="sequence"/>
-        <field name="view_mode">kanban</field>
-        <field name="view_id" ref="res_partner_contact_kanban_view"/>
-        <field name="act_window_id" ref="action_partner_contact_form"/>
-    </record>
-
-    <menuitem
-            id="menu_workflow"
-            name="Workflow"
-            parent="crm.crm_menu_root"
-            sequence="0"/>
-
-    <menuitem
-            id="menu_contact"
-            name="TARGET"
-            parent="menu_workflow"
-            sequence="1"
-            action="action_partner_contact_form"/>
-
-    <!-- CRM -->
-
-    <!-- CRM Kanban view -->
+    <!-- TARGET Kanban view -->
     <record model="ir.ui.view" id="res_partner_target_kanban_view">
         <field name="name">res.partner.kanban</field>
         <field name="model">res.partner</field>
@@ -246,15 +135,15 @@
         </field>
     </record>
 
-    <!-- CRM Action view -->
+    <!-- TARGET Action view -->
 
     <record id="action_partner_target_form" model="ir.actions.act_window">
-        <field name="name">CRM</field>
+        <field name="name">TARGET</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">res.partner</field>
         <field name="view_type">form</field>
         <field name="view_mode">kanban,tree,form</field>
-        <field name="domain">[('stage_sequence', 'in', (6,7,8,9,10,11,12,13,14))]</field>
+        <field name="domain">[('stage_sequence', 'in', (0,1,2,3,4,5,6,7,8,9,10,11,12))]</field>
         <field name="context">{"search_default_customer":1}</field>
         <field name="search_view_id" ref="base.view_res_partner_filter"/>
         <field name="help" type="html">
@@ -276,7 +165,7 @@
 
     <menuitem
             id="menu_target"
-            name="CRM"
+            name="TARGET"
             parent="menu_workflow"
             sequence="2"
             action="action_partner_target_form"/>
@@ -363,7 +252,7 @@
         <field name="res_model">res.partner</field>
         <field name="view_type">form</field>
         <field name="view_mode">kanban,tree,form</field>
-        <field name="domain">[('stage_sequence','in',(14,15,16))]</field>
+        <field name="domain">[('stage_sequence','in',(12,13,14))]</field>
         <field name="context">{"search_default_customer":1}</field>
         <field name="search_view_id" ref="base.view_res_partner_filter"/>
         <field name="help" type="html">
@@ -389,6 +278,23 @@
             parent="menu_workflow"
             sequence="3"
             action="action_partner_account_form"/>
+
+    <!-- tree view ****************************************************************** -->
+    <record id="view_partner_tree_inherit" model="ir.ui.view">
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="model">res.partner</field>
+        <field type="xml" name="arch">
+            <xpath expr="//tree[1]" position="inside">
+                 <field name="city"/>
+                <field name="inami"/>
+                <field name="specialization" widget="many2many_tags"/>
+                <field name="subscription_type"/>
+                <field name="business_developer_id"/>
+                <field name="stage_id"/>
+
+            </xpath>
+        </field>
+    </record>
 
 
 </odoo>

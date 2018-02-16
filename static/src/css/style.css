@@ -5,3 +5,16 @@ background-size: 17px 17px;
 background-position: 6px 50%;
 padding-left: 27px !important;
 }
+.o_horizontal_separator {
+    font-size: 16px !important;
+}
+.o_form_view .o_form_statusbar > .o_statusbar_status > .o_arrow_button.btn-primary.disabled {
+    color: #5F3253;
+    font-size: 11px;
+    background-color: #E6E6E6;
+    cursor: default;
+    font-weight: bold !important;
+}
+.o_form_view .o_form_statusbar > .o_statusbar_status > .o_arrow_button.btn-primary.disabled::after {
+    border-left-color: #E6E6E6;
+}

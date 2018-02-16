@@ -1,370 +1,415 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-        <record id="view_partner_fields_form_inherit" model="ir.ui.view">
-            <field name="inherit_id" ref="base.view_partner_form" />
-            <field name="model">res.partner</field>
-            <field type="xml" name="arch">
-                 <xpath expr="//form[1]/sheet[1]/group[1]" position="after">
-                     <group>
+    <record id="view_partner_fields_form_inherit" model="ir.ui.view">
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="model">res.partner</field>
+        <field type="xml" name="arch">
+            <xpath expr="//form[1]/sheet[1]/group[1]" position="replace">
+
+                <group>
                     <group>
-                            <field name="function" placeholder="e.g. Sales Director" attrs="{'invisible': [('is_company','=', True)]}"/>
-                            <field name="phone" widget="phone"/>
-                            <field name="mobile" widget="phone"/>
-                            <field name="user_ids" invisible="1"/>
-                            <field name="email" widget="email" context="{'gravatar_image': True}" attrs="{'required': [('user_ids','!=', [])]}"/>
-                            <field name="website" widget="url" placeholder="e.g. www.odoo.com"/>
-                            <field name="title" options="{&quot;no_open&quot;: True}" attrs="{'invisible': [('is_company', '=', True)]}"/>
-                            <field name="lang"/>
-                        </group>
-                        <group>
-                            <field name="type" attrs="{'invisible': [('parent_id','=', False)]}" groups="base.group_no_one"/>
-                            <label for="street" string="Address"/>
-                            <div class="o_address_format">
-                                <div class="oe_edit_only">
-                                    <button name="open_parent" type="object" string="(edit)" class="oe_link" attrs="{'invisible': ['|', ('parent_id', '=', False), ('type', '!=', 'contact')]}"/>
-                                </div>
-                                <field name="street" placeholder="Street..." class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                <field name="street2" placeholder="Street 2..." class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                <field name="city" placeholder="City" class="o_address_city" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                <field name="state_id" class="o_address_state" placeholder="State" options="{&quot;no_open&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" context="{'country_id': country_id, 'zip': zip}"/>
-                                <field name="zip" placeholder="ZIP" class="o_address_zip" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                <field name="country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                            </div>
-                            <field name="vat" placeholder="e.g. BE0477472701"/>
-                            <field name="category_id" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}" placeholder="Tags..."/>
-                        </group>
-
+                        <field name="function" placeholder="e.g. Sales Director" invisible="1"/>
+                        <field name="phone" widget="phone"/>
+                        <field name="mobile" widget="phone"/>
+                        <field name="user_ids" invisible="1"/>
+                        <field name="email" widget="email" context="{'gravatar_image': True}"
+                               attrs="{'required': [('user_ids','!=', [])]}"/>
+                        <field name="website" widget="url" placeholder="e.g. www.odoo.com"/>
+                        <field name="title" options="{&quot;no_open&quot;: True}"
+                               attrs="{'invisible': [('is_company', '=', True)]}"/>
+                        <field name="lang"/>
+                        <field name="inami"/>
+                        <field name="subscription_type"/>
+                        <field name="business_developer_id"/>
                     </group>
-                     <group>
-                         <group>
-                              <field name="inami" />
-                              <field name="subscription_type" />
-                              <field name="business_developer_id" />
-                         </group>
-                         <group>
-                             <field name="specialization"  widget="many2many_tags"  />
-                              <field name="personnality" />
-                              <field name="happiness"  widget="priority"  />
-                         </group>
-                     </group>
-
-
-               </xpath>
-                <xpath expr="//form[1]/sheet[1]/group[1]" position="attributes">
-                    <attribute name="invisible">1</attribute>
-                </xpath>
-
-                 <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]" position="before">
-                    <page name="prospection" string="Prospection Process" autofocus="autofocus">
-                        <field name="stage_sequence" invisible="1" />
-
-                        <div name="Attempt_Contact" attrs="{'invisible': [('stage_sequence', '&lt;',2)]}">
-                        <group>
-                            <group string="Attempt of contact"  >
-                                  <field name="date_attempt_contact_one" />
-                                  <field name="bd_attempt_contact_one" />
-
-                            </group>
-                            <group string="2nd Attempt of contact" >
-                                <field name="date_attempt_contact_two" />
-                                  <field name="bd_attempt_contact_two" />
-
-                            </group>
-                            <group string="3rd Attempt of contact" >
-                                <field name="date_attempt_contact_three" />
-                                <field name="bd_attempt_contact_three" />
-                            </group>
-                            <group string="4th Attempt of contact" >
-                                 <field name="date_attempt_contact_four" />
-                                 <field name="bd_attempt_contact_four" />
-
-                            </group>
-                        </group>
+                    <group>
+                        <field name="type" attrs="{'invisible': [('parent_id','=', False)]}"
+                               groups="base.group_no_one"/>
+                        <label for="street" string="Address"/>
+                        <div class="o_address_format">
+                            <div class="oe_edit_only">
+                                <button name="open_parent" type="object" string="(edit)" class="oe_link"
+                                        attrs="{'invisible': ['|', ('parent_id', '=', False), ('type', '!=', 'contact')]}"/>
+                            </div>
+                            <field name="street" placeholder="Street..." class="o_address_street"
+                                   attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                            <field name="street2" placeholder="Street 2..." class="o_address_street"
+                                   attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                            <field name="city" placeholder="City" class="o_address_city"
+                                   attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                            <field name="state_id" class="o_address_state" placeholder="State"
+                                   options="{&quot;no_open&quot;: True}"
+                                   attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
+                                   context="{'country_id': country_id, 'zip': zip}"/>
+                            <field name="zip" placeholder="ZIP" class="o_address_zip"
+                                   attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                            <field name="country_id" placeholder="Country" class="o_address_country"
+                                   options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"
+                                   attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
                         </div>
-                        <div name="Call_Pitch" attrs="{'invisible': [('stage_sequence', '&lt;',3)]}">
+                        <field name="vat" placeholder="e.g. BE0477472701"/>
+                        <field name="category_id" widget="many2many_tags"
+                               options="{'color_field': 'color', 'no_create_edit': True}" placeholder="Tags..."/>
+                        <field name="specialization" widget="many2many_tags"/>
+                        <field name="personnality"/>
+                        <field name="happiness" widget="priority"/>
+                    </group>
 
-                        <group>
-                            <group string="Call Pitch" >
-                                <field name="secretary_call_pitch_one" />
-                                <field name="doctor_call_pitch_one" />
-                                <field name="date_call_pitch_one" />
-                                <field name="bd_call_pitch_one" />
-                                <field name="comment_call_pitch_one" />
+                </group>
 
-                            </group>
-                            <group string="2nd Call Pitch" >
 
-                                <field name="secretary_call_pitch_two" />
-                                <field name="doctor_call_pitch_two" />
-                                <field name="date_call_pitch_two" />
-                                <field name="bd_call_pitch_two" />
-                                <field name="comment_call_pitch_two" />
+            </xpath>
+            <!--<xpath expr="//form[1]/sheet[1]/group[1]" position="attributes">-->
+            <!--<attribute name="invisible">1</attribute>-->
+            <!--</xpath>-->
 
-                            </group>
-                            <group string="3rd Call Pitch" >
-                                <field name="secretary_call_pitch_three" />
-                                <field name="doctor_call_pitch_three" />
-                                <field name="date_call_pitch_three" />
-                                <field name="bd_call_pitch_three" />
-                                <field name="comment_call_pitch_three" />
-                            </group>
-                            <group string="4th Call Pitch">
-                                <field name="secretary_call_pitch_four" />
-                                <field name="doctor_call_pitch_four" />
-                                <field name="date_call_pitch_four" />
-                                <field name="bd_call_pitch_four" />
-                                <field name="comment_call_pitch_four" />
-                            </group>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]" position="before">
+                <page name="prospection" string="Prospection Process" autofocus="autofocus">
+                    <field name="stage_sequence" invisible="1"/>
+
+                    <div name="Attempt_Contact" attrs="{'invisible': [('stage_sequence', '&lt;',2)]}" >
+                        <div class="o_horizontal_separator">Attempt of Contact</div>
+                        <field name="call_attempt_ids"  mode="kanban" context="{'default_partner_id': active_id }">
+                                <kanban >
+                                    <field name="date_attempt"/>
+                                    <field name="bd_attempt"/>
+                                    <field name="partner_id" />
+                                    <field name="name" />
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                                <div class="oe_kanban_details oe_kanban_global_click">
+                                                    <a t-if="!read_only_mode" type="delete" class="fa fa-times pull-right"/>
+                                                    <strong>Date: </strong>
+                                                    <field name="date_attempt"/><br/>
+                                                    <strong>Business Developer: </strong>
+                                                    <field name="bd_attempt"/>
+                                                </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                                <form string="ATTEMPT OF CONTACT">
+                                    <group>
+                                        <group>
+                                            <field name="name" invisible="1"/>
+                                            <field name="partner_id" />
+                                            <field name="description" invisible="1"/>
+                                        </group>
+                                        <group>
+                                            <field name="date_attempt"/>
+                                            <field name="bd_attempt"/>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                    </div>
+                    <div name="Call_Pitch" attrs="{'invisible': [('stage_sequence', '&lt;',3)]}">
+                        <div class="o_horizontal_separator">Call Pitch</div>
+                        <field name="call_pitch_ids"  mode="kanban" context="{'default_partner_id': active_id }">
+                                <kanban >
+                                    <field name="date_pitch"/>
+                                    <field name="bd_pitch"/>
+                                    <field name="partner_id" />
+                                    <field name="name" />
+                                    <field name="sd_call_pitch" />
+                                    <field name="comment_call_pitch" />
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                                <div class="oe_kanban_details oe_kanban_global_click">
+                                                    <a t-if="!read_only_mode" type="delete" class="fa fa-times pull-right"/>
+                                                    <strong>Secretary / Doctor: </strong>
+                                                    <field name="sd_call_pitch"/><br/>
+                                                    <strong>Date: </strong>
+                                                    <field name="date_pitch"/><br/>
+                                                    <strong>Business Developer: </strong>
+                                                    <field name="bd_pitch"/><br/>
+                                                    <strong>Comment: </strong>
+                                                    <field name="comment_call_pitch"/>
+                                                </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                                <form string="CALL PITCH">
+                                    <group>
+                                        <group>
+                                            <field name="name" invisible="1"/>
+                                            <field name="partner_id" />
+                                            <field name="sd_call_pitch" />
+                                            <field name="comment_call_pitch" />
+                                        </group>
+                                        <group>
+                                            <field name="date_pitch"/>
+                                            <field name="bd_pitch"/>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                    </div>
+
+                    <div name="Call_Back" attrs="{'invisible': [('stage_sequence', '&lt;',4)]}">
+
+                        <group string="Call Back">
+                            <field name="date_call_back_one"/>
+                            <field name="bd_call_back_one"/>
+                            <field name="comment_call_back_one"/>
                         </group>
-                        </div>
 
-                        <div name="Call_Back" attrs="{'invisible': [('stage_sequence', '&lt;',4)]}">
+                    </div>
 
-                        <group>
-                            <group string="Call Back" >
-                                <field name="date_call_back_one" />
-                                <field name="bd_call_back_one" />
-                                <field name="comment_call_back_one" />
-                            </group>
-                            <group string="2nd Call back">
-                                <field name="date_call_back_two" />
-                                <field name="bd_call_back_two" />
-                                <field name="comment_call_back_two" />
-                            </group>
-                            <group string="3rd Call back">
-                                <field name="date_call_back_three" />
-                                <field name="bd_call_back_three" />
-                                <field name="comment_call_back_three" />
-                            </group>
+                    <div name="Email_Sent" attrs="{'invisible': [('stage_sequence', '&lt;',5)]}">
+
+                        <group string="Email Sent">
+
+                            <field name="date_email_sent"/>
+                            <field name="bd_email_sent"/>
+                            <field name="comment_email_sent"/>
                         </group>
-                        </div>
 
-                        <div name="Email_Sent" attrs="{'invisible': [('stage_sequence', '&lt;',5)]}">
+                    </div>
 
-                        <group>
-                            <group string="Email Sent">
-
-                                <field name="date_email_sent" />
-                                <field name="bd_email_sent" />
-                                <field name="comment_email_sent" />
-                            </group>
-
-                        </group>
-                        </div>
-
-                        <div name="attempt_contact" attrs="{'invisible': [('stage_sequence', '&lt;',5)]}">
-
-                        <group>
-                            <group string="Interested"  attrs="{'invisible': [('stage_sequence', '&lt;',6)]}">
-                                <field name="date_interested" />
-                                <field name="bd_interested" />
-                                <field name="comment_interested" />
-                                <field name="crm_visibility"  widget="many2many_checkboxes" />
-                            </group>
-
-                            <group string="Not Interested"  attrs="{'invisible': [('stage_sequence', '&lt;',5)]}">
-                                <field name="date_notinterested" />
-                                <field name="bd_notinterested" />
-                                <field name="reason_notinterested" />
-                            </group>
-                        </group>
-                        </div>
-
-                        <div name="Meeting_Set" attrs="{'invisible': [('stage_sequence', '&lt;',7)]}">
-
-                        <group>
-                            <group string="Meeting Set" >
-                                <field name="date_meeting_set" />
-                                <field name="bd_meeting_set" />
-                                <field name="comment_meeting_set" />
-                            </group>
-                        </group>
-                        </div>
-
-                        <div name="Meeting" attrs="{'invisible': [('stage_sequence', '&lt;',8)]}">
-
-                        <group >
-                            <group string="Meeting" attrs="{'invisible': [('stage_sequence', '&lt;',8)]}">
-                                <field name="date_meeting_one" />
-                                <field name="bd_meeting_one" />
-                                <field name="comment_meeting_one" />
-                            </group>
-                            <group string="2nd Meeting" attrs="{'invisible': [('stage_sequence', '&lt;',9)]}">
-                                <field name="date_meeting_two" />
-                                <field name="bd_meeting_two" />
-                                <field name="comment_meeting_two" />
-                            </group>
-                            <group string="3rd Meeting" attrs="{'invisible': [('stage_sequence', '&lt;',10)]}">
-                                <field name="date_meeting_three" />
-                                <field name="bd_meeting_three" />
-                                <field name="comment_meeting_three" />
-                            </group>
-                        </group>
-                        </div>
-
-                        <div name="Offer" attrs="{'invisible': [('stage_sequence', '&lt;',11)]}">
+                    <div name="attempt_contact" attrs="{'invisible': [('stage_sequence', '&lt;',5)]}">
 
                         <group>
-                            <group string="Offer" >
-                                <field name="date_offer" />
-                                <field name="bd_offer" />
-                                <field name="offer_details" />
+                            <group string="Interested" attrs="{'invisible': [('stage_sequence', '&lt;',6)]}">
+                                <field name="date_interested"/>
+                                <field name="bd_interested"/>
+                                <field name="comment_interested"/>
+                                <field name="crm_visibility" widget="many2many_checkboxes"/>
+                            </group>
+
+                            <group string="Not Interested" attrs="{'invisible': [('stage_sequence', '&lt;',5)]}">
+                                <field name="date_notinterested"/>
+                                <field name="bd_notinterested"/>
+                                <field name="reason_notinterested"/>
                             </group>
                         </group>
-                        </div>
+                    </div>
 
-                        <div name="Pre-Agreement" attrs="{'invisible': [('stage_sequence', '&lt;',13)]}">
+                    <div name="Meeting_Set" attrs="{'invisible': [('stage_sequence', '&lt;',7)]}">
+
+                        <group>
+                            <group string="Meeting Set">
+                                <field name="date_meeting_set"/>
+                                <field name="bd_meeting_set"/>
+                                <field name="comment_meeting_set"/>
+                            </group>
+                        </group>
+                    </div>
+
+                    <div name="Meeting" attrs="{'invisible': [('stage_sequence', '&lt;',8)]}">
+                        <div class="o_horizontal_separator">Meeting</div>
+                        <field name="contact_meeting_ids"  mode="kanban" context="{'default_partner_id': active_id }">
+                                <kanban >
+                                    <field name="date_meeting"/>
+                                    <field name="bd_meeting"/>
+                                    <field name="partner_id" />
+                                    <field name="name" />
+                                    <field name="comment_meeting" />
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                                <div class="oe_kanban_details oe_kanban_global_click">
+                                                    <a t-if="!read_only_mode" type="delete" class="fa fa-times pull-right"/>
+                                                    <strong>Date: </strong>
+                                                    <field name="date_meeting"/><br/>
+                                                    <strong>Business Developer: </strong>
+                                                    <field name="bd_meeting"/><br/>
+                                                    <strong>Comment: </strong>
+                                                    <field name="comment_meeting"/>
+                                                </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                                <form string="MEETING">
+                                    <group>
+                                        <group>
+                                            <field name="name" invisible="1"/>
+                                            <field name="partner_id" />
+                                            <field name="comment_meeting" />
+                                        </group>
+                                        <group>
+                                            <field name="date_meeting"/>
+                                            <field name="bd_meeting"/>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                    </div>
+
+                    <div name="Offer" attrs="{'invisible': [('stage_sequence', '&lt;',11)]}">
+
+                        <group>
+                            <group string="Offer">
+                                <field name="date_offer"/>
+                                <field name="bd_offer"/>
+                                <field name="offer_details"/>
+                            </group>
+                        </group>
+                    </div>
+
+                    <div name="Pre-Agreement" attrs="{'invisible': [('stage_sequence', '&lt;',13)]}">
 
                         <group>
                             <group string="Pre-Agreement">
-                                <field name="date_preagreement" />
-                                <field name="bd_preagreement" />
-                                <field name="comment_preagreement" />
+                                <field name="date_preagreement"/>
+                                <field name="bd_preagreement"/>
+                                <field name="comment_preagreement"/>
                             </group>
                         </group>
-                        </div>
+                    </div>
 
-                        <div name="signed" attrs="{'invisible': [('stage_sequence', '&lt;',14)]}">
+                    <div name="signed" attrs="{'invisible': [('stage_sequence', '&lt;',14)]}">
 
                         <group>
-                            <group string="Signed" >
-                                <field name="date_signed" />
-                                <field name="bd_signed" />
-                                <field name="comment_signed" />
+                            <group string="Signed">
+                                <field name="date_signed"/>
+                                <field name="bd_signed"/>
+                                <field name="comment_signed"/>
+                                <field name="subscription_type"/>
                             </group>
                         </group>
-                        </div>
+                    </div>
 
-                    </page>
+                </page>
 
-                    <page name="account" string="Account Management">
+                <page name="account" string="Account Management">
+                    <group>
                         <group>
-                            <group>
-                                <field name="first_email" />
-                            </group>
-                            <group>
-                                <field name="comment_first_email" />
-                            </group>
-                            <group>
-                                <field name="service_completed" />
-                            </group>
-                            <group>
-                                <field name="comment_service_completed" />
-                            </group>
-                            <group>
-                                <field name="price_completed" />
-                            </group>
-                            <group>
-                                <field name="comment_price_completed" />
-                            </group>
-                            <group>
-                                <field name="cv_completed" />
-                            </group>
-                            <group>
-                                <field name="comment_cv_completed" />
-                            </group>
-                            <group>
-                                <field name="duration_completed" />
-                            </group>
-                            <group>
-                                <field name="comment_duration_completed" />
-                            </group>
-                            <group>
-                                <field name="personal_message_completed" />
-                            </group>
-                            <group>
-                                <field name="comment_personal_message_completed" />
-                            </group>
-                            <group>
-                                <field name="profile_picture" />
-                            </group>
-                            <group>
-                                <field name="comment_profile_picture" />
-                            </group>
-                            <group>
-                                <field name="photo_practice" />
-                            </group>
-                            <group>
-                                <field name="comment_photo_practice" />
-                            </group>
-                            <group>
-                                <field name="marketing_kit" />
-                            </group>
-                            <group>
-                                <field name="comment_marketing_kit" />
-                            </group>
-                            <group>
-                                <field name="synchronisation_completed" />
-                            </group>
-                            <group>
-                                <field name="comment_synchronisation_completed" />
-                            </group>
-                            <group>
-                                <field name="backlink" />
-                            </group>
-                            <group>
-                                <field name="comment_backlink" />
-                            </group>
-                            <group>
-                                <field name="google_profile" />
-                            </group>
-                            <group>
-                                <field name="comment_google_profile" />
-                            </group>
-                            <group>
-                                <field name="voicemail" />
-                            </group>
-                            <group>
-                                <field name="comment_voicemail" />
-                            </group>
-                            <group>
-                                <field name="mail_signature" />
-                            </group>
-                            <group>
-                                <field name="comment_mail_signature" />
-                            </group>
-                            <group>
-                                <field name="email_to_patient" />
-                            </group>
-                            <group>
-                                <field name="comment_email_to_patient" />
-                            </group>
-                            <group>
-                                <field name="translation" />
-                            </group>
-                            <group>
-                                <field name="comment_translation" />
-                            </group>
-                            <group>
-                                <field name="business_card" />
-                            </group>
-                            <group>
-                                <field name="comment_business_card" />
-                            </group>
+                            <field name="first_email"/>
                         </group>
-                    </page>
-                     <page name="da_profile" string="DA Profile">
-                         <group>
-                             <group>
-                                 <field name="academic_pub" />
-                                 <field name="asociation_member" />
-                                 <field name="conference_participation" />
-                                 <field name="experience"  widget="many2many_tags"/>
-                                 <field name="studies"  widget="many2many_tags"/>
-                                 <field name="message_patient" />
-                             </group>
-                             <group>
-                                 <field name="linkedin_link" />
-                                 <field name="facebook_link" />
-                                 <field name="expertise"  widget="many2many_tags"/>
-                                 <field name="availability" />
-                                 <field name="services"  widget="many2many_tags"/>
-                                 <field name="skills"  widget="many2many_tags"/>
-                             </group>
-                         </group>
-                     </page>
-                 </xpath>
+                        <group>
+                            <field name="comment_first_email"/>
+                        </group>
+                        <group>
+                            <field name="service_completed"/>
+                        </group>
+                        <group>
+                            <field name="comment_service_completed"/>
+                        </group>
+                        <group>
+                            <field name="price_completed"/>
+                        </group>
+                        <group>
+                            <field name="comment_price_completed"/>
+                        </group>
+                        <group>
+                            <field name="cv_completed"/>
+                        </group>
+                        <group>
+                            <field name="comment_cv_completed"/>
+                        </group>
+                        <group>
+                            <field name="duration_completed"/>
+                        </group>
+                        <group>
+                            <field name="comment_duration_completed"/>
+                        </group>
+                        <group>
+                            <field name="personal_message_completed"/>
+                        </group>
+                        <group>
+                            <field name="comment_personal_message_completed"/>
+                        </group>
+                        <group>
+                            <field name="profile_picture"/>
+                        </group>
+                        <group>
+                            <field name="comment_profile_picture"/>
+                        </group>
+                        <group>
+                            <field name="photo_practice"/>
+                        </group>
+                        <group>
+                            <field name="comment_photo_practice"/>
+                        </group>
+                        <group>
+                            <field name="marketing_kit"/>
+                        </group>
+                        <group>
+                            <field name="comment_marketing_kit"/>
+                        </group>
+                        <group>
+                            <field name="synchronisation_completed"/>
+                        </group>
+                        <group>
+                            <field name="comment_synchronisation_completed"/>
+                        </group>
+                        <group>
+                            <field name="backlink"/>
+                        </group>
+                        <group>
+                            <field name="comment_backlink"/>
+                        </group>
+                        <group>
+                            <field name="google_profile"/>
+                        </group>
+                        <group>
+                            <field name="comment_google_profile"/>
+                        </group>
+                        <group>
+                            <field name="voicemail"/>
+                        </group>
+                        <group>
+                            <field name="comment_voicemail"/>
+                        </group>
+                        <group>
+                            <field name="mail_signature"/>
+                        </group>
+                        <group>
+                            <field name="comment_mail_signature"/>
+                        </group>
+                        <group>
+                            <field name="email_to_patient"/>
+                        </group>
+                        <group>
+                            <field name="comment_email_to_patient"/>
+                        </group>
+                        <group>
+                            <field name="translation"/>
+                        </group>
+                        <group>
+                            <field name="comment_translation"/>
+                        </group>
+                        <group>
+                            <field name="business_card"/>
+                        </group>
+                        <group>
+                            <field name="comment_business_card"/>
+                        </group>
+                    </group>
+                </page>
+                <page name="da_profile" string="DA Profile">
+                    <group>
+                        <group>
+                            <field name="academic_pub"/>
+                            <field name="asociation_member"/>
+                            <field name="conference_participation"/>
+                            <field name="experience" widget="many2many_tags"/>
+                            <field name="studies" widget="many2many_tags"/>
+                            <field name="message_patient"/>
+                        </group>
+                        <group>
+                            <field name="linkedin_link"/>
+                            <field name="facebook_link"/>
+                            <field name="expertise" widget="many2many_tags"/>
+                            <field name="availability"/>
+                            <field name="services" widget="many2many_tags"/>
+                            <field name="skills" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <group>
+                        <div>
+                            <field name="image1" widget="image" class="oe_avatar"/>
+                            <field name="image2" widget="image" class="oe_avatar"/>
+                            <field name="image3" widget="image" class="oe_avatar"/>
+                            <field name="image4" widget="image" class="oe_avatar"/>
+                            <field name="image5" widget="image" class="oe_avatar"/>
+                            <field name="image6" widget="image" class="oe_avatar"/>
+                            <field name="image7" widget="image" class="oe_avatar"/>
+                            <field name="image8" widget="image" class="oe_avatar"/>
+                        </div>
+                    </group>
+                </page>
+            </xpath>
 
-            </field>
-        </record>
+        </field>
+    </record>
 </odoo>

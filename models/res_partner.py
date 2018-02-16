@@ -76,6 +76,42 @@ class Experience(models.Model):
     name = fields.Char('Name')
     description = fields.Char('Description')
 
+class CallAttempt(models.Model):
+    _name = 'call.attempt'
+    _order = "date_attempt"
+
+    description = fields.Char('Description')
+    date_attempt = fields.Date('Date')
+    bd_attempt = fields.Many2one('res.users', 'Business Developer')
+    partner_id = fields.Many2one('res.partner','Contact', readonly=True)
+    name = fields.Char('Name', related="partner_id.name", store=True, readonly=True)
+
+class CallPitch(models.Model):
+    _name = 'call.pitch'
+    _order = "date_pitch"
+
+    date_pitch = fields.Date('Date')
+    bd_pitch = fields.Many2one('res.users', 'Business Developer')
+    partner_id = fields.Many2one('res.partner', 'Contact', readonly=True)
+    name = fields.Char('Name', related="partner_id.name", store=True, readonly=True)
+    comment_call_pitch = fields.Char('Comment')
+    sd_call_pitch = fields.Selection(
+        [('secretary', 'Secretary'), ('doctor', 'Doctor')],
+        string='Secretary / Doctor')
+
+class ContactMeeting(models.Model):
+    _name = 'contact.meeting'
+    _order = "date_meeting"
+
+    date_meeting = fields.Date('Date')
+    bd_meeting = fields.Many2one('res.users', 'Business Developer')
+    partner_id = fields.Many2one('res.partner','Contact', readonly=True)
+    name = fields.Char('Name', related="partner_id.name", store=True, readonly=True)
+    comment_meeting = fields.Char('Comment')
+
+
+
+
 class Partner(models.Model):
 
     _inherit = 'res.partner'
@@ -111,65 +147,15 @@ class Partner(models.Model):
     # Prospection Process Tab
 
     # group attemp of contcat
-    date_attempt_contact_one = fields.Date('Date')
-    bd_attempt_contact_one = fields.Many2one('res.users', 'Business Developer')
-
-    # group _twond attemp of contcat
-    date_attempt_contact_two = fields.Date('Date')
-    bd_attempt_contact_two = fields.Many2one('res.users', 'Business Developer')
-
-    # group _threerd attemp of contcat
-    date_attempt_contact_three = fields.Date('Date')
-    bd_attempt_contact_three = fields.Many2one('res.users', 'Business Developer')
-
-    # group _fourth attemp of contcat
-    date_attempt_contact_four = fields.Date('Date')
-    bd_attempt_contact_four = fields.Many2one('res.users', 'Business Developer')
+    call_attempt_ids = fields.One2many('call.attempt','partner_id',string="Attempt of Contact", store=True)
 
     # group call pitch
-    secretary_call_pitch_one = fields.Boolean('Secretary')
-    doctor_call_pitch_one = fields.Boolean('Doctor')
-    date_call_pitch_one = fields.Date('Date')
-    bd_call_pitch_one = fields.Many2one('res.users', 'Business Developer')
-    comment_call_pitch_one = fields.Char('Comment')
-
-    # group _twond call pitch
-
-    secretary_call_pitch_two = fields.Boolean('Secretary')
-    doctor_call_pitch_two = fields.Boolean('Doctor')
-    date_call_pitch_two = fields.Date('Date')
-    bd_call_pitch_two = fields.Many2one('res.users', 'Business Developer')
-    comment_call_pitch_two = fields.Char('Comment')
-
-    # group _threerd call pitch
-
-    secretary_call_pitch_three = fields.Boolean('Secretary')
-    doctor_call_pitch_three = fields.Boolean('Doctor')
-    date_call_pitch_three = fields.Date('Date')
-    bd_call_pitch_three = fields.Many2one('res.users', 'Business Developer')
-    comment_call_pitch_three = fields.Char('Comment')
-
-    # group _fourth call pitch
-    secretary_call_pitch_four = fields.Boolean('Secretary')
-    doctor_call_pitch_four = fields.Boolean('Doctor')
-    date_call_pitch_four = fields.Date('Date')
-    bd_call_pitch_four = fields.Many2one('res.users', 'Business Developer')
-    comment_call_pitch_four = fields.Char('Comment')
+    call_pitch_ids = fields.One2many('call.pitch', 'partner_id', string="Call Pitch")
 
     # group call back
-    date_call_back_one = fields.Datetime('Date Time')
+    date_call_back_one = fields.Datetime('Date Time', track_visibility='onchange')
     bd_call_back_one = fields.Many2one('res.users', 'Business Developer')
     comment_call_back_one = fields.Char('Comment')
-
-    # group _twond call back
-    date_call_back_two = fields.Datetime('Date Time')
-    bd_call_back_two = fields.Many2one('res.users', 'Business Developer')
-    comment_call_back_two = fields.Char('Comment')
-
-    # group _threerd call back
-    date_call_back_three = fields.Datetime('Date Time')
-    bd_call_back_three = fields.Many2one('res.users', 'Business Developer')
-    comment_call_back_three = fields.Char('Comment')
 
     # group Email sent
     date_email_sent = fields.Date('Date')
@@ -193,20 +179,8 @@ class Partner(models.Model):
     bd_meeting_set = fields.Many2one('res.users', 'Business Developer')
     comment_meeting_set = fields.Char('Comment')
 
-    # group _onest meeting
-    date_meeting_one = fields.Date('Date')
-    bd_meeting_one = fields.Many2one('res.users', 'Business Developer')
-    comment_meeting_one = fields.Char('Comment')
-
-    # group _twond meeting
-    date_meeting_two = fields.Date('Date')
-    bd_meeting_two = fields.Many2one('res.users', 'Business Developer')
-    comment_meeting_two = fields.Char('Comment')
-
-    # group _threerd meeting
-    date_meeting_three = fields.Date('Date')
-    bd_meeting_three = fields.Many2one('res.users', 'Business Developer')
-    comment_meeting_three = fields.Char('Comment')
+    # group _ meeting
+    contact_meeting_ids = fields.One2many('contact.meeting', 'partner_id', string="Meeting")
 
     # group offer
     date_offer = fields.Date('Date')
@@ -298,13 +272,25 @@ class Partner(models.Model):
     asociation_member = fields.Char('Member to associations')
     academic_pub = fields.Char('Academic research / Publications')
 
+    # *** 8 images *******************************
+    image1 = fields.Binary("Image", attachment=True )
+    image2 = fields.Binary("Image", attachment=True )
+    image3 = fields.Binary("Image", attachment=True )
+    image4 = fields.Binary("Image", attachment=True )
+    image5 = fields.Binary("Image", attachment=True )
+    image6 = fields.Binary("Image", attachment=True )
+    image7 = fields.Binary("Image", attachment=True )
+    image8 = fields.Binary("Image", attachment=True )
+
+
+
     def _default_stage_id(self):
         return self.env['crm.stage'].search([], limit=1).id
 
     @api.onchange('stage_id')
     @api.multi
     def onchange_contact_stage_id(self):
-        self.state_contact = self.stage_id.id
+        # self.state_contact = self.stage_id.id
         self.state_target = self.stage_id.id
         self.state_account = self.stage_id.id
 
@@ -320,9 +306,6 @@ class Partner(models.Model):
     stage_id = fields.Many2one('crm.stage', string='Status', index=True, track_visibility='onchange' ,
         group_expand='_read_group_all_states' , default=lambda self: self._default_stage_id())
 
-    state_contact= fields.Many2one('crm.stage' ,string='Status',
-         group_expand='_read_group_contact_states', track_visibility=False)
-
     state_target = fields.Many2one('crm.stage',  string='Status',
          group_expand='_read_group_target_states',track_visibility=False)
 
@@ -332,22 +315,17 @@ class Partner(models.Model):
     stage_sequence = fields.Integer(related='stage_id.sequence', string='Status Sequence', store=True, readonly=True)
 
 
-    @api.model
-    def _read_group_contact_states(self, stages, domain, order):
-        search_domain = [('sequence', 'in', (0,1,2,3,4,5,6))]
-        stage_ids = stages._search(search_domain, order=order, access_rights_uid=SUPERUSER_ID)
-        return stages.browse(stage_ids)
 
     @api.model
     def _read_group_target_states(self, stages, domain, order):
-        search_domain = [('sequence', 'in',(6,7,8,9,10,11,12,13,14))]
+        search_domain = [('sequence', 'in',(0,1,2,3,4,5,6,7,8,9,10,11,12))]
         stage_ids = stages._search(search_domain, order=order, access_rights_uid=SUPERUSER_ID)
 
         return stages.browse(stage_ids)
 
     @api.model
     def _read_group_account_states(self, stages, domain, order):
-        search_domain = [('sequence', 'in', (14,15,16))]
+        search_domain = [('sequence', 'in', (12,13,14))]
         stage_ids = stages._search(search_domain, order=order, access_rights_uid=SUPERUSER_ID)
 
         return stages.browse(stage_ids)
@@ -367,18 +345,15 @@ class Partner(models.Model):
         if not stage_id:
             return {}
         stage = self.env['crm.stage'].browse(stage_id)
-
-        if self.stage_id.id == 2 and self.date_attempt_contact_one == False:
+        call_attempt = len(self.env['call.attempt'].browse(self.call_attempt_ids))
+        call_pitch = len(self.env['call.pitch'].browse(self.call_attempt_ids))
+        if self.stage_id.id == 2 and call_attempt == 0:
             raise exceptions.Warning(
-                _('To move to this step you first need to fill field Date (attempt of contact) '))
+                _('To move to this step you first need to fill field Call Attempt '))
 
-        elif self.stage_id.id == 3 and self.secretary_call_pitch_one == False  and self.doctor_call_pitch_one == False:
+        elif self.stage_id.id == 3 and call_pitch == 0:
             raise exceptions.Warning(
-                _('To move to this step you first need to fill field Secretary or Doctor'))
-
-        elif self.stage_id.id == 3 and self.date_call_pitch_one == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Date (pitched)'))
+                _('To move to this step you first need to fill field Call Pitch'))
 
         elif self.stage_id.id == 9 and self.date_call_back_one == False:
             raise exceptions.Warning(
@@ -440,41 +415,13 @@ class Partner(models.Model):
         elif self.stage_id.id in (8,16) and self.personnality == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Personality'))
-
-        ######
+        elif self.stage_id.id in (8,16) and self.expertise == False:
+            raise exceptions.Warning(
+                _('To move to this step you first need to fill field Expertise'))
 
         elif self.stage_id.id in (8,16) and self.availability == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Availability'))
-        #
-        # elif self.stage_id.id in (8,16) and self.x_studio_field_kc22X == False:
-        #     raise exceptions.Warning(
-        #         _('To move to this step you first need to fill field Agenda Synchro'))
-        #
-        elif self.stage_id.id in (8,16) and self.expertise == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Expertise'))
-        #
-        # elif self.stage_id.id in (8,16) and self.x_studio_field_xVtps == False:
-        #     raise exceptions.Warning(
-        #         _('To move to this step you first need to fill field Current CRM'))
-        # elif self.stage_id.id in (8,16) and self.x_studio_field_puqZa == False:
-        #     raise exceptions.Warning(
-        #         _('To move to this step you first need to fill field Competitors software'))
-        # elif self.stage_id.id in (8,16) and self.x_studio_field_6G6rb == False:
-        #     raise exceptions.Warning(
-        #         _('To move to this step you first need to fill field Google backlink'))
-        # elif self.stage_id.id in (8,16) and self.x_studio_field_K3GQ1 == False:
-        #     raise exceptions.Warning(
-        #         _('To move to this step you first need to fill field User Manuel sent'))
-        #
-        # elif self.stage_id.id in (8,16) and self.x_studio_field_6bUX9 == False:
-        #     raise exceptions.Warning(
-        #         _('To move to this step you first need to fill field URL BACKEND'))
-        # elif self.stage_id.id in (8, 16) and self.x_studio_field_ZilCW == False:
-        #     raise exceptions.Warning(
-        #         _('To move to this step you first need to fill field Account manager'))
-
         elif self.stage_id.id in (8, 16) and self.skills == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Skills'))
@@ -496,8 +443,8 @@ class Partner(models.Model):
         res = super(Partner, self).write(vals)
         if vals.get('stage_id'):
             vals.update(self._onchange_stage_id_values(vals.get('stage_id')))
-        if vals.get('state_contact'):
-            vals.update(self._onchange_contact_stage_id(vals.get('state_contact')))
+        # if vals.get('state_contact'):
+        #     vals.update(self._onchange_contact_stage_id(vals.get('state_contact')))
         elif vals.get('state_target'):
             vals.update(self._onchange_contact_stage_id(vals.get('state_target')))
         elif vals.get('state_account'):
