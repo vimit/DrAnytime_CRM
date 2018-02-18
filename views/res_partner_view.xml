@@ -45,6 +45,8 @@
         <field name="model">res.partner</field>
         <field type="xml" name="arch">
             <group name="group_by" position="inside">
+                <filter name="business_developer" string="Business Developer" domain="[]" context="{'group_by' : 'business_developer_id'}"/>
+
                 <filter name="stage" string="Stage" domain="[]" context="{'group_by' : 'stage_id'}"/>
                 <filter name="stage_target" string="Target Stage" domain="[]" context="{'group_by' : 'state_target'}"/>
                 <filter name="stage_account" string="Account Stage" domain="[]"
@@ -392,4 +394,5 @@
         <field name="view_id" ref="res_partner_contact_kanban_view"/>
         <field name="act_window_id" ref="action_partner_contact_form"/>
 </record>
+
 </odoo>

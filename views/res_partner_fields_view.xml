@@ -166,7 +166,7 @@
 
                     </div>
 
-                    <div name="attempt_contact" attrs="{'invisible': [('stage_sequence', '&lt;',5)]}">
+                    <div name="Interested" attrs="{'invisible': [('stage_sequence', '&lt;',5)]}">
 
                         <group>
                             <group string="Interested" attrs="{'invisible': [('stage_sequence', '&lt;',6)]}">
@@ -234,7 +234,7 @@
                             </field>
                     </div>
 
-                    <div name="Offer" attrs="{'invisible': [('stage_sequence', '&lt;',11)]}">
+                    <div name="Offer" attrs="{'invisible': [('stage_sequence', '&lt;',9)]}">
 
                         <group>
                             <group string="Offer">
@@ -245,7 +245,7 @@
                         </group>
                     </div>
 
-                    <div name="Pre-Agreement" attrs="{'invisible': [('stage_sequence', '&lt;',13)]}">
+                    <div name="Pre-Agreement" attrs="{'invisible': [('stage_sequence', '&lt;',11)]}">
 
                         <group>
                             <group string="Pre-Agreement">
@@ -256,7 +256,7 @@
                         </group>
                     </div>
 
-                    <div name="signed" attrs="{'invisible': [('stage_sequence', '&lt;',14)]}">
+                    <div name="signed" attrs="{'invisible': [('stage_sequence', '&lt;',12)]}">
 
                         <group>
                             <group string="Signed">
