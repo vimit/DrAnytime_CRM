@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import api, fields, models, SUPERUSER_ID, exceptions, _
+from odoo import api, fields, models, SUPERUSER_ID, exceptions, tools, _
 from odoo.exceptions import UserError, AccessError
 
 class ResUsers(models.Model):
@@ -175,7 +175,7 @@ class Partner(models.Model):
     reason_notinterested = fields.Many2one('reason.notinterested', 'Reason')
 
     # group meeting set
-    date_meeting_set = fields.Date('Date')
+    date_meeting_set = fields.Date('Date', track_visibility='onchange')
     bd_meeting_set = fields.Many2one('res.users', 'Business Developer')
     comment_meeting_set = fields.Char('Comment')
 
@@ -437,6 +437,68 @@ class Partner(models.Model):
 
         return {}
 
+    @api.multi
+    def _call_activity_create(self):
+        print('---------dd---',self.date_call_back_one)
+        model_id = self.env['ir.model'].search([('model','=','res.partner')],limit=1).id
+        activity_type_id = self.env['mail.activity.type'].search([('name','=','Call')],limit=1).id
+
+        vals={
+            'activity_type_id':activity_type_id,
+            'date_deadline':self.date_call_back_one,
+            'user_id':self.bd_call_back_one.id,
+            'summary':self.comment_call_back_one,
+            'res_model_id':model_id,
+            'res_id': self.id,
+            'res_model': 'res.partner'
+        }
+        self.env['mail.activity'].create(vals)
+
+        return {}
+
+    @api.multi
+    def _meeting_activity_create(self):
+        model_id = self.env['ir.model'].search([('model', '=', 'res.partner')], limit=1).id
+        activity_type_id = self.env['mail.activity.type'].search([('name', '=', 'Meeting')], limit=1).id
+        alarm_ten_id = self.env['calendar.alarm'].search([('duration', '=', '1'),('interval', '=', 'days'),('type','=','notification')], limit=1).id
+
+        vals_calendar = {
+            'name': self.name,
+            'allday': True,
+            'start_date': self.date_meeting_set,
+            'stop_date': self.date_meeting_set,
+            'start': self.date_meeting_set,
+            'stop': self.date_meeting_set,
+            'description': self.comment_meeting_set,
+
+        }
+
+        calendar_id = self.env['calendar.event'].create(vals_calendar)
+        if calendar_id:
+            if self.bd_meeting_set.id == self.env.uid:
+                self.env.cr.execute(
+                    'insert into calendar_event_res_partner_rel (calendar_event_id,res_partner_id) values(%s,%s)',
+                    (calendar_id.id, self.env.uid))
+
+            else:
+                self.env.cr.execute('insert into calendar_event_res_partner_rel (calendar_event_id,res_partner_id) values(%s,%s)',
+                                    (calendar_id.id, self.bd_meeting_set.partner_id.id))
+            self.env.cr.execute(
+                'insert into calendar_alarm_calendar_event_rel (calendar_event_id,calendar_alarm_id) values(%s,%s)',
+                (calendar_id.id, alarm_ten_id))
+
+        vals = {
+            'activity_type_id': activity_type_id,
+            'date_deadline': self.date_meeting_set,
+            'user_id': self.bd_meeting_set.id,
+            'summary': self.comment_meeting_set,
+            'res_model_id': model_id,
+            'res_id': self.id,
+            'res_model': 'res.partner',
+            # 'calendar_event_id':[(6, 0, calendar_id.ids)]
+        }
+        activity_id= self.env['mail.activity'].create(vals)
+        return {}
 
     @api.multi
     def write(self, vals):
@@ -449,6 +511,11 @@ class Partner(models.Model):
             vals.update(self._onchange_contact_stage_id(vals.get('state_target')))
         elif vals.get('state_account'):
             vals.update(self._onchange_contact_stage_id(vals.get('state_account')))
+
+        if vals.get('date_call_back_one'):
+            vals.update(self._call_activity_create())
+        if vals.get('date_meeting_set'):
+            vals.update(self._meeting_activity_create())
 
 
         return res
