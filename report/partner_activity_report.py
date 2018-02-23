@@ -45,6 +45,7 @@ class ContactActivityReport(models.Model):
     partner_id = fields.Many2one('res.partner', 'Customer/contact', readonly=True)
 
     business_developer_id = fields.Many2one('res.users', 'Business Developer', readonly=True)
+    intern_ids = fields.Many2one('hr.intern', 'Intern')
     state = fields.Selection([
         ('overdue', 'Overdue'),
         ('today', 'Today'),
@@ -69,7 +70,8 @@ class ContactActivityReport(models.Model):
                 l.country_id,
                 l.company_id,
                 l.stage_id,
-                l.business_developer_id
+                l.business_developer_id,
+                l.intern_ids
  
                 
                 

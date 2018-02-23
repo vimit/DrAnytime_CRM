@@ -21,6 +21,7 @@
                         <field name="inami"/>
                         <field name="subscription_type"/>
                         <field name="business_developer_id"/>
+                        <field name="intern_ids" />
                     </group>
                     <group>
                         <field name="type" attrs="{'invisible': [('parent_id','=', False)]}"
@@ -75,6 +76,7 @@
                                     <field name="bd_attempt"/>
                                     <field name="partner_id" />
                                     <field name="name" />
+                                    <field name="description" />
                                     <templates>
                                         <t t-name="kanban-box">
                                                 <div class="oe_kanban_details oe_kanban_global_click">
@@ -82,7 +84,9 @@
                                                     <strong>Date: </strong>
                                                     <field name="date_attempt"/><br/>
                                                     <strong>Business Developer: </strong>
-                                                    <field name="bd_attempt"/>
+                                                    <field name="bd_attempt"/><br/>
+                                                    <strong>Commentaire: </strong>
+                                                    <field name="description"/>
                                                 </div>
                                         </t>
                                     </templates>
@@ -92,7 +96,7 @@
                                         <group>
                                             <field name="name" invisible="1"/>
                                             <field name="partner_id" />
-                                            <field name="description" invisible="1"/>
+                                            <field name="description"/>
                                         </group>
                                         <group>
                                             <field name="date_attempt"/>
@@ -149,7 +153,7 @@
 
                         <group string="Call Back">
                             <field name="date_call_back_one"/>
-                            <field name="bd_call_back_one"/>
+                            <field name="bd_call_back_one" string="Business Developer"/>
                             <field name="comment_call_back_one"/>
                         </group>
 
@@ -160,42 +164,36 @@
                         <group string="Email Sent">
 
                             <field name="date_email_sent"/>
-                            <field name="bd_email_sent"/>
-                            <field name="comment_email_sent"/>
+                            <field name="bd_email_sent" string="Business Developer"/>
+                            <field name="comment_email_sent" string="Comment"/>
                         </group>
 
                     </div>
 
-                    <div name="Interested" attrs="{'invisible': [('stage_sequence', '&lt;',5)]}">
+                    <div name="NotInterested" attrs="{'invisible': [('stage_sequence', '&lt;',5)]}">
 
                         <group>
-                            <group string="Interested" attrs="{'invisible': [('stage_sequence', '&lt;',6)]}">
-                                <field name="date_interested"/>
-                                <field name="bd_interested"/>
-                                <field name="comment_interested"/>
-                                <field name="crm_visibility" widget="many2many_checkboxes"/>
-                            </group>
 
                             <group string="Not Interested" attrs="{'invisible': [('stage_sequence', '&lt;',5)]}">
                                 <field name="date_notinterested"/>
-                                <field name="bd_notinterested"/>
+                                <field name="bd_notinterested" string="Business Developer"/>
                                 <field name="reason_notinterested"/>
                             </group>
                         </group>
                     </div>
 
-                    <div name="Meeting_Set" attrs="{'invisible': [('stage_sequence', '&lt;',7)]}">
+                    <div name="Meeting_Set" attrs="{'invisible': [('stage_sequence', '&lt;',6)]}">
 
                         <group>
                             <group string="Meeting Set">
                                 <field name="date_meeting_set"/>
-                                <field name="bd_meeting_set"/>
-                                <field name="comment_meeting_set"/>
+                                <field name="bd_meeting_set" string="Business Developer"/>
+                                <field name="comment_meeting_set" string="Comment"/>
                             </group>
                         </group>
                     </div>
 
-                    <div name="Meeting" attrs="{'invisible': [('stage_sequence', '&lt;',8)]}">
+                    <div name="Meeting" attrs="{'invisible': [('stage_sequence', '&lt;',7)]}">
                         <div class="o_horizontal_separator">Meeting</div>
                         <field name="contact_meeting_ids"  mode="kanban" context="{'default_partner_id': active_id }">
                                 <kanban >
@@ -234,36 +232,36 @@
                             </field>
                     </div>
 
-                    <div name="Offer" attrs="{'invisible': [('stage_sequence', '&lt;',9)]}">
+                    <div name="Offer" attrs="{'invisible': [('stage_sequence', '&lt;',8)]}">
 
                         <group>
                             <group string="Offer">
                                 <field name="date_offer"/>
-                                <field name="bd_offer"/>
+                                <field name="bd_offer" string="Business Developer"/>
                                 <field name="offer_details"/>
                             </group>
                         </group>
                     </div>
 
-                    <div name="Pre-Agreement" attrs="{'invisible': [('stage_sequence', '&lt;',11)]}">
+                    <div name="Pre-Agreement" attrs="{'invisible': [('stage_sequence', '&lt;',10)]}">
 
                         <group>
                             <group string="Pre-Agreement">
                                 <field name="date_preagreement"/>
-                                <field name="bd_preagreement"/>
-                                <field name="comment_preagreement"/>
+                                <field name="bd_preagreement" string="Business Developer"/>
+                                <field name="comment_preagreement" string="Comment"/>
                             </group>
                         </group>
                     </div>
 
-                    <div name="signed" attrs="{'invisible': [('stage_sequence', '&lt;',12)]}">
+                    <div name="signed" attrs="{'invisible': [('stage_sequence', '&lt;',11)]}">
 
                         <group>
                             <group string="Signed">
                                 <field name="date_signed"/>
-                                <field name="bd_signed"/>
+                                <field name="bd_signed" string="Business Developer"/>
                                 <field name="comment_signed"/>
-                                <field name="subscription_type"/>
+                                <field name="subscription_type" string="Comment"/>
                             </group>
                         </group>
                     </div>
@@ -276,103 +274,103 @@
                             <field name="first_email"/>
                         </group>
                         <group>
-                            <field name="comment_first_email"/>
+                            <field name="comment_first_email" string="Comment"/>
                         </group>
                         <group>
                             <field name="service_completed"/>
                         </group>
                         <group>
-                            <field name="comment_service_completed"/>
+                            <field name="comment_service_completed" string="Comment"/>
                         </group>
                         <group>
                             <field name="price_completed"/>
                         </group>
                         <group>
-                            <field name="comment_price_completed"/>
+                            <field name="comment_price_completed" string="Comment"/>
                         </group>
                         <group>
                             <field name="cv_completed"/>
                         </group>
                         <group>
-                            <field name="comment_cv_completed"/>
+                            <field name="comment_cv_completed" string="Comment"/>
                         </group>
                         <group>
                             <field name="duration_completed"/>
                         </group>
                         <group>
-                            <field name="comment_duration_completed"/>
+                            <field name="comment_duration_completed" string="Comment"/>
                         </group>
                         <group>
                             <field name="personal_message_completed"/>
                         </group>
                         <group>
-                            <field name="comment_personal_message_completed"/>
+                            <field name="comment_personal_message_completed" string="Comment"/>
                         </group>
                         <group>
                             <field name="profile_picture"/>
                         </group>
                         <group>
-                            <field name="comment_profile_picture"/>
+                            <field name="comment_profile_picture" string="Comment"/>
                         </group>
                         <group>
                             <field name="photo_practice"/>
                         </group>
                         <group>
-                            <field name="comment_photo_practice"/>
+                            <field name="comment_photo_practice" string="Comment"/>
                         </group>
                         <group>
                             <field name="marketing_kit"/>
                         </group>
                         <group>
-                            <field name="comment_marketing_kit"/>
+                            <field name="comment_marketing_kit" string="Comment"/>
                         </group>
                         <group>
                             <field name="synchronisation_completed"/>
                         </group>
                         <group>
-                            <field name="comment_synchronisation_completed"/>
+                            <field name="comment_synchronisation_completed" string="Comment"/>
                         </group>
                         <group>
                             <field name="backlink"/>
                         </group>
                         <group>
-                            <field name="comment_backlink"/>
+                            <field name="comment_backlink" string="Comment"/>
                         </group>
                         <group>
                             <field name="google_profile"/>
                         </group>
                         <group>
-                            <field name="comment_google_profile"/>
+                            <field name="comment_google_profile" string="Comment"/>
                         </group>
                         <group>
                             <field name="voicemail"/>
                         </group>
                         <group>
-                            <field name="comment_voicemail"/>
+                            <field name="comment_voicemail" string="Comment"/>
                         </group>
                         <group>
                             <field name="mail_signature"/>
                         </group>
                         <group>
-                            <field name="comment_mail_signature"/>
+                            <field name="comment_mail_signature" string="Comment"/>
                         </group>
                         <group>
                             <field name="email_to_patient"/>
                         </group>
                         <group>
-                            <field name="comment_email_to_patient"/>
+                            <field name="comment_email_to_patient" string="Comment"/>
                         </group>
                         <group>
                             <field name="translation"/>
                         </group>
                         <group>
-                            <field name="comment_translation"/>
+                            <field name="comment_translation" string="Comment"/>
                         </group>
                         <group>
                             <field name="business_card"/>
                         </group>
                         <group>
-                            <field name="comment_business_card"/>
+                            <field name="comment_business_card" string="Comment"/>
                         </group>
                     </group>
                 </page>

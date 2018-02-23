@@ -25,3 +25,5 @@ call_pitch_manager,call.pitch.manager,DrAnytime_CRM.model_call_pitch,sales_team.
 call_pitch_root,call.pitch.root,DrAnytime_CRM.model_call_pitch,,1,1,1,1
 contact_meeting_manager,contact.meeting.manager,DrAnytime_CRM.model_contact_meeting,sales_team.group_sale_manager,1,1,1,1
 contact_meeting_root,contact.meeting.root,DrAnytime_CRM.model_contact_meeting,,1,1,1,1
+contact_intern_manager,contact.intern.manager,DrAnytime_CRM.model_hr_intern,sales_team.group_sale_manager,1,1,1,1
+contact_intern_root,contact.intern.root,DrAnytime_CRM.model_hr_intern,,1,1,1,1

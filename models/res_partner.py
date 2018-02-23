@@ -80,7 +80,7 @@ class CallAttempt(models.Model):
     _name = 'call.attempt'
     _order = "date_attempt"
 
-    description = fields.Char('Description')
+    description = fields.Char('Comment')
     date_attempt = fields.Date('Date')
     bd_attempt = fields.Many2one('res.users', 'Business Developer')
     partner_id = fields.Many2one('res.partner','Contact', readonly=True)
@@ -109,8 +109,13 @@ class ContactMeeting(models.Model):
     name = fields.Char('Name', related="partner_id.name", store=True, readonly=True)
     comment_meeting = fields.Char('Comment')
 
+class Intern(models.Model):
+    _name = 'hr.intern'
 
-
+    name  = fields.Char('Name')
+    description = fields.Char('Description')
+    start_date = fields.Date('Start Date')
+    end_date = fields.Date('End Date')
 
 class Partner(models.Model):
 
@@ -130,7 +135,7 @@ class Partner(models.Model):
     specialization = fields.Many2many('partner.specialization', 'partner_specialization_rel', 'partner_id',
                                       'specialization_id', string='Specialization')
 
-    business_developer_id = fields.Many2one('res.users', 'Business Developer')
+    business_developer_id = fields.Many2one('res.users', 'Business Developer',default=lambda self: self.env.uid)
 
     personnality = fields.Selection(
         [('analytical', 'Analytical'), ('driving', 'Driving'), ('amiable', 'Amiable'), ('expressive', 'Expressive')],
@@ -142,7 +147,8 @@ class Partner(models.Model):
                                   ('3', '3'),
                                   ('4', '4'),
                                   ('5', '5')
-                                  ], string='Doctor Happyness')
+                                  ], string='Doctor Happiness')
+    intern_ids = fields.Many2one('hr.intern', 'Intern')
 
     # Prospection Process Tab
 
@@ -150,109 +156,109 @@ class Partner(models.Model):
     call_attempt_ids = fields.One2many('call.attempt','partner_id',string="Attempt of Contact", store=True)
 
     # group call pitch
-    call_pitch_ids = fields.One2many('call.pitch', 'partner_id', string="Call Pitch")
+    call_pitch_ids = fields.One2many('call.pitch', 'partner_id', string="Call Pitch", store=True)
 
     # group call back
     date_call_back_one = fields.Datetime('Date Time', track_visibility='onchange')
-    bd_call_back_one = fields.Many2one('res.users', 'Business Developer')
-    comment_call_back_one = fields.Char('Comment')
+    bd_call_back_one = fields.Many2one('res.users', 'Business Developer (Call back)')
+    comment_call_back_one = fields.Char('Comment(Call back)')
 
     # group Email sent
     date_email_sent = fields.Date('Date')
-    bd_email_sent = fields.Many2one('res.users', 'Business Developer')
-    comment_email_sent = fields.Char('Comment')
+    bd_email_sent = fields.Many2one('res.users', 'Business Developer(Email sent)')
+    comment_email_sent = fields.Char('Comment(Email sent)')
 
     # group interested
-    date_interested = fields.Date('Date')
-    bd_interested = fields.Many2one('res.users', 'Business Developer')
-    comment_interested = fields.Char('Comment')
-    crm_visibility = fields.Many2many('crm.visibility', 'partner_crm_visibilty_rel', 'partner_id', 'crm_visibilty_id',
-                                      string='CRM / Visibility')
+    # date_interested = fields.Date('Date')
+    # bd_interested = fields.Many2one('res.users', 'Business Developer')
+    # comment_interested = fields.Char('Comment')
+    # crm_visibility = fields.Many2many('crm.visibility', 'partner_crm_visibilty_rel', 'partner_id', 'crm_visibilty_id',
+    #                                   string='CRM / Visibility')
 
     # group not interested
     date_notinterested = fields.Date('Date')
-    bd_notinterested = fields.Many2one('res.users', 'Business Developer')
+    bd_notinterested = fields.Many2one('res.users', 'Business Developer(Not Interested)')
     reason_notinterested = fields.Many2one('reason.notinterested', 'Reason')
 
     # group meeting set
     date_meeting_set = fields.Date('Date', track_visibility='onchange')
-    bd_meeting_set = fields.Many2one('res.users', 'Business Developer')
-    comment_meeting_set = fields.Char('Comment')
+    bd_meeting_set = fields.Many2one('res.users', 'Business Developer(Meeting Set)')
+    comment_meeting_set = fields.Char('Comment(Meeting Set)')
 
     # group _ meeting
-    contact_meeting_ids = fields.One2many('contact.meeting', 'partner_id', string="Meeting")
+    contact_meeting_ids = fields.One2many('contact.meeting', 'partner_id', string="Meeting", store=True)
 
     # group offer
     date_offer = fields.Date('Date')
-    bd_offer = fields.Many2one('res.users', 'Business Developer')
+    bd_offer = fields.Many2one('res.users', 'Business Developer(Offer)')
     offer_details = fields.Char('Offer Details')
 
     # group preagreement
     date_preagreement = fields.Date('Date')
-    bd_preagreement = fields.Many2one('res.users', 'Business Developer')
-    comment_preagreement = fields.Char('Comment')
+    bd_preagreement = fields.Many2one('res.users', 'Business Developer(Pre-agreement)')
+    comment_preagreement = fields.Char('Comment(Pre-agreement)')
 
     # group signed
     date_signed = fields.Date('Date')
-    bd_signed = fields.Many2one('res.users', 'Business Developer')
-    comment_signed = fields.Char('Comment')
+    bd_signed = fields.Many2one('res.users', 'Business Developer(Signed)')
+    comment_signed = fields.Char('Comment(Signed)')
 
     # Tab Account Management
     first_email = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], '1st email (activation)')
-    comment_first_email = fields.Char('Comment')
+    comment_first_email = fields.Char('Comment(1srt email)')
     #
     service_completed = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], 'Services completed')
-    comment_service_completed = fields.Char('Comment')
+    comment_service_completed = fields.Char('Comment(Services completed)')
     #
     price_completed = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], 'Prices completed')
-    comment_price_completed = fields.Char('Comment')
+    comment_price_completed = fields.Char('Comment(Prices completed)')
     #
     cv_completed = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')],
                                     'CV/experiences completed')
-    comment_cv_completed = fields.Char('Comment')
+    comment_cv_completed = fields.Char('Comment(CV/experiences completed)')
     #
     duration_completed = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')],
                                           'Duration completed')
-    comment_duration_completed = fields.Char('Comment')
+    comment_duration_completed = fields.Char('Comment(Duration completed)')
     #
     personal_message_completed = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')],
                                                   'Personal message completed')
-    comment_personal_message_completed = fields.Char('Comment')
+    comment_personal_message_completed = fields.Char('Comment(Personal message completed)')
     #
     profile_picture = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], 'Profile picture')
-    comment_profile_picture = fields.Char('Comment')
+    comment_profile_picture = fields.Char('Comment(Profile picture)')
     #
     photo_practice = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], 'Photo Practice')
-    comment_photo_practice = fields.Char('Comment')
+    comment_photo_practice = fields.Char('Comment(Photo Practice)')
     #
     marketing_kit = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], 'Marketing kit')
-    comment_marketing_kit = fields.Char('Comment')
+    comment_marketing_kit = fields.Char('Comment(Marketing kit)')
     #
     synchronisation_completed = fields.Selection(
-        [('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going'), ('not_possible', 'Not Possible')], 'Synchronisation')
-    comment_synchronisation_completed = fields.Char('Comment')
+        [('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going'), ('not_possible', 'Not Possible')], 'Synchronization')
+    comment_synchronisation_completed = fields.Char('Comment(Synchronization)')
     #
     backlink = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], 'Backlink')
-    comment_backlink = fields.Char('Comment')
+    comment_backlink = fields.Char('Comment(Backlink)')
     #
     google_profile = fields.Selection(
         [('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going'), ('already_one', 'Already One')], 'Google profile')
-    comment_google_profile = fields.Char('Comment')
+    comment_google_profile = fields.Char('Comment(Google profile)')
     #
     voicemail = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], 'Voicemail')
-    comment_voicemail = fields.Char('Comment')
+    comment_voicemail = fields.Char('Comment(Voicemail)')
     #
-    mail_signature = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], 'Mail signature ')
-    comment_mail_signature = fields.Char('Comment')
+    mail_signature = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], 'Mail signature')
+    comment_mail_signature = fields.Char('Comment(Mail signature)')
     #
     email_to_patient = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], 'Email to patient')
-    comment_email_to_patient = fields.Char('Comment')
+    comment_email_to_patient = fields.Char('Comment(Email to patient)')
     #
     translation = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], 'Translation')
-    comment_translation = fields.Char('Comment')
+    comment_translation = fields.Char('Comment(Translation)')
     #
     business_card = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], 'Business cards')
-    comment_business_card = fields.Char('Comment')
+    comment_business_card = fields.Char('Comment(Business cards)')
     ## tab DA Profile
     skills = fields.Many2many('partner.skills', 'partner_skills_rel', 'partner_id', 'skills_id',
                                       string='Skills')
@@ -318,14 +324,14 @@ class Partner(models.Model):
 
     @api.model
     def _read_group_target_states(self, stages, domain, order):
-        search_domain = [('sequence', 'in',(0,1,2,3,4,5,6,7,8,9,10,11,12))]
+        search_domain = [('sequence', 'in',(0,1,2,3,4,5,6,7,8,9,10,11))]
         stage_ids = stages._search(search_domain, order=order, access_rights_uid=SUPERUSER_ID)
 
         return stages.browse(stage_ids)
 
     @api.model
     def _read_group_account_states(self, stages, domain, order):
-        search_domain = [('sequence', 'in', (12,13,14))]
+        search_domain = [('sequence', 'in', (11,12,13))]
         stage_ids = stages._search(search_domain, order=order, access_rights_uid=SUPERUSER_ID)
 
         return stages.browse(stage_ids)
@@ -431,15 +437,14 @@ class Partner(models.Model):
                 _('To move to this step you first need to fill field Services'))
 
 
-        if not self.env.user.has_group('sales_team.group_sale_manager') and self.stage_id.id == 16 :
-            raise exceptions.Warning(
-                _('You are not allowed to pass to Stage Activated, Please contact Administrator'))
+        # if not self.env.user.has_group('sales_team.group_sale_manager') and self.stage_id.id == 16 :
+        #     raise exceptions.Warning(
+        #         _('You are not allowed to pass to Stage Activated, Please contact Administrator'))
 
         return {}
 
     @api.multi
     def _call_activity_create(self):
-        print('---------dd---',self.date_call_back_one)
         model_id = self.env['ir.model'].search([('model','=','res.partner')],limit=1).id
         activity_type_id = self.env['mail.activity.type'].search([('name','=','Call')],limit=1).id
 
@@ -505,8 +510,6 @@ class Partner(models.Model):
         res = super(Partner, self).write(vals)
         if vals.get('stage_id'):
             vals.update(self._onchange_stage_id_values(vals.get('stage_id')))
-        # if vals.get('state_contact'):
-        #     vals.update(self._onchange_contact_stage_id(vals.get('state_contact')))
         elif vals.get('state_target'):
             vals.update(self._onchange_contact_stage_id(vals.get('state_target')))
         elif vals.get('state_account'):
