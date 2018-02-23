@@ -159,12 +159,12 @@ class Partner(models.Model):
     call_pitch_ids = fields.One2many('call.pitch', 'partner_id', string="Call Pitch", store=True)
 
     # group call back
-    date_call_back_one = fields.Datetime('Date Time', track_visibility='onchange')
+    date_call_back_one = fields.Datetime('Date Time(Call back)', track_visibility='onchange')
     bd_call_back_one = fields.Many2one('res.users', 'Business Developer (Call back)')
     comment_call_back_one = fields.Char('Comment(Call back)')
 
     # group Email sent
-    date_email_sent = fields.Date('Date')
+    date_email_sent = fields.Date('Date(Email sent)')
     bd_email_sent = fields.Many2one('res.users', 'Business Developer(Email sent)')
     comment_email_sent = fields.Char('Comment(Email sent)')
 
@@ -176,12 +176,12 @@ class Partner(models.Model):
     #                                   string='CRM / Visibility')
 
     # group not interested
-    date_notinterested = fields.Date('Date')
+    date_notinterested = fields.Date('Date(Not Interested)')
     bd_notinterested = fields.Many2one('res.users', 'Business Developer(Not Interested)')
     reason_notinterested = fields.Many2one('reason.notinterested', 'Reason')
 
     # group meeting set
-    date_meeting_set = fields.Date('Date', track_visibility='onchange')
+    date_meeting_set = fields.Date('Date(Meeting Set)', track_visibility='onchange')
     bd_meeting_set = fields.Many2one('res.users', 'Business Developer(Meeting Set)')
     comment_meeting_set = fields.Char('Comment(Meeting Set)')
 
@@ -189,17 +189,17 @@ class Partner(models.Model):
     contact_meeting_ids = fields.One2many('contact.meeting', 'partner_id', string="Meeting", store=True)
 
     # group offer
-    date_offer = fields.Date('Date')
+    date_offer = fields.Date('Date(Offer)')
     bd_offer = fields.Many2one('res.users', 'Business Developer(Offer)')
     offer_details = fields.Char('Offer Details')
 
     # group preagreement
-    date_preagreement = fields.Date('Date')
+    date_preagreement = fields.Date('Date(Pre-agreement)')
     bd_preagreement = fields.Many2one('res.users', 'Business Developer(Pre-agreement)')
     comment_preagreement = fields.Char('Comment(Pre-agreement)')
 
     # group signed
-    date_signed = fields.Date('Date')
+    date_signed = fields.Date('Date(Signed)')
     bd_signed = fields.Many2one('res.users', 'Business Developer(Signed)')
     comment_signed = fields.Char('Comment(Signed)')
 

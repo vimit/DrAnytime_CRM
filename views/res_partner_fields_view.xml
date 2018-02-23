@@ -152,9 +152,9 @@
                     <div name="Call_Back" attrs="{'invisible': [('stage_sequence', '&lt;',4)]}">
 
                         <group string="Call Back">
-                            <field name="date_call_back_one"/>
+                            <field name="date_call_back_one" string="Date"/>
                             <field name="bd_call_back_one" string="Business Developer"/>
-                            <field name="comment_call_back_one"/>
+                            <field name="comment_call_back_one"  string="Comment"/>
                         </group>
 
                     </div>
@@ -163,7 +163,7 @@
 
                         <group string="Email Sent">
 
-                            <field name="date_email_sent"/>
+                            <field name="date_email_sent" string="Date"/>
                             <field name="bd_email_sent" string="Business Developer"/>
                             <field name="comment_email_sent" string="Comment"/>
                         </group>
@@ -175,7 +175,7 @@
                         <group>
 
                             <group string="Not Interested" attrs="{'invisible': [('stage_sequence', '&lt;',5)]}">
-                                <field name="date_notinterested"/>
+                                <field name="date_notinterested" string="Date"/>
                                 <field name="bd_notinterested" string="Business Developer"/>
                                 <field name="reason_notinterested"/>
                             </group>
@@ -186,7 +186,7 @@
 
                         <group>
                             <group string="Meeting Set">
-                                <field name="date_meeting_set"/>
+                                <field name="date_meeting_set" string="Date"/>
                                 <field name="bd_meeting_set" string="Business Developer"/>
                                 <field name="comment_meeting_set" string="Comment"/>
                             </group>
@@ -236,7 +236,7 @@
 
                         <group>
                             <group string="Offer">
-                                <field name="date_offer"/>
+                                <field name="date_offer" string="Date"/>
                                 <field name="bd_offer" string="Business Developer"/>
                                 <field name="offer_details"/>
                             </group>
@@ -247,7 +247,7 @@
 
                         <group>
                             <group string="Pre-Agreement">
-                                <field name="date_preagreement"/>
+                                <field name="date_preagreement" string="Date"/>
                                 <field name="bd_preagreement" string="Business Developer"/>
                                 <field name="comment_preagreement" string="Comment"/>
                             </group>
@@ -258,9 +258,9 @@
 
                         <group>
                             <group string="Signed">
-                                <field name="date_signed"/>
+                                <field name="date_signed" string="Date"/>
                                 <field name="bd_signed" string="Business Developer"/>
-                                <field name="comment_signed"/>
+                                <field name="comment_signed" string="Comment"/>
                                 <field name="subscription_type" string="Comment"/>
                             </group>
                         </group>
