@@ -83,6 +83,7 @@ class CallAttempt(models.Model):
     description = fields.Char('Comment')
     date_attempt = fields.Date('Date')
     bd_attempt = fields.Many2one('res.users', 'Business Developer')
+    intern_attempt = fields.Many2one('hr.intern', 'Intern')
     partner_id = fields.Many2one('res.partner','Contact', readonly=True)
     name = fields.Char('Name', related="partner_id.name", store=True, readonly=True)
 
@@ -92,6 +93,7 @@ class CallPitch(models.Model):
 
     date_pitch = fields.Date('Date')
     bd_pitch = fields.Many2one('res.users', 'Business Developer')
+    intern_pitch = fields.Many2one('hr.intern', 'Intern')
     partner_id = fields.Many2one('res.partner', 'Contact', readonly=True)
     name = fields.Char('Name', related="partner_id.name", store=True, readonly=True)
     comment_call_pitch = fields.Char('Comment')
@@ -105,6 +107,7 @@ class ContactMeeting(models.Model):
 
     date_meeting = fields.Date('Date')
     bd_meeting = fields.Many2one('res.users', 'Business Developer')
+    intern_meeting = fields.Many2one('hr.intern', 'Intern')
     partner_id = fields.Many2one('res.partner','Contact', readonly=True)
     name = fields.Char('Name', related="partner_id.name", store=True, readonly=True)
     comment_meeting = fields.Char('Comment')
@@ -149,6 +152,7 @@ class Partner(models.Model):
                                   ('5', '5')
                                   ], string='Doctor Happiness')
     intern_ids = fields.Many2one('hr.intern', 'Intern')
+    doctor_admin = fields.Char('Doctor AdminID')
 
     # Prospection Process Tab
 
@@ -161,11 +165,13 @@ class Partner(models.Model):
     # group call back
     date_call_back_one = fields.Datetime('Date Time(Call back)', track_visibility='onchange')
     bd_call_back_one = fields.Many2one('res.users', 'Business Developer (Call back)')
+    intern_call_back_one = fields.Many2one('hr.intern', 'Intern (Call back)')
     comment_call_back_one = fields.Char('Comment(Call back)')
 
     # group Email sent
     date_email_sent = fields.Date('Date(Email sent)')
     bd_email_sent = fields.Many2one('res.users', 'Business Developer(Email sent)')
+    intern_email_sent = fields.Many2one('hr.intern', 'Intern (Email sent)')
     comment_email_sent = fields.Char('Comment(Email sent)')
 
     # group interested
@@ -178,11 +184,13 @@ class Partner(models.Model):
     # group not interested
     date_notinterested = fields.Date('Date(Not Interested)')
     bd_notinterested = fields.Many2one('res.users', 'Business Developer(Not Interested)')
+    intern_notinterested = fields.Many2one('hr.intern', 'Intern (Not Interested)')
     reason_notinterested = fields.Many2one('reason.notinterested', 'Reason')
 
     # group meeting set
     date_meeting_set = fields.Date('Date(Meeting Set)', track_visibility='onchange')
     bd_meeting_set = fields.Many2one('res.users', 'Business Developer(Meeting Set)')
+    intern_meeting_set = fields.Many2one('hr.intern', 'Intern (Meeting Set)')
     comment_meeting_set = fields.Char('Comment(Meeting Set)')
 
     # group _ meeting
@@ -191,16 +199,19 @@ class Partner(models.Model):
     # group offer
     date_offer = fields.Date('Date(Offer)')
     bd_offer = fields.Many2one('res.users', 'Business Developer(Offer)')
+    intern_offer = fields.Many2one('hr.intern', 'Intern (Offer)')
     offer_details = fields.Char('Offer Details')
 
     # group preagreement
     date_preagreement = fields.Date('Date(Pre-agreement)')
     bd_preagreement = fields.Many2one('res.users', 'Business Developer(Pre-agreement)')
+    intern_preagreement = fields.Many2one('hr.intern', 'Intern (Pre-agreement)')
     comment_preagreement = fields.Char('Comment(Pre-agreement)')
 
     # group signed
     date_signed = fields.Date('Date(Signed)')
     bd_signed = fields.Many2one('res.users', 'Business Developer(Signed)')
+    intern_signed = fields.Many2one('hr.intern', 'Intern (Signed)')
     comment_signed = fields.Char('Comment(Signed)')
 
     # Tab Account Management
@@ -287,6 +298,15 @@ class Partner(models.Model):
     image6 = fields.Binary("Image", attachment=True )
     image7 = fields.Binary("Image", attachment=True )
     image8 = fields.Binary("Image", attachment=True )
+
+    # Tab subscription details *****
+    company_currency_id = fields.Many2one('res.currency', related='company_id.currency_id', string="Company Currency",
+                                          readonly=True,
+                                          help='Utility field to express amount currency')
+    subscription_month = fields.Monetary('Monthly subscription', currency_field='company_currency_id')
+    subscription_commitment = fields.Selection([('monthly','Monthly'),('trimestrial','Trimestrial'),('semestrial','Semestrial'),('yearly','Yearly')],'Commitment')
+    subscription_upfront_payment = fields.Selection([('no','NO'),('trimestrial','Trimestrial'),('semestrial','Semestrial'),('yearly','Yearly')], 'Upfront Payment')
+    subscription_upfront_turnover = fields.Monetary('Upfront turnover', currency_field='company_currency_id')
 
 
 
@@ -382,9 +402,9 @@ class Partner(models.Model):
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Business Developer'))
 
-        elif self.stage_id.id in (8,16) and self.crm_visibility == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field CRM / VISIBILITY   '))
+        # elif self.stage_id.id in (8,16) and self.crm_visibility == False:
+        #     raise exceptions.Warning(
+        #         _('To move to this step you first need to fill field CRM / VISIBILITY   '))
 
         elif self.stage_id.id in (8,16) and self.backlink == False:
             raise exceptions.Warning(

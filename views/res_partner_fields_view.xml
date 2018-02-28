@@ -54,6 +54,7 @@
                         <field name="specialization" widget="many2many_tags"/>
                         <field name="personnality"/>
                         <field name="happiness" widget="priority"/>
+                        <field name="doctor_admin"/>
                     </group>
 
                 </group>
@@ -68,12 +69,13 @@
                 <page name="prospection" string="Prospection Process" autofocus="autofocus">
                     <field name="stage_sequence" invisible="1"/>
 
-                    <div name="Attempt_Contact" attrs="{'invisible': [('stage_sequence', '&lt;',2)]}" >
-                        <div class="o_horizontal_separator">Attempt of Contact</div>
+                    <div name="call_attempt" attrs="{'invisible': [('stage_sequence', '&lt;',2)]}" >
+                        <div class="o_horizontal_separator">Call Attempt</div>
                         <field name="call_attempt_ids"  mode="kanban" context="{'default_partner_id': active_id }">
                                 <kanban >
                                     <field name="date_attempt"/>
                                     <field name="bd_attempt"/>
+                                    <field name="intern_attempt"/>
                                     <field name="partner_id" />
                                     <field name="name" />
                                     <field name="description" />
@@ -85,6 +87,8 @@
                                                     <field name="date_attempt"/><br/>
                                                     <strong>Business Developer: </strong>
                                                     <field name="bd_attempt"/><br/>
+                                                        <strong>Intern: </strong>
+                                                    <field name="intern_attempt"/><br/>
                                                     <strong>Commentaire: </strong>
                                                     <field name="description"/>
                                                 </div>
@@ -101,6 +105,7 @@
                                         <group>
                                             <field name="date_attempt"/>
                                             <field name="bd_attempt"/>
+                                            <field name="intern_attempt"/>
                                         </group>
                                     </group>
                                 </form>
@@ -112,6 +117,7 @@
                                 <kanban >
                                     <field name="date_pitch"/>
                                     <field name="bd_pitch"/>
+                                    <field name="intern_pitch"/>
                                     <field name="partner_id" />
                                     <field name="name" />
                                     <field name="sd_call_pitch" />
@@ -126,6 +132,8 @@
                                                     <field name="date_pitch"/><br/>
                                                     <strong>Business Developer: </strong>
                                                     <field name="bd_pitch"/><br/>
+                                                        <strong>Intern: </strong>
+                                                        <field name="intern_pitch"/><br/>
                                                     <strong>Comment: </strong>
                                                     <field name="comment_call_pitch"/>
                                                 </div>
@@ -143,6 +151,7 @@
                                         <group>
                                             <field name="date_pitch"/>
                                             <field name="bd_pitch"/>
+                                            <field name="intern_pitch"/>
                                         </group>
                                     </group>
                                 </form>
@@ -154,6 +163,7 @@
                         <group string="Call Back">
                             <field name="date_call_back_one" string="Date"/>
                             <field name="bd_call_back_one" string="Business Developer"/>
+                            <field name="intern_call_back_one" string="Intern"/>
                             <field name="comment_call_back_one"  string="Comment"/>
                         </group>
 
@@ -165,6 +175,7 @@
 
                             <field name="date_email_sent" string="Date"/>
                             <field name="bd_email_sent" string="Business Developer"/>
+                            <field name="intern_email_sent" string="Intern"/>
                             <field name="comment_email_sent" string="Comment"/>
                         </group>
 
@@ -177,6 +188,7 @@
                             <group string="Not Interested" attrs="{'invisible': [('stage_sequence', '&lt;',5)]}">
                                 <field name="date_notinterested" string="Date"/>
                                 <field name="bd_notinterested" string="Business Developer"/>
+                                <field name="intern_notinterested" string="Intern"/>
                                 <field name="reason_notinterested"/>
                             </group>
                         </group>
@@ -188,6 +200,7 @@
                             <group string="Meeting Set">
                                 <field name="date_meeting_set" string="Date"/>
                                 <field name="bd_meeting_set" string="Business Developer"/>
+                                <field name="intern_meeting_set" string="Intern"/>
                                 <field name="comment_meeting_set" string="Comment"/>
                             </group>
                         </group>
@@ -199,6 +212,7 @@
                                 <kanban >
                                     <field name="date_meeting"/>
                                     <field name="bd_meeting"/>
+                                    <field name="intern_meeting"/>
                                     <field name="partner_id" />
                                     <field name="name" />
                                     <field name="comment_meeting" />
@@ -210,6 +224,8 @@
                                                     <field name="date_meeting"/><br/>
                                                     <strong>Business Developer: </strong>
                                                     <field name="bd_meeting"/><br/>
+                                                        <strong>Intern: </strong>
+                                                    <field name="intern_meeting"/><br/>
                                                     <strong>Comment: </strong>
                                                     <field name="comment_meeting"/>
                                                 </div>
@@ -226,6 +242,7 @@
                                         <group>
                                             <field name="date_meeting"/>
                                             <field name="bd_meeting"/>
+                                            <field name="intern_meeting"/>
                                         </group>
                                     </group>
                                 </form>
@@ -238,6 +255,7 @@
                             <group string="Offer">
                                 <field name="date_offer" string="Date"/>
                                 <field name="bd_offer" string="Business Developer"/>
+                                <field name="intern_offer" string="Intern"/>
                                 <field name="offer_details"/>
                             </group>
                         </group>
@@ -249,6 +267,7 @@
                             <group string="Pre-Agreement">
                                 <field name="date_preagreement" string="Date"/>
                                 <field name="bd_preagreement" string="Business Developer"/>
+                                <field name="intern_preagreement" string="Intern"/>
                                 <field name="comment_preagreement" string="Comment"/>
                             </group>
                         </group>
@@ -260,8 +279,9 @@
                             <group string="Signed">
                                 <field name="date_signed" string="Date"/>
                                 <field name="bd_signed" string="Business Developer"/>
+                                <field name="intern_signed" string="Intern"/>
                                 <field name="comment_signed" string="Comment"/>
-                                <field name="subscription_type" string="Comment"/>
+                                <field name="subscription_type" />
                             </group>
                         </group>
                     </div>
@@ -406,6 +426,19 @@
                         </div>
                     </group>
                 </page>
+                <page name="subscription_detail" string="Subscription Detail">
+                    <group>
+                        <group>
+                            <field name="subscription_month"  widget='monetary'/>
+                            <field name="subscription_commitment"/>
+                            <field name="subscription_upfront_payment"/>
+                            <field name="subscription_upfront_turnover"  widget='monetary'/>
+
+                        </group>
+                    </group>
+                </page>
+
+
             </xpath>
 
         </field>

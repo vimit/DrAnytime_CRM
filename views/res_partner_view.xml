@@ -41,6 +41,9 @@
             <field name="image"  position="attributes">
                 <attribute name="invisible">1</attribute>
             </field>
+            <field name="country_id"  position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
         </field>
     </record>
 
@@ -105,7 +108,7 @@
                 <field name="type"/>
                 <templates>
                     <t t-name="kanban-box">
-                        <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click">
+                        <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click_edit">
                             <div class="o_dropdown_kanban dropdown">
                                 <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">
                                     <span class="fa fa-bars fa-lg"/>
@@ -214,7 +217,7 @@
                 <field name="type"/>
                 <templates>
                     <t t-name="kanban-box">
-                        <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click">
+                        <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click_edit">
                             <div class="o_dropdown_kanban dropdown">
                                 <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">
                                     <span class="fa fa-bars fa-lg"/>
