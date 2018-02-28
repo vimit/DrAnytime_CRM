@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <odoo>
-<record id="sale_subscription_view_form_inherit" model="ir.ui.view">
-        <field name="inherit_id" ref="sale_subscription.sale_subscription_view_form" />
-        <field name="model">sale.subscription</field>
-        <field type="xml" name="arch">
-            <field name="tag_ids"  position="before">
-                <field name="sub_type" />
+    <record id="sale_subscription_view_form_inherit" model="ir.ui.view">
+            <field name="name">sale.subscription.form</field>
+            <field name="model">sale.subscription</field>
+        <field name="inherit_id" ref="sale_subscription.sale_subscription_view_form"/>
+            <field name="arch" type="xml">
+                <field name="date" position="after">
+                    <field name="sent_by_mail"/>
+                </field>
             </field>
+    </record>
 
-        </field>
-</record>
+
 </odoo>

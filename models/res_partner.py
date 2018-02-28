@@ -124,6 +124,8 @@ class Partner(models.Model):
 
     _inherit = 'res.partner'
 
+    sent_by_mail = fields.Boolean('Send by paper mail')
+
     # principal doctor information
     inami = fields.Char('INAMI / RIZIV')
     subscription_type = fields.Selection([('none', 'None'),

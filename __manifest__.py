@@ -2,16 +2,17 @@
 
 {
     'name': 'DoctorAnyTime workflow',
-    'version': '11.1.0',
+    'version': '11.1.1',
     'category': 'Customization',
     'license': 'AGPL-3',
     'author': "RealDev ",
-    'depends': ['base', 'crm','web' ,'sale_subscription'],
+    'depends': ['base', 'crm','web'  ,'sale_subscription'],
     'data': [
 
         'security/ir.model.access.csv',
         'views/res_partner_fields_view.xml',
         'views/res_partner_view.xml',
+        'views/account_invoice_view.xml',
         'views/sale_subscription_view.xml',
 
         'static/src/xml/template.xml',

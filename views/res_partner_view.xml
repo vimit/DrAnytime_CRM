@@ -30,10 +30,9 @@
                 <attribute name="required">1</attribute>
             </xpath>
 
-            <!--<field name="lang" position="after">-->
-                <!--<field name="business_developer_id" attrs="{'required': ['|',['stage_id','=',8],['stage_id','=',16]]}"/>-->
-                 <!--<field name="intern_ids" />-->
-            <!--</field>-->
+           <field name="property_payment_term_id" position="after">
+                 <field name="sent_by_mail" />
+            </field>
 
             <page name="sales_purchases" position="attributes">
                 <attribute name="invisible">1</attribute>
@@ -41,9 +40,7 @@
             <field name="image"  position="attributes">
                 <attribute name="invisible">1</attribute>
             </field>
-            <field name="country_id"  position="attributes">
-                <attribute name="invisible">1</attribute>
-            </field>
+
         </field>
     </record>
 
