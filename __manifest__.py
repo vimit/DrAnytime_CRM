@@ -6,7 +6,7 @@
     'category': 'Customization',
     'license': 'AGPL-3',
     'author': "RealDev ",
-    'depends': ['base', 'crm','web'  ,'sale_subscription'],
+    'depends': ['base', 'crm','web' ,'sale_subscription'],
     'data': [
 
         'security/ir.model.access.csv',
@@ -18,6 +18,7 @@
         'static/src/xml/template.xml',
         'report/partner_activity_report_views.xml',
         'report/stage_track_report_views.xml',
+        'report/partner_sub_report_views.xml',
 
     ],
     'installable': True,

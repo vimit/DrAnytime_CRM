@@ -302,13 +302,13 @@ class Partner(models.Model):
     image8 = fields.Binary("Image", attachment=True )
 
     # Tab subscription details *****
-    company_currency_id = fields.Many2one('res.currency', related='company_id.currency_id', string="Company Currency",
-                                          readonly=True,
-                                          help='Utility field to express amount currency')
-    subscription_month = fields.Monetary('Monthly subscription', currency_field='company_currency_id')
-    subscription_commitment = fields.Selection([('monthly','Monthly'),('trimestrial','Trimestrial'),('semestrial','Semestrial'),('yearly','Yearly')],'Commitment')
-    subscription_upfront_payment = fields.Selection([('no','NO'),('trimestrial','Trimestrial'),('semestrial','Semestrial'),('yearly','Yearly')], 'Upfront Payment')
-    subscription_upfront_turnover = fields.Monetary('Upfront turnover', currency_field='company_currency_id')
+    # company_currency_id = fields.Many2one('res.currency', related='company_id.currency_id', string="Company Currency",
+    #                                       readonly=True,
+    #                                       help='Utility field to express amount currency')
+    subscription_month = fields.Float('Monthly subscription', currency_field='company_currency_id', track_visibility='onchange' )
+    subscription_commitment = fields.Selection([('monthly','Monthly'),('trimestrial','Trimestrial'),('semestrial','Semestrial'),('yearly','Yearly')],'Commitment', track_visibility='onchange' )
+    subscription_upfront_payment = fields.Selection([('no','NO'),('trimestrial','Trimestrial'),('semestrial','Semestrial'),('yearly','Yearly')], 'Upfront Payment', track_visibility='onchange' )
+    subscription_upfront_turnover = fields.Float('Upfront turnover', currency_field='company_currency_id', track_visibility='onchange' )
 
 
 
@@ -404,38 +404,6 @@ class Partner(models.Model):
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Business Developer'))
 
-        # elif self.stage_id.id in (8,16) and self.crm_visibility == False:
-        #     raise exceptions.Warning(
-        #         _('To move to this step you first need to fill field CRM / VISIBILITY   '))
-
-        elif self.stage_id.id in (8,16) and self.backlink == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Website backlink'))
-
-        elif self.stage_id.id in (8,16) and self.voicemail == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Voicemail'))
-
-        elif self.stage_id.id in (8,16) and self.mail_signature == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Email signature '))
-
-        elif self.stage_id.id in (8,16) and self.translation == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Translation'))
-
-        elif self.stage_id.id in (8,16) and self.business_card == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Business card '))
-
-        elif self.stage_id.id in (8,16) and self.marketing_kit == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Marketing kit'))
-
-        elif self.stage_id.id in (8,16) and self.google_profile == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Google profile'))
-
         elif self.stage_id.id in (8,16) and self.happiness == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Happy doctor '))
@@ -457,6 +425,34 @@ class Partner(models.Model):
         elif self.stage_id.id in (8, 16) and self.services == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Services'))
+        elif self.stage_id.id == 16 and self.backlink == False:
+            raise exceptions.Warning(
+                _('To move to this step you first need to fill field backlink'))
+
+        elif self.stage_id.id == 16 and self.voicemail == False:
+            raise exceptions.Warning(
+                _('To move to this step you first need to fill field Voicemail'))
+
+        elif self.stage_id.id == 16 and self.mail_signature == False:
+            raise exceptions.Warning(
+                _('To move to this step you first need to fill field Email signature '))
+
+        elif self.stage_id.id == 16 and self.translation == False:
+            raise exceptions.Warning(
+                _('To move to this step you first need to fill field Translation'))
+
+        elif self.stage_id.id == 16 and self.business_card == False:
+            raise exceptions.Warning(
+                _('To move to this step you first need to fill field Business card '))
+
+        elif self.stage_id.id == 16 and self.marketing_kit == False:
+            raise exceptions.Warning(
+                _('To move to this step you first need to fill field Marketing kit'))
+
+        elif self.stage_id.id == 16 and self.google_profile == False:
+            raise exceptions.Warning(
+                _('To move to this step you first need to fill field Google profile'))
+
 
 
         # if not self.env.user.has_group('sales_team.group_sale_manager') and self.stage_id.id == 16 :
