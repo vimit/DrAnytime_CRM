@@ -353,7 +353,7 @@ class Partner(models.Model):
 
     @api.model
     def _read_group_account_states(self, stages, domain, order):
-        search_domain = [('sequence', 'in', (11,12,13))]
+        search_domain = [('sequence', 'in', (11,12,13,14))]
         stage_ids = stages._search(search_domain, order=order, access_rights_uid=SUPERUSER_ID)
 
         return stages.browse(stage_ids)
@@ -403,10 +403,6 @@ class Partner(models.Model):
         elif self.stage_id.id in (8,16) and self.business_developer_id == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Business Developer'))
-
-        elif self.stage_id.id in (8,16) and self.happiness == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Happy doctor '))
 
         elif self.stage_id.id in (8,16) and self.personnality == False:
             raise exceptions.Warning(

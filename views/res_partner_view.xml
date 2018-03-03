@@ -262,7 +262,7 @@
         <field name="res_model">res.partner</field>
         <field name="view_type">form</field>
         <field name="view_mode">kanban,tree,form</field>
-        <field name="domain">[('stage_sequence','in',(11,12,13)),('customer','=',1)]</field>
+        <field name="domain">[('stage_sequence','in',(11,12,13,14)),('customer','=',1)]</field>
         <field name="context">{'search_default_my_partners': 1}</field>
         <field name="search_view_id" ref="base.view_res_partner_filter"/>
         <field name="help" type="html">
