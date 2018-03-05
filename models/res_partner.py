@@ -188,10 +188,11 @@ class Partner(models.Model):
     bd_notinterested = fields.Many2one('res.users', 'Business Developer(Not Interested)')
     intern_notinterested = fields.Many2one('hr.intern', 'Intern (Not Interested)')
     reason_notinterested = fields.Many2one('reason.notinterested', 'Reason')
+    comment_not_inteterested = fields.Char('Comment')
 
     # group meeting set
-    date_meeting_set = fields.Date('Date(Meeting Set)', track_visibility='onchange')
-    bd_meeting_set = fields.Many2one('res.users', 'Business Developer(Meeting Set)')
+    date_meeting_set = fields.Date('Date(Meeting Set)', track_visibility='onchange', index=True)
+    bd_meeting_set = fields.Many2one('res.users', 'Business Developer(Meeting Set)', index=True)
     intern_meeting_set = fields.Many2one('hr.intern', 'Intern (Meeting Set)')
     comment_meeting_set = fields.Char('Comment(Meeting Set)')
 
@@ -372,9 +373,12 @@ class Partner(models.Model):
         """ returns the new values when stage_id has changed """
         if not stage_id:
             return {}
-        stage = self.env['crm.stage'].browse(stage_id)
+
         call_attempt = len(self.env['call.attempt'].browse(self.call_attempt_ids))
-        call_pitch = len(self.env['call.pitch'].browse(self.call_attempt_ids))
+        call_pitch = len(self.env['call.pitch'].browse(self.call_pitch_ids))
+        contact_meeting =  len(self.env['contact.meeting'].browse(self.contact_meeting_ids))
+        # file_attached = len(self.env['ir.attachment'].search([('res_model','=','res.partner'),('res_id','=',self.id)]))
+
         if self.stage_id.id == 2 and call_attempt == 0:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Call Attempt '))
@@ -395,65 +399,100 @@ class Partner(models.Model):
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Date (pre_agreement) '))
 
-        elif self.stage_id.id in (8,16) and self.specialization == False:
+        ###########
+        elif self.stage_id.id == 8 and self.phone == False:
             raise exceptions.Warning(
-                _('To move to this step you first need to fill field Specialization'))
-
-
-        elif self.stage_id.id in (8,16) and self.business_developer_id == False:
+                _('To move to this step you first need to fill field Phone'))
+        elif self.stage_id.id == 8 and self.email == False:
+            raise exceptions.Warning(
+                _('To move to this step you first need to fill field Email'))
+        elif self.stage_id.id == 8 and self.lang == False:
+            raise exceptions.Warning(
+                _('To move to this step you first need to fill field Language'))
+        elif self.stage_id.id == 8 and self.inami == False:
+            raise exceptions.Warning(
+                _('To move to this step you first need to fill field INAMI'))
+        elif self.stage_id.id == 8 and self.subscription_type == False:
+            raise exceptions.Warning(
+                _('To move to this step you first need to fill field Subscription Type'))
+        elif self.stage_id.id == 8 and self.business_developer_id == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Business Developer'))
-
-        elif self.stage_id.id in (8,16) and self.personnality == False:
+        elif self.stage_id.id == 8 and self.street == False:
             raise exceptions.Warning(
-                _('To move to this step you first need to fill field Personality'))
-        elif self.stage_id.id in (8,16) and self.expertise == False:
+                _('To move to this step you first need to fill field Adress'))
+        elif self.stage_id.id == 8 and self.vat == False:
             raise exceptions.Warning(
-                _('To move to this step you first need to fill field Expertise'))
-
-        elif self.stage_id.id in (8,16) and self.availability == False:
+                _('To move to this step you first need to fill field TIN'))
+        elif self.stage_id.id == 8 and self.category_id == False:
             raise exceptions.Warning(
-                _('To move to this step you first need to fill field Availability'))
-        elif self.stage_id.id in (8, 16) and self.skills == False:
+                _('To move to this step you first need to fill field Tags'))
+        elif self.stage_id.id == 8 and self.specialization == False:
             raise exceptions.Warning(
-                _('To move to this step you first need to fill field Skills'))
-
-        elif self.stage_id.id in (8, 16) and self.services == False:
+                _('To move to this step you first need to fill field Specialization'))
+        elif self.stage_id.id == 8 and not self.title and self.is_company != True:
             raise exceptions.Warning(
-                _('To move to this step you first need to fill field Services'))
-        elif self.stage_id.id == 16 and self.backlink == False:
+                _('To move to this step you first need to fill field Title'))
+        elif self.stage_id.id == 8 and self.personnality == False:
             raise exceptions.Warning(
-                _('To move to this step you first need to fill field backlink'))
-
-        elif self.stage_id.id == 16 and self.voicemail == False:
+                _('To move to this step you first need to fill field Personnality'))
+        ##
+        elif self.stage_id.id == 8 and call_attempt ==0:
             raise exceptions.Warning(
-                _('To move to this step you first need to fill field Voicemail'))
-
-        elif self.stage_id.id == 16 and self.mail_signature == False:
+                _('To move to this step you first need to fill Call Attempt'))
+        elif self.stage_id.id == 8 and self.date_meeting_set == False:
             raise exceptions.Warning(
-                _('To move to this step you first need to fill field Email signature '))
-
-        elif self.stage_id.id == 16 and self.translation == False:
+                _('To move to this step you first need to fill field Date of Meeting Set'))
+        elif self.stage_id.id == 8 and contact_meeting == 0:
             raise exceptions.Warning(
-                _('To move to this step you first need to fill field Translation'))
-
-        elif self.stage_id.id == 16 and self.business_card == False:
+                _('To move to this step you first need to fill Contact Meeting'))
+        ##
+        elif self.stage_id.id == 8 and self.subscription_month == False:
             raise exceptions.Warning(
-                _('To move to this step you first need to fill field Business card '))
-
-        elif self.stage_id.id == 16 and self.marketing_kit == False:
+                _('To move to this step you first need to fill field Monthly subscription'))
+        elif self.stage_id.id == 8 and self.subscription_commitment == False:
             raise exceptions.Warning(
-                _('To move to this step you first need to fill field Marketing kit'))
-
-        elif self.stage_id.id == 16 and self.google_profile == False:
+                _('To move to this step you first need to fill field Commitment'))
+        elif self.stage_id.id == 8 and self.subscription_upfront_payment == False:
             raise exceptions.Warning(
-                _('To move to this step you first need to fill field Google profile'))
+                _('To move to this step you first need to fill field Upfront Payment'))
+        elif self.stage_id.id == 8 and self.subscription_upfront_turnover == False:
+            raise exceptions.Warning(
+                _('To move to this step you first need to fill field Upfront turnover'))
 
-
-
-        # if not self.env.user.has_group('sales_team.group_sale_manager') and self.stage_id.id == 16 :
+        # elif self.stage_id.id in (8,16) and file_attached ==0 :
         #     raise exceptions.Warning(
-        #         _('You are not allowed to pass to Stage Activated, Please contact Administrator'))
+        #         _('To move to this step you first need to upload at least one file'))
+
+        ###############
+        # elif self.stage_id.id == 16 and self.backlink == False:
+        #     raise exceptions.Warning(
+        #         _('To move to this step you first need to fill field backlink'))
+        #
+        # elif self.stage_id.id == 16 and self.voicemail == False:
+        #     raise exceptions.Warning(
+        #         _('To move to this step you first need to fill field Voicemail'))
+        #
+        # elif self.stage_id.id == 16 and self.mail_signature == False:
+        #     raise exceptions.Warning(
+        #         _('To move to this step you first need to fill field Email signature '))
+        #
+        # elif self.stage_id.id == 16 and self.translation == False:
+        #     raise exceptions.Warning(
+        #         _('To move to this step you first need to fill field Translation'))
+        #
+        # elif self.stage_id.id == 16 and self.business_card == False:
+        #     raise exceptions.Warning(
+        #         _('To move to this step you first need to fill field Business card '))
+        #
+        # elif self.stage_id.id == 16 and self.marketing_kit == False:
+        #     raise exceptions.Warning(
+        #         _('To move to this step you first need to fill field Marketing kit'))
+        #
+        # elif self.stage_id.id == 16 and self.google_profile == False:
+        #     raise exceptions.Warning(
+        #         _('To move to this step you first need to fill field Google profile'))
+
 
         return {}
 
@@ -480,7 +519,7 @@ class Partner(models.Model):
         model_id = self.env['ir.model'].search([('model', '=', 'res.partner')], limit=1).id
         activity_type_id = self.env['mail.activity.type'].search([('name', '=', 'Meeting')], limit=1).id
         alarm_ten_id = self.env['calendar.alarm'].search([('duration', '=', '1'),('interval', '=', 'days'),('type','=','notification')], limit=1).id
-
+        list_attendees = [self.bd_meeting_set.partner_id.id,self.id]
         vals_calendar = {
             'name': self.name,
             'allday': True,
@@ -489,19 +528,14 @@ class Partner(models.Model):
             'start': self.date_meeting_set,
             'stop': self.date_meeting_set,
             'description': self.comment_meeting_set,
+            'partner_ids':[(6, 0, list_attendees)],
 
         }
 
+        print('ok2----------------',vals_calendar)
         calendar_id = self.env['calendar.event'].create(vals_calendar)
+        print('ok3-------',calendar_id)
         if calendar_id:
-            if self.bd_meeting_set.id == self.env.uid:
-                self.env.cr.execute(
-                    'insert into calendar_event_res_partner_rel (calendar_event_id,res_partner_id) values(%s,%s)',
-                    (calendar_id.id, self.env.uid))
-
-            else:
-                self.env.cr.execute('insert into calendar_event_res_partner_rel (calendar_event_id,res_partner_id) values(%s,%s)',
-                                    (calendar_id.id, self.bd_meeting_set.partner_id.id))
             self.env.cr.execute(
                 'insert into calendar_alarm_calendar_event_rel (calendar_event_id,calendar_alarm_id) values(%s,%s)',
                 (calendar_id.id, alarm_ten_id))
