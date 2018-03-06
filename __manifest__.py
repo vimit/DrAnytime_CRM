@@ -2,7 +2,7 @@
 
 {
     'name': 'DoctorAnyTime workflow',
-    'version': '11.1.4',
+    'version': '11.1.5',
     'category': 'Customization',
     'license': 'AGPL-3',
     'author': "RealDev ",
@@ -13,6 +13,7 @@
         'views/res_partner_fields_view.xml',
         'views/res_partner_view.xml',
         'views/account_invoice_view.xml',
+        'views/target_report.xml',
         'views/sale_subscription_view.xml',
 
         'static/src/xml/template.xml',

@@ -191,7 +191,7 @@
                                 <field name="bd_notinterested" string="Business Developer"/>
                                 <field name="intern_notinterested" string="Intern"/>
                                 <field name="reason_notinterested"/>
-                                <field name="comment_not_inteterested"/>
+                                <field name="comment_not_inteterested" string="Comment"/>
                             </group>
                         </group>
                     </div>

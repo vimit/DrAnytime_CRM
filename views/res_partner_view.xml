@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <odoo>
+    <record id="res_partner_kanban_view_inherit" model="ir.ui.view">
+        <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+        <field name="model">res.partner</field>
+        <field type="xml" name="arch">
+            <xpath expr="//templates[1]/t/div[1]" position="attributes">
+                <attribute name="class">oe_kanban_global_click_edit o_res_partner_kanban</attribute>
+
+            </xpath>
+        </field>
+    </record>
     <record id="view_partner_form_inherit" model="ir.ui.view">
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="model">res.partner</field>

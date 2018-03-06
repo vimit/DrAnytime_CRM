@@ -2,6 +2,7 @@
 
 from odoo import api, fields, models, SUPERUSER_ID, exceptions, tools, _
 from odoo.exceptions import UserError, AccessError
+from datetime import datetime,timedelta
 
 class ResUsers(models.Model):
     _inherit = "res.users"
@@ -105,7 +106,7 @@ class ContactMeeting(models.Model):
     _name = 'contact.meeting'
     _order = "date_meeting"
 
-    date_meeting = fields.Date('Date')
+    date_meeting = fields.Datetime('Date')
     bd_meeting = fields.Many2one('res.users', 'Business Developer')
     intern_meeting = fields.Many2one('hr.intern', 'Intern')
     partner_id = fields.Many2one('res.partner','Contact', readonly=True)
@@ -188,10 +189,10 @@ class Partner(models.Model):
     bd_notinterested = fields.Many2one('res.users', 'Business Developer(Not Interested)')
     intern_notinterested = fields.Many2one('hr.intern', 'Intern (Not Interested)')
     reason_notinterested = fields.Many2one('reason.notinterested', 'Reason')
-    comment_not_inteterested = fields.Char('Comment')
+    comment_not_inteterested = fields.Char('Comment (Not Interested)')
 
     # group meeting set
-    date_meeting_set = fields.Date('Date(Meeting Set)', track_visibility='onchange', index=True)
+    date_meeting_set = fields.Datetime('Date(Meeting Set)', track_visibility='onchange', index=True)
     bd_meeting_set = fields.Many2one('res.users', 'Business Developer(Meeting Set)', index=True)
     intern_meeting_set = fields.Many2one('hr.intern', 'Intern (Meeting Set)')
     comment_meeting_set = fields.Char('Comment(Meeting Set)')
@@ -311,7 +312,7 @@ class Partner(models.Model):
     subscription_upfront_payment = fields.Selection([('no','NO'),('trimestrial','Trimestrial'),('semestrial','Semestrial'),('yearly','Yearly')], 'Upfront Payment', track_visibility='onchange' )
     subscription_upfront_turnover = fields.Float('Upfront turnover', currency_field='company_currency_id', track_visibility='onchange' )
 
-
+    #
 
     def _default_stage_id(self):
         return self.env['crm.stage'].search([], limit=1).id
@@ -520,13 +521,17 @@ class Partner(models.Model):
         activity_type_id = self.env['mail.activity.type'].search([('name', '=', 'Meeting')], limit=1).id
         alarm_ten_id = self.env['calendar.alarm'].search([('duration', '=', '1'),('interval', '=', 'days'),('type','=','notification')], limit=1).id
         list_attendees = [self.bd_meeting_set.partner_id.id,self.id]
+        start_datetime = fields.Datetime.from_string(self.date_meeting_set)
+        stop_datetime = fields.Datetime.to_string(start_datetime + timedelta(hours=1))
+        stop = fields.Datetime.to_string(start_datetime + timedelta(hours=1))
         vals_calendar = {
             'name': self.name,
-            'allday': True,
-            'start_date': self.date_meeting_set,
-            'stop_date': self.date_meeting_set,
+            'allday': False,
+            'duration': 1,
+            'start_datetime': self.date_meeting_set,
+            'stop_datetime': stop_datetime,
             'start': self.date_meeting_set,
-            'stop': self.date_meeting_set,
+            'stop': stop,
             'description': self.comment_meeting_set,
             'partner_ids':[(6, 0, list_attendees)],
 
