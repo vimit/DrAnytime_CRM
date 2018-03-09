@@ -272,8 +272,26 @@ class Partner(models.Model):
     translation = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], 'Translation')
     comment_translation = fields.Char('Comment(Translation)')
     #
-    business_card = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], 'Business cards')
+    business_card = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')], 'Manuel Sent')
     comment_business_card = fields.Char('Comment(Business cards)')
+    ###
+    manuel_sent = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('proposed', 'Proposed')], 'Business cards')
+    comment_manuel_sent = fields.Char('Comment(Manuel Sent)')
+    widget = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going'), ('proposed', 'Proposed'), ('sent', 'Sent'), ('todo', 'To Do'), ('topropose', 'To Propose')], 'Widget')
+    comment_widget = fields.Char('Comment(Widget)')
+    voice_mail = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')],
+                                  'Voicemail + email signature')
+    comment_voice_mail = fields.Char('Comment(Voicemail + email signature)')
+    website_ok = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going')],
+                                  'Website')
+    comment_website_ok = fields.Char('Comment(Website)')
+    customer_service_number = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going'), ('proposed', 'Proposed')],
+                                               'Customer service number on google profile ?')
+    comment_customer_service_number = fields.Char('Comment(Customer service number on google profile)')
+    website_backlink = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going'), ('proposed', 'Proposed'), ('sent', 'Sent'), ('todo', 'To Do'), ('topropose', 'To Propose')],
+                                       'Backlink on website')
+    comment_website_backlink = fields.Char('Comment(Backlink on website)')
+
     ## tab DA Profile
     skills = fields.Many2many('partner.skills', 'partner_skills_rel', 'partner_id', 'skills_id',
                                       string='Skills')

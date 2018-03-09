@@ -394,6 +394,45 @@
                         <group>
                             <field name="comment_business_card" string="Comment"/>
                         </group>
+
+                        <!-- -->
+                        <group>
+                            <field name="manuel_sent"/>
+                        </group>
+                        <group>
+                            <field name="comment_manuel_sent" string="Comment"/>
+                        </group>
+
+                        <group>
+                            <field name="widget"/>
+                        </group>
+                        <group>
+                            <field name="comment_widget" string="Comment"/>
+                        </group>
+                        <group>
+                            <field name="voice_mail"/>
+                        </group>
+                        <group>
+                            <field name="comment_voice_mail" string="Comment"/>
+                        </group>
+                        <group>
+                            <field name="website_ok"/>
+                        </group>
+                        <group>
+                            <field name="comment_website_ok" string="Comment"/>
+                        </group><group>
+                            <field name="customer_service_number"/>
+                        </group>
+                        <group>
+                            <field name="comment_customer_service_number" string="Comment"/>
+                        </group>
+                        <group>
+                            <field name="website_backlink"/>
+                        </group>
+                        <group>
+                            <field name="comment_website_backlink" string="Comment"/>
+                        </group>
+
                     </group>
                 </page>
                 <page name="da_profile" string="DA Profile">

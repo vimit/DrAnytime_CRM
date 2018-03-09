@@ -2,7 +2,7 @@
 
 {
     'name': 'DoctorAnyTime workflow',
-    'version': '11.1.5',
+    'version': '11.1.6',
     'category': 'Customization',
     'license': 'AGPL-3',
     'author': "RealDev ",
