@@ -162,7 +162,7 @@
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">res.partner</field>
         <field name="view_type">form</field>
-        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_mode">tree,kanban,form</field>
         <field name="domain">[('stage_sequence', 'in', (0,1,2,3,4,5,6,7,8,9,10,11)),('customer','=',1)]</field>
         <field name="context">{'search_default_my_partners': 1}</field>
         <field name="search_view_id" ref="base.view_res_partner_filter"/>
@@ -271,7 +271,7 @@
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">res.partner</field>
         <field name="view_type">form</field>
-        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_mode">tree,kanban,form</field>
         <field name="domain">[('stage_sequence','in',(11,12,13,14)),('customer','=',1)]</field>
         <field name="context">{'search_default_my_partners': 1}</field>
         <field name="search_view_id" ref="base.view_res_partner_filter"/>
@@ -285,7 +285,7 @@
         </field>
     </record>
     <record id="action_partner_account_kanban_view2" model="ir.actions.act_window.view">
-        <field eval="2" name="sequence"/>
+        <field eval="3" name="sequence"/>
         <field name="view_mode">kanban</field>
         <field name="view_id" ref="res_partner_account_kanban_view"/>
         <field name="act_window_id" ref="action_partner_account_form"/>

@@ -6,7 +6,7 @@
     'category': 'Customization',
     'license': 'AGPL-3',
     'author': "RealDev ",
-    'depends': ['base', 'crm','web','sale_subscription'],
+    'depends': ['base', 'crm','web' ,'sale_subscription'],
     'data': [
 
         'security/ir.model.access.csv',

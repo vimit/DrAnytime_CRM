@@ -329,7 +329,7 @@ class Partner(models.Model):
     subscription_commitment = fields.Selection([('monthly','Monthly'),('trimestrial','Trimestrial'),('semestrial','Semestrial'),('yearly','Yearly')],'Commitment', track_visibility='onchange' )
     subscription_upfront_payment = fields.Selection([('no','NO'),('trimestrial','Trimestrial'),('semestrial','Semestrial'),('yearly','Yearly')], 'Upfront Payment', track_visibility='onchange' )
     subscription_upfront_turnover = fields.Float('Upfront turnover', currency_field='company_currency_id', track_visibility='onchange' )
-
+    telesecretary_contract = fields.Float('Telesecretary contract (in € / month)')
     #
 
     def _default_stage_id(self):
@@ -361,7 +361,6 @@ class Partner(models.Model):
     state_contact = fields.Many2one('crm.stage', string='Status',track_visibility=False)
 
     stage_sequence = fields.Integer(related='stage_id.sequence', string='Status Sequence', store=True, readonly=True)
-
 
 
     @api.model
@@ -419,63 +418,63 @@ class Partner(models.Model):
                 _('To move to this step you first need to fill field Date (pre_agreement) '))
 
         ###########
-        elif self.stage_id.id == 8 and self.phone == False:
+        elif self.stage_id.id in (8,16) and self.phone == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Phone'))
-        elif self.stage_id.id == 8 and self.email == False:
+        elif self.stage_id.id in (8,16) and self.email == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Email'))
-        elif self.stage_id.id == 8 and self.lang == False:
+        elif self.stage_id.id in (8,16) and self.lang == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Language'))
-        elif self.stage_id.id == 8 and self.inami == False:
+        elif self.stage_id.id  in (8,16) and self.inami == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field INAMI'))
-        elif self.stage_id.id == 8 and self.subscription_type == False:
+        elif self.stage_id.id in (8,16) and self.subscription_type == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Subscription Type'))
-        elif self.stage_id.id == 8 and self.business_developer_id == False:
+        elif self.stage_id.id in (8,16) and self.business_developer_id == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Business Developer'))
-        elif self.stage_id.id == 8 and self.street == False:
+        elif self.stage_id.id in (8,16) and self.street == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Adress'))
-        elif self.stage_id.id == 8 and self.vat == False:
+        elif self.stage_id.id in (8,16) and self.vat == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field TIN'))
-        elif self.stage_id.id == 8 and self.category_id == False:
+        elif self.stage_id.id in (8,16) and self.category_id == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Tags'))
-        elif self.stage_id.id == 8 and self.specialization == False:
+        elif self.stage_id.id in (8,16) and self.specialization == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Specialization'))
-        elif self.stage_id.id == 8 and not self.title and self.is_company != True:
+        elif self.stage_id.id in (8,16) and not self.title and self.is_company != True:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Title'))
-        elif self.stage_id.id == 8 and self.personnality == False:
+        elif self.stage_id.id in (8,16)and self.personnality == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Personnality'))
         ##
-        elif self.stage_id.id == 8 and call_attempt ==0:
+        elif self.stage_id.id in (8,16) and call_attempt ==0:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill Call Attempt'))
-        elif self.stage_id.id == 8 and self.date_meeting_set == False:
+        elif self.stage_id.id in (8,16) and self.date_meeting_set == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Date of Meeting Set'))
-        elif self.stage_id.id == 8 and contact_meeting == 0:
+        elif self.stage_id.id in (8,16) and contact_meeting == 0:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill Contact Meeting'))
         ##
-        elif self.stage_id.id == 8 and self.subscription_month == False:
+        elif self.stage_id.id in (8,16) and self.subscription_month == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Monthly subscription'))
-        elif self.stage_id.id == 8 and self.subscription_commitment == False:
+        elif self.stage_id.id in (8,16) and self.subscription_commitment == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Commitment'))
         elif self.stage_id.id == 8 and self.subscription_upfront_payment == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Upfront Payment'))
-        elif self.stage_id.id == 8 and self.subscription_upfront_turnover == False:
+        elif self.stage_id.i in (8,16) and self.subscription_upfront_turnover == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Upfront turnover'))
 
