@@ -471,10 +471,10 @@ class Partner(models.Model):
         elif self.stage_id.id in (8,16) and self.subscription_commitment == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Commitment'))
-        elif self.stage_id.id == 8 and self.subscription_upfront_payment == False:
+        elif self.stage_id.id in (8,16) and self.subscription_upfront_payment == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Upfront Payment'))
-        elif self.stage_id.i in (8,16) and self.subscription_upfront_turnover == False:
+        elif self.stage_id.id in (8,16) and self.subscription_upfront_turnover == False:
             raise exceptions.Warning(
                 _('To move to this step you first need to fill field Upfront turnover'))
 
