@@ -396,87 +396,68 @@ class Partner(models.Model):
         call_pitch = len(self.env['call.pitch'].browse(self.call_pitch_ids))
         contact_meeting =  len(self.env['contact.meeting'].browse(self.contact_meeting_ids))
         # file_attached = len(self.env['ir.attachment'].search([('res_model','=','res.partner'),('res_id','=',self.id)]))
+        msg=''
 
         if self.stage_id.id == 2 and call_attempt == 0:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Call Attempt '))
+            msg = msg + ' - Call Attempt  \n'
 
-        elif self.stage_id.id == 3 and call_pitch == 0:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Call Pitch'))
+        if self.stage_id.id == 3 and call_pitch == 0:
+            msg = msg + ' - Call Pitch  \n'
 
-        elif self.stage_id.id == 9 and self.date_call_back_one == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Date (callback)'))
+        if self.stage_id.id == 9 and self.date_call_back_one == False:
+            msg = msg + ' - Date (callback) '
 
-        elif self.stage_id.id == 10 and self.date_meeting_set == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Date (meeting set)'))
+        if self.stage_id.id == 10 and self.date_meeting_set == False:
+            msg = msg + ' - Date (meeting set) \n'
 
-        elif self.stage_id.id == 6 and self.date_preagreement == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Date (pre_agreement) '))
+        if self.stage_id.id == 6 and self.date_preagreement == False:
+            msg = msg + ' - Date (pre_agreement)  \n'
 
         ###########
-        elif self.stage_id.id in (8,16) and self.phone == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Phone'))
-        elif self.stage_id.id in (8,16) and self.email == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Email'))
-        elif self.stage_id.id in (8,16) and self.lang == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Language'))
-        elif self.stage_id.id  in (8,16) and self.inami == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field INAMI'))
-        elif self.stage_id.id in (8,16) and self.subscription_type == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Subscription Type'))
-        elif self.stage_id.id in (8,16) and self.business_developer_id == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Business Developer'))
-        elif self.stage_id.id in (8,16) and self.street == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Adress'))
-        elif self.stage_id.id in (8,16) and self.vat == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field TIN'))
-        elif self.stage_id.id in (8,16) and self.category_id == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Tags'))
-        elif self.stage_id.id in (8,16) and self.specialization == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Specialization'))
-        elif self.stage_id.id in (8,16) and not self.title and self.is_company != True:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Title'))
-        elif self.stage_id.id in (8,16)and self.personnality == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Personnality'))
+        if self.stage_id.id in (8,16) and self.phone == False:
+            msg = msg + ' - Phone \n'
+        if self.stage_id.id in (8,16) and self.email == False:
+            msg = msg + ' - Email \n'
+        if self.stage_id.id in (8,16) and self.lang == False:
+            msg = msg + ' - Language \n'
+        if self.stage_id.id  in (8,16) and self.inami == False:
+            msg = msg + ' - INAMI \n'
+        if self.stage_id.id in (8,16) and self.subscription_type == False:
+            msg = msg + ' - Subscription Type \n'
+        if self.stage_id.id in (8,16) and self.business_developer_id == False:
+            msg = msg + ' - Business Developer \n'
+        if self.stage_id.id in (8,16) and self.street == False:
+            msg = msg + ' - Street in Adress \n'
+        if self.stage_id.id in (8,16) and self.vat == False:
+            msg = msg + ' - TIN \n'
+        if self.stage_id.id in (8,16) and self.category_id == False:
+            msg = msg + ' - Tags \n'
+        if self.stage_id.id in (8,16) and self.specialization == False:
+            msg = msg + ' - Specialization \n'
+        if self.stage_id.id in (8,16) and not self.title and self.is_company != True:
+            msg = msg + ' - Title \n'
+        if self.stage_id.id in (8,16)and self.personnality == False:
+            msg = msg + ' - Personnality \n'
         ##
-        elif self.stage_id.id in (8,16) and call_attempt ==0:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill Call Attempt'))
-        elif self.stage_id.id in (8,16) and self.date_meeting_set == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Date of Meeting Set'))
-        elif self.stage_id.id in (8,16) and contact_meeting == 0:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill Contact Meeting'))
+        if self.stage_id.id in (8,16) and call_attempt ==0:
+            msg = msg + ' - Call Attempt \n'
+        if self.stage_id.id in (8,16) and self.date_meeting_set == False:
+            msg = msg + ' - Date of Meeting Set \n'
+        if self.stage_id.id in (8,16) and contact_meeting == 0:
+            msg = msg + ' - Contact Meeting \n'
         ##
-        elif self.stage_id.id in (8,16) and self.subscription_month == False:
+        if self.stage_id.id in (8,16) and self.subscription_month == False:
+            msg = msg + ' - Monthly subscription \n'
+        if self.stage_id.id in (8,16) and self.subscription_commitment == False:
+            msg = msg + ' - Commitment \n'
+        if self.stage_id.id in (8,16) and self.subscription_upfront_payment == False:
+            msg = msg + ' - Upfront Payment \n'
+        if self.stage_id.id in (8,16) and self.subscription_upfront_turnover == False:
+            msg = msg + ' - Upfront turnover \n'
+
+        if msg:
             raise exceptions.Warning(
-                _('To move to this step you first need to fill field Monthly subscription'))
-        elif self.stage_id.id in (8,16) and self.subscription_commitment == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Commitment'))
-        elif self.stage_id.id in (8,16) and self.subscription_upfront_payment == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Upfront Payment'))
-        elif self.stage_id.id in (8,16) and self.subscription_upfront_turnover == False:
-            raise exceptions.Warning(
-                _('To move to this step you first need to fill field Upfront turnover'))
+                    _('To move to this step you first need to fill those fields : \n' + msg))
 
         # elif self.stage_id.id in (8,16) and file_attached ==0 :
         #     raise exceptions.Warning(

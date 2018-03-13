@@ -59,7 +59,9 @@
         <field name="model">res.partner</field>
         <field type="xml" name="arch">
              <filter name="customer" position="after">
-                <filter string="My partners" name="my_partners" domain="[('business_developer_id','=',uid)]"/>
+
+                <filter string="My partners" name="my_partners" domain="[('business_developer_id','=',uid),('type','=','contact')]"/>
+                 <filter string="Contact Adress Type" name="partner_adress" domain="[('type','!=','contact')]"/>
 
              </filter>
             <group name="group_by" position="inside">
@@ -315,7 +317,6 @@
             </xpath>
         </field>
     </record>
-
 
 
 </odoo>
