@@ -475,6 +475,7 @@
                             <field name="subscription_upfront_payment"/>
                             <field name="subscription_upfront_turnover"  widget='monetary'/>
                             <field name="telesecretary_contract"  widget='monetary'/>
+                            <field name="subsciption_part_condition"/>
 
                         </group>
                     </group>

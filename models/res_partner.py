@@ -15,9 +15,9 @@ class Stage(models.Model):
     def _onchange_restrict_access(self, stage_id):
         """ returns the new values when stage_id has changed """
         print('----------',self.env.uid)
-        if self.env.uid != 1 :
-            raise exceptions.Warning('You are not allowed to change the stages, Please contact the Administrator')
-            return  True
+        # if self.env.uid != 1 :
+        raise exceptions.Warning('You are not allowed to change the stages, Please contact the Administrator')
+        return  True
         return {}
 
 
@@ -330,6 +330,7 @@ class Partner(models.Model):
     subscription_upfront_payment = fields.Selection([('no','NO'),('trimestrial','Trimestrial'),('semestrial','Semestrial'),('yearly','Yearly')], 'Upfront Payment', track_visibility='onchange' )
     subscription_upfront_turnover = fields.Float('Upfront turnover', currency_field='company_currency_id', track_visibility='onchange' )
     telesecretary_contract = fields.Float('Telesecretary contract (in € / month)')
+    subsciption_part_condition = fields.Char('Particular Conditions')
     #
 
     def _default_stage_id(self):
