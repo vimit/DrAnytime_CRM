@@ -28,3 +28,8 @@ contact_meeting_root,contact.meeting.root,DrAnytime_CRM.model_contact_meeting,,1
 contact_intern_manager,contact.intern.manager,DrAnytime_CRM.model_hr_intern,sales_team.group_sale_manager,1,1,1,1
 contact_intern_root,contact.intern.root,DrAnytime_CRM.model_hr_intern,,1,1,1,1
 contact_sub_report_root,contact.sub.report.root,DrAnytime_CRM.model_contact_sub_report,,1,1,1,1
+signed_call_track_report_root,signed.call.track.report.root,DrAnytime_CRM.model_signed_call_track_report,,1,1,1,1
+signed_ftof_track_report_root,signed.ftof.track.report.root,DrAnytime_CRM.model_signed_ftof_track_report,,1,1,1,1
+contact_activity_div_bd_report_root,contact.activity.div.bd.report.root,DrAnytime_CRM.model_contact_activity_div_bd_report,,1,1,1,1
+contact_div_bd_report_root,contact.div.bd.report.root,DrAnytime_CRM.model_contact_div_bd_report,,1,1,1,1
+stage_retired_track_report_root,stage.retired.track.report.root,DrAnytime_CRM.model_stage_retired_track_report,,1,1,1,1

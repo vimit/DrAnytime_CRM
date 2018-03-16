@@ -2,7 +2,7 @@
 
 {
     'name': 'DoctorAnyTime workflow',
-    'version': '11.2.0',
+    'version': '11.2.1',
     'category': 'Customization',
     'license': 'AGPL-3',
     'author': "RealDev ",
@@ -16,10 +16,16 @@
         'views/target_report.xml',
         'views/sale_subscription_view.xml',
 
+        'report/subscription_report.xml',
         'static/src/xml/template.xml',
-        'report/partner_activity_report_views.xml',
-        'report/stage_track_report_views.xml',
-        'report/partner_sub_report_views.xml',
+        'rview/partner_activity_report_views.xml',
+        'rview/stage_track_report_views.xml',
+        'rview/partner_sub_report_views.xml',
+        'rview/stage_retired_track_report_views.xml',
+        'rview/partner_activity_report_div_bd_views.xml',
+        'rview/partner_report_div_bd_views.xml',
+        'rview/call_signed_report_views.xml',
+        'rview/ftof_signed_report_views.xml',
 
     ],
     'installable': True,

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <!-- Active Monthly Subscriptions Report  -->
+    <record id="active_monthly_sub_view_pivot" model="ir.ui.view">
+        <field name="model">sale.subscription</field>
+        <field type="xml" name="arch">
+            <pivot string="Active Monthly Subscriptions" >
+                <field name="recurring_next_date"  type="col"/>
+                <field name="recurring_monthly" type="measure"/>
+
+            </pivot>
+        </field>
+    </record>
+
+    <record id="active_monthly_sub_report" model="ir.actions.act_window">
+        <field name="name">Active Monthly Subscriptions Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.subscription</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">pivot</field>
+        <field name="domain">[('state','=','open')]</field>
+        <field name="view_id" ref="active_monthly_sub_view_pivot"/>
+
+    </record>
+ <menuitem
+            id="active_monthly_sub_report_menu"
+            name="Active Monthly Subscriptions"
+            parent="crm.crm_menu_report"
+            action="active_monthly_sub_report"
+            sequence="8"/>
+
+    <!-- New Subscriptions Starts -->
+     <record id="new_sub_start_view_pivot" model="ir.ui.view">
+        <field name="model">sale.subscription</field>
+        <field type="xml" name="arch">
+            <pivot string="Active Monthly Subscriptions" >
+                <field name="date_start"  type="col"/>
+                <field name="recurring_total" type="measure"/>
+
+            </pivot>
+        </field>
+    </record>
+
+    <record id="new_sub_start_report" model="ir.actions.act_window">
+        <field name="name">New Subscriptions Starts</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.subscription</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">pivot</field>
+        <field name="domain">[('state','=','open')]</field>
+        <field name="view_id" ref="new_sub_start_view_pivot"/>
+
+    </record>
+ <menuitem
+            id="new_sub_start_report_menu"
+            name="New Subscriptions Starts"
+            parent="crm.crm_menu_report"
+            action="new_sub_start_report"
+            sequence="9"/>
+
+    <!-- Total New Paying  -->
+    <record id="total_new_paying_view_pivot" model="ir.ui.view">
+        <field name="model">sale.subscription</field>
+        <field type="xml" name="arch">
+            <pivot string="Active Monthly Subscriptions" >
+                <field name="date_start"  type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="total_new_paying_report" model="ir.actions.act_window">
+        <field name="name">Total New Paying</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.subscription</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">pivot</field>
+        <field name="domain">[('state','=','open')]</field>
+        <field name="view_id" ref="total_new_paying_view_pivot"/>
+
+    </record>
+ <menuitem
+            id="total_new_paying_report_menu"
+            name="Total New Paying"
+            parent="crm.crm_menu_report"
+            action="total_new_paying_report"
+            sequence="10"/>
+</odoo>

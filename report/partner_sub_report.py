@@ -32,6 +32,7 @@ class ContactReport(models.Model):
     tsmcreate_date = fields.Datetime('Monthly subscription Update Date', readonly=True)
     tsufield_name = fields.Char('Upfront turnover', readonly=True)
     tsmfield_name = fields.Char('Monthly subscription', readonly=True)
+    
 
     # field_name = fields.Selection([('subscription_upfront_turnover','subscription_upfront_turnover'),('subscription_upfront_payment','subscription_upfront_payment'),('subscription_commitment','subscription_commitment'),('subscription_month','subscription_month')],'Value updated')
 

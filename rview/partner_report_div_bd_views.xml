@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="crm_div_bd_report_view_graph" model="ir.ui.view">
+            <field name="name">contact.div.bd.report.graph</field>
+            <field name="model">contact.div.bd.report</field>
+            <field name="arch" type="xml">
+                <graph string="Activities Analysis" stacked="True">
+                    <field name="count_div_bd" type="measure"/>
+                    <field name="create_date" interval="month" type="col"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="crm_div_bd_report_view_pivot" model="ir.ui.view">
+            <field name="name">contact.div.bd.report.pivot</field>
+            <field name="model">contact.div.bd.report</field>
+            <field name="arch" type="xml">
+                <pivot string="Activities Analysis" disable_linking="True">
+                    <field name="count_div_bd" type="measure"/>
+                    <field name="create_date" interval="month" type="col"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="crm_div_bd_report_view_search" model="ir.ui.view">
+            <field name="name">contact.report.search</field>
+            <field name="model">contact.div.bd.report</field>
+            <field name="arch" type="xml">
+                <search string="Activities Analysis">
+                    <filter string="My Activities" name="activities_my" domain="[('user_id', '=', uid)]"/>
+                    <separator/>
+                    <group expand="1" string="Group By">
+                        <filter string="Created By" name="group_by_salesperson" context="{'group_by':'user_id'}"/>
+                        <filter string="State" context="{'group_by':'state_id'}" />
+                        <filter string="Stage" context="{'group_by':'stage_id'}"/>
+                        <filter string="Business developer" name="group_by_business_developer" context="{'group_by':'business_developer_id'}" />
+
+
+                    </group>
+                </search>
+            </field>
+        </record>
+
+       <record id="crm_div_bd_report_action" model="ir.actions.act_window">
+           <field name="name">Activities Analysis</field>
+           <field name="res_model">contact.div.bd.report</field>
+           <field name="view_type">form</field>
+           <field name="view_mode">graph,pivot</field>
+           <field name="context">{}</field>
+           <field name="domain">[]</field>
+       </record>
+
+       <menuitem
+            id="crm_div_bd_report_menu"
+            name="Contact/BD"
+            groups="sales_team.group_sale_manager"
+            parent="crm.crm_menu_report"
+            action="crm_div_bd_report_action"
+            sequence="12"/>
+
+
+</odoo>

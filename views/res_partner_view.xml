@@ -313,7 +313,7 @@
                 <field name="subscription_type"/>
                 <field name="business_developer_id"/>
                 <field name="stage_id"/>
-                <field name="x_last_date_one"/>
+                <field name="x_last_date_one"  string='Last contact Date'/>
                 <field name="comment"/>
 
             </xpath>

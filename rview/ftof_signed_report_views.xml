@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="signed_ftof_report_view_graph" model="ir.ui.view">
+            <field name="name">signed.ftof.track.report.graph</field>
+            <field name="model">signed.ftof.track.report</field>
+            <field name="arch" type="xml">
+                <graph string="Signed Activity Convertion Rate" stacked="True">
+                    <field name="date" type="col"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="signed_ftof_report_view_pivot" model="ir.ui.view">
+            <field name="name">signed.ftof.track.report.pivot</field>
+            <field name="model">signed.ftof.track.report</field>
+            <field name="arch" type="xml">
+                <pivot string="Signed Activity Convertion Rate" disable_linking="True">
+                    <field name="author_id" type="col"/>
+                    <field name="stage_signed"  type="row"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="signed_ftof_report_view_search" model="ir.ui.view">
+            <field name="name">signed.ftof.track.report.search</field>
+            <field name="model">signed.ftof.track.report</field>
+            <field name="arch" type="xml">
+                <search string="Signed Activity Convertion Rate">
+                    <!--<filter string="My Activities" name="activities_my" domain="[('author_id', '=', uid)]"/>-->
+                    <separator/>
+                    <field name="author_id" string="Created By"/>
+                    <group expand="1" string="Group By">
+                        <filter string="Modified By" name="group_by_salesperson" context="{'group_by':'author_id'}"/>
+                        <filter string="State" context="{'group_by':'state_id'}" />
+                        <filter string="Company" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
+                        <filter string="Stage" context="{'group_by':'stage_id'}"/>
+                        <filter string="Customer" name="group_by_contact" context="{'group_by':'partner_id'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
+       <record id="signed_ftof_report_action" model="ir.actions.act_window">
+           <field name="name">Signed Face to Face Activity Convertion Rate</field>
+           <field name="res_model">signed.ftof.track.report</field>
+           <field name="view_type">form</field>
+           <field name="view_mode">graph,pivot</field>
+           <field name="context">{}</field>
+           <field name="domain">[]</field>
+       </record>
+
+       <menuitem
+            id="signed_ftof_report_menu"
+            name="F2F Signed Contact Convertion Rate"
+            groups="sales_team.group_sale_manager"
+            parent="crm.crm_menu_report"
+            action="signed_ftof_report_action"
+            sequence="16"/>
+
+</odoo>
