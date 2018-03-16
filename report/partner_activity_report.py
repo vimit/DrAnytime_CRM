@@ -43,6 +43,7 @@ class ContactActivityReport(models.Model):
     company_id = fields.Many2one('res.company', 'Company', readonly=True)
     stage_id = fields.Many2one('crm.stage', 'Stage', readonly=True)
     partner_id = fields.Many2one('res.partner', 'Customer/contact', readonly=True)
+    state_id = fields.Many2one('res.country.state', 'State')
 
     business_developer_id = fields.Many2one('res.users', 'Business Developer', readonly=True)
     intern_ids = fields.Many2one('hr.intern', 'Intern')
@@ -71,7 +72,8 @@ class ContactActivityReport(models.Model):
                 l.company_id,
                 l.stage_id,
                 l.business_developer_id,
-                l.intern_ids
+                l.intern_ids,
+                l.state_id
  
                 
                 

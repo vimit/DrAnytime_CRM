@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import api, fields, models, SUPERUSER_ID, exceptions, tools, _
-from odoo.exceptions import UserError, AccessError
+from odoo.exceptions import UserError, AccessError, ValidationError
 from datetime import datetime,timedelta
 
 class ResUsers(models.Model):
@@ -124,6 +124,10 @@ class Intern(models.Model):
 class Partner(models.Model):
 
     _inherit = 'res.partner'
+
+
+
+    ###
 
     sent_by_mail = fields.Boolean('Send by paper mail')
 
@@ -386,12 +390,12 @@ class Partner(models.Model):
         return stages.browse(stage_ids)
 
     ####### Test required field to pass to an other stage ####
-
     @api.model
     def _onchange_stage_id_values(self, stage_id):
         """ returns the new values when stage_id has changed """
         if not stage_id:
             return {}
+        print('1111')
 
         call_attempt = len(self.env['call.attempt'].browse(self.call_attempt_ids))
         call_pitch = len(self.env['call.pitch'].browse(self.call_pitch_ids))
@@ -457,8 +461,7 @@ class Partner(models.Model):
             msg = msg + ' - Upfront turnover \n'
 
         if msg:
-            raise exceptions.Warning(
-                    _('To move to this step you first need to fill those fields : \n' + msg))
+            raise ValidationError('To move to this step you first need to fill those fields : \n' + msg)
 
         # elif self.stage_id.id in (8,16) and file_attached ==0 :
         #     raise exceptions.Warning(
@@ -559,6 +562,7 @@ class Partner(models.Model):
 
     @api.multi
     def write(self, vals):
+        print('0000')
         res = super(Partner, self).write(vals)
         if vals.get('stage_id'):
             vals.update(self._onchange_stage_id_values(vals.get('stage_id')))
@@ -574,6 +578,17 @@ class Partner(models.Model):
 
 
         return res
+
+        # vat constraint
+
+    @api.constrains('vat')
+    def check_vat_limit(self):
+        for partner in self:
+            if not partner.vat:
+                continue
+            if len(partner.vat) < 9:
+                msg = 'The TIN must be at least 10 caracters"'
+                raise ValidationError(msg)
 
 
 

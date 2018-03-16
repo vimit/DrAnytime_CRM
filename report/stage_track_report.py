@@ -24,8 +24,7 @@ class StageTrackReport(models.Model):
     company_id = fields.Many2one('res.company', 'Company', readonly=True)
     partner_id = fields.Many2one('res.partner', 'Customer/contact', readonly=True)
     stage_signed = fields.Char('Stage SIGNED AGREEMENT')
-
-
+    state_id = fields.Many2one('res.country.state', 'State')
 
     def _select(self):
         return """
@@ -38,7 +37,8 @@ class StageTrackReport(models.Model):
                 l.id as partner_id,
                 l.country_id,
                 l.company_id,
-                l.stage_id
+                l.stage_id,
+                l.state_id
                 
                 
         """

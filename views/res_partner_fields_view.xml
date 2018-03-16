@@ -26,7 +26,8 @@
                     <group>
                         <field name="type" attrs="{'invisible': [('parent_id','=', False)]}"
                                groups="base.group_no_one"/>
-                        <label for="street" string="Address"/>
+                        <label for="street" string="Address" attrs="{'invisible': [('type', '=', 'contact')]}"/><br/>
+                        <label for="street" string="Invoicing Address" attrs="{'invisible': [('type', '!=', 'contact')]}"/>
                         <div class="o_address_format">
                             <div class="oe_edit_only">
                                 <button name="open_parent" type="object" string="(edit)" class="oe_link"

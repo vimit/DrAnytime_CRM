@@ -5,7 +5,7 @@ from datetime import date, datetime, timedelta
 
 
 
-class StageTrackReport(models.Model):
+class RetiredStageTrackReport(models.Model):
     """ Stage track change Analysis """
 
     _name = "stage.retired.track.report"
@@ -17,6 +17,7 @@ class StageTrackReport(models.Model):
 
     date = fields.Datetime('Date', readonly=True)
     author_id = fields.Many2one('res.partner', 'Created By', readonly=True)
+    state_id = fields.Many2one('res.country.state', 'State')
 
     # user_id = fields.Many2one('res.users', 'Assigned a', readonly=True)
     stage_id = fields.Many2one('crm.stage', 'Actual Stage', readonly=True)
@@ -38,7 +39,8 @@ class StageTrackReport(models.Model):
                 l.id as partner_id,
                 l.country_id,
                 l.company_id,
-                l.stage_id
+                l.stage_id,
+                l.state_id
                 
                 
         """

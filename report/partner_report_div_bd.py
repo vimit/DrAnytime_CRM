@@ -4,7 +4,7 @@ from odoo import fields, models, tools, api
 from datetime import date, datetime, timedelta
 
 
-class ContactActivityReport(models.Model):
+class BDContactActivityReport(models.Model):
     """ CRM Lead Analysis """
 
     _name = "contact.div.bd.report"

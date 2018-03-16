@@ -5,10 +5,10 @@ from datetime import date, datetime, timedelta
 
 
 
-class FtoFTrackReport(models.Model):
+class CallforSignedTrackReport(models.Model):
     """ Stage track change Analysis """
 
-    _name = "signed.ftof.track.report"
+    _name = "signed.called.track.report"
     _auto = False
     _description = "Stage track Analysis"
     _rec_name = 'id'
@@ -25,13 +25,13 @@ class FtoFTrackReport(models.Model):
     company_id = fields.Many2one('res.company', 'Company', readonly=True)
     partner_id = fields.Many2one('res.partner', 'Customer/contact', readonly=True)
     stage_signed = fields.Char('Stage SIGNED AGREEMENT')
-    ftof_signed  = fields.Float('F2F signed rate')
+    called_signed  = fields.Float('Call signed rate')
 
 
 
     def _select(self):
         return """
-        with ftof_values as ( select id,create_date from mail_message where mail_activity_type_id=5)
+        with ftof_values as ( select id,create_date from mail_message where mail_activity_type_id=2)
         SELECT
                 m.id as id,
                 m.field,
@@ -43,7 +43,7 @@ class FtoFTrackReport(models.Model):
                 l.company_id,
                 l.state_id,
                 l.stage_id,
-                100*count(m.id)/count(f.id) as ftof_signed              
+                100*count(m.id)/count(f.id) as called_signed              
                 
         """
 

@@ -7,6 +7,7 @@
             <field name="arch" type="xml">
                 <field name="payment_term_id" position="after">
                     <field name="sent_by_mail"/>
+                    <field name="adress_email_to_send"/>
                 </field>
                 <button name="action_invoice_sent" position="before">
                      <button name="action_send_mail" type="object" string="Send by paper mail" attrs="{'invisible':['|',('sent_by_mail','=',True), ('state', 'not in', ('open','paid'))]}" class="oe_highlight o_invoice_send" groups="base.group_user"/>
