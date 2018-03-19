@@ -19,11 +19,6 @@ padding-left: 27px !important;
     border-left-color: #E6E6E6;
 }
 
-
-
-element {
-
-}
 .o_dashboard .oe_dashboard .oe_action .oe_header {
 font-size: 13px !important;
 padding: 0 0 0 12px !important;
@@ -35,13 +30,13 @@ font-weight: 700;
 
     margin: 0  !important;
 }
-.table-bordered > thead > tr:first-of-type > th:nth-of-type(3),
-.o_pivot_cell_value.text-right:last-of-type,
-.oe_dashboard_column .o_pivot_header_cell_opened.hidden-xs,
-.oe_dashboard_column .o_pivot_measure_row {
+.o_dashboard .table-bordered > thead > tr:first-of-type > th:nth-of-type(3),
+.o_dashboard .o_pivot_cell_value.text-right:last-of-type,
+.o_dashboard .oe_dashboard_column .o_pivot_header_cell_opened.hidden-xs,
+.o_dashboard .oe_dashboard_column .o_pivot_measure_row {
     display: none;
 }
-.oe_dashboard_column td,
-.oe_dashboard_column th {
+.o_dashboard .oe_dashboard_column td,
+.o_dashboard .oe_dashboard_column th {
     width: 72px !important;
 }
