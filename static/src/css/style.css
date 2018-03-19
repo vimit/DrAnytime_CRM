@@ -18,3 +18,20 @@ padding-left: 27px !important;
 .o_form_view .o_form_statusbar > .o_statusbar_status > .o_arrow_button.btn-primary.disabled::after {
     border-left-color: #E6E6E6;
 }
+
+
+
+element {
+
+}
+.o_dashboard .oe_dashboard .oe_action .oe_header {
+font-size: 13px !important;
+padding: 0 0 0 12px !important;
+color: #875A7B;
+font-weight: 700;
+
+}
+.o_dashboard .oe_dashboard .oe_action {
+
+    margin: 0  !important;
+}
