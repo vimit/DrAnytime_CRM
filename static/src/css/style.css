@@ -35,3 +35,13 @@ font-weight: 700;
 
     margin: 0  !important;
 }
+.table-bordered > thead > tr:first-of-type > th:nth-of-type(3),
+.o_pivot_cell_value.text-right:last-of-type,
+.oe_dashboard_column .o_pivot_header_cell_opened.hidden-xs,
+.oe_dashboard_column .o_pivot_measure_row {
+    display: none;
+}
+.oe_dashboard_column td,
+.oe_dashboard_column th {
+    width: 72px !important;
+}

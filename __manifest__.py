@@ -14,11 +14,12 @@
         'views/res_partner_view.xml',
         'views/account_invoice_view.xml',
         'views/target_report.xml',
+
         'views/sale_subscription_view.xml',
+        'rview/subscription_report.xml',
 
         'static/src/xml/template.xml',
 
-        'rview/subscription_report.xml',
         'rview/partner_activity_report_views.xml',
         'rview/stage_track_report_views.xml',
         'rview/partner_sub_report_views.xml',
