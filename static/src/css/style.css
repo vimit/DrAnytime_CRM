@@ -31,8 +31,7 @@ font-weight: 700;
     margin: 0  !important;
 }
 .o_dashboard .table-bordered > thead > tr:first-of-type > th:nth-of-type(3),
-.o_dashboard .o_pivot_cell_value.text-right:last-of-type,
-.o_dashboard .oe_dashboard_column .o_pivot_header_cell_opened.hidden-xs,
+.o_dashboard .table-bordered > thead > tr:first-of-type > th:nth-of-type(2),
 .o_dashboard .oe_dashboard_column .o_pivot_measure_row {
     display: none;
 }
