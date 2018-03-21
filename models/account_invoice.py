@@ -6,7 +6,7 @@ class AccountInvoice(models.Model):
     _inherit = "account.invoice"
 
     sent_by_mail = fields.Boolean('Send by paper mail')
-    adress_email_to_send = fields.Char('Adress Email of Agent', default='support@realdev.be')
+    adress_email_to_send = fields.Char('Adress Email of Agent', default='info@winseed.be')
 
 
 
