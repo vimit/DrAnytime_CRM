@@ -481,7 +481,12 @@
                         </group>
                     </group>
                 </page>
-
+                <page name="lost_detail" string="Lost">
+                    <group>
+                            <field name="date_lost" string="Date"/>
+                        <field name="reason_lost"/>
+                    </group>
+                </page>
 
             </xpath>
 

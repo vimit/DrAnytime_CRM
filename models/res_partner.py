@@ -290,7 +290,7 @@ class Partner(models.Model):
                                   'Website')
     comment_website_ok = fields.Char('Comment(Website)')
     customer_service_number = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going'), ('proposed', 'Proposed')],
-                                               'Customer service number on google profile ?')
+                                               'Customer service number on google profile ')
     comment_customer_service_number = fields.Char('Comment(Customer service number on google profile)')
     website_backlink = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('on_going', 'On Going'), ('proposed', 'Proposed'), ('sent', 'Sent'), ('todo', 'To Do'), ('topropose', 'To Propose')],
                                        'Backlink on website')
@@ -336,6 +336,9 @@ class Partner(models.Model):
     telesecretary_contract = fields.Float('Telesecretary contract (in € / month)')
     subsciption_part_condition = fields.Char('Particular Conditions')
     #
+    # Tab Lost
+    date_lost = fields.Date('Lost Date')
+    reason_lost = fields.Many2one('sale.subscription.close.reason','Lost reason')
 
     def _default_stage_id(self):
         return self.env['crm.stage'].search([], limit=1).id
@@ -388,6 +391,14 @@ class Partner(models.Model):
         stage_ids = stages._search(search_domain, order=order, access_rights_uid=SUPERUSER_ID)
 
         return stages.browse(stage_ids)
+    ### test if there are at least one file attached onchange stage
+    @api.onchange('stage_id')
+    def onchange_stage(self):
+        file_attached = len(
+            self.env['ir.attachment'].search([('res_model', '=', 'res.partner'), ('res_id', '=', self._origin.id)]))
+        if self.stage_id.id in (8, 16) and file_attached == 0:
+            raise ValidationError('To move to this step you first need to Upload at least one file ')
+
 
     ####### Test required field to pass to an other stage ####
     @api.model
@@ -402,7 +413,12 @@ class Partner(models.Model):
         contact_meeting =  len(self.env['contact.meeting'].browse(self.contact_meeting_ids))
         # file_attached = len(self.env['ir.attachment'].search([('res_model','=','res.partner'),('res_id','=',self.id)]))
         msg=''
-
+        ## file attached
+        file_attached = len(
+            self.env['ir.attachment'].search([('res_model', '=', 'res.partner'), ('res_id', '=', self.id)]))
+        if self.stage_id.id in (8, 16) and file_attached == 0:
+            msg = msg + ' - Upload at least one file \n'
+        ##
         if self.stage_id.id == 2 and call_attempt == 0:
             msg = msg + ' - Call Attempt  \n'
 
@@ -418,84 +434,116 @@ class Partner(models.Model):
         if self.stage_id.id == 6 and self.date_preagreement == False:
             msg = msg + ' - Date (pre_agreement)  \n'
 
-        ###########
-        if self.stage_id.id in (8,16) and self.phone == False:
-            msg = msg + ' - Phone \n'
+        ## individual and company contact
+        if self.stage_id.id in (8,16) and self.mobile == False:
+            msg = msg + ' - Mobile \n'
         if self.stage_id.id in (8,16) and self.email == False:
             msg = msg + ' - Email \n'
+        if self.stage_id.id in (8, 16) and self.street == False:
+            msg = msg + ' - Street in Adress \n'
         if self.stage_id.id in (8,16) and self.lang == False:
             msg = msg + ' - Language \n'
-        if self.stage_id.id  in (8,16) and self.inami == False:
-            msg = msg + ' - INAMI \n'
-        if self.stage_id.id in (8,16) and self.subscription_type == False:
-            msg = msg + ' - Subscription Type \n'
-        if self.stage_id.id in (8,16) and self.business_developer_id == False:
+        if self.stage_id.id in (8, 16) and self.business_developer_id == False:
             msg = msg + ' - Business Developer \n'
-        if self.stage_id.id in (8,16) and self.street == False:
-            msg = msg + ' - Street in Adress \n'
         if self.stage_id.id in (8,16) and self.vat == False:
             msg = msg + ' - TIN \n'
-        if self.stage_id.id in (8,16) and self.category_id == False:
-            msg = msg + ' - Tags \n'
-        if self.stage_id.id in (8,16) and self.specialization == False:
-            msg = msg + ' - Specialization \n'
+
+        ## individual contact
+        if self.company_type=='person' and self.stage_id.id  in (8,16) and self.parent_id and self.parent_id.street== False:
+            msg = msg + ' - Invoicing Address (Company Adress) \n'
+        if self.company_type=='person' and self.stage_id.id  in (8,16) and self.inami == False:
+            msg = msg + ' - INAMI \n'
+        if self.company_type=='person' and self.stage_id.id in (8,16) and self.subscription_type == False:
+            msg = msg + ' - Subscription Type \n'
         if self.stage_id.id in (8,16) and not self.title and self.is_company != True:
             msg = msg + ' - Title \n'
-        if self.stage_id.id in (8,16)and self.personnality == False:
-            msg = msg + ' - Personnality \n'
-        ##
-        if self.stage_id.id in (8,16) and call_attempt ==0:
-            msg = msg + ' - Call Attempt \n'
-        if self.stage_id.id in (8,16) and self.date_meeting_set == False:
-            msg = msg + ' - Date of Meeting Set \n'
-        if self.stage_id.id in (8,16) and contact_meeting == 0:
-            msg = msg + ' - Contact Meeting \n'
-        ##
-        if self.stage_id.id in (8,16) and self.subscription_month == False:
-            msg = msg + ' - Monthly subscription \n'
-        if self.stage_id.id in (8,16) and self.subscription_commitment == False:
-            msg = msg + ' - Commitment \n'
-        if self.stage_id.id in (8,16) and self.subscription_upfront_payment == False:
-            msg = msg + ' - Upfront Payment \n'
-        if self.stage_id.id in (8,16) and self.subscription_upfront_turnover == False:
-            msg = msg + ' - Upfront turnover \n'
+        if self.stage_id.id in (8,16) and self.specialization == False:
+            msg = msg + ' - Specialization \n'
+        ### Prospection process
+        if self.company_type=='person' and self.stage_id.id in (8,16) and self.date_signed == False:
+            msg = msg + ' - Date(Signed) \n'
+        if self.company_type=='person' and self.stage_id.id in (8, 16) and self.bd_signed == False:
+            msg = msg + ' - Business Developer (Signed) \n'
+        if self.company_type=='person' and self.stage_id.id in (8, 16) and self.comment_signed == False:
+            msg = msg + ' - Comment (Signed) \n'
 
+        ### Subscription details
+        if self.company_type=='person' and self.stage_id.id in (8,16) and self.subscription_month == False:
+            msg = msg + ' - Monthly subscription \n'
+        if self.company_type=='person' and self.stage_id.id in (8,16) and self.subscription_commitment == False:
+            msg = msg + ' - Commitment \n'
+        if self.company_type=='person' and self.stage_id.id in (8,16) and self.subscription_upfront_payment == False:
+            msg = msg + ' - Upfront Payment \n'
+        if self.company_type=='person' and self.stage_id.id in (8,16) and self.subscription_upfront_turnover == False:
+            msg = msg + ' - Upfront turnover \n'
+        if self.company_type=='person' and self.stage_id.id in (8,16) and self.telesecretary_contract == False:
+            msg = msg + ' - Telesecretary contract \n'
+        if self.company_type=='person' and self.stage_id.id in (8,16) and self.subsciption_part_condition == False:
+            msg = msg + ' - Particular Conditions \n'
+
+        ## stage activated and only individuals
+        if self.company_type=='person' and self.stage_id.id == 16 and self.doctor_admin == False:
+            msg = msg + ' - Doctor AdminID \n'
+        ### stage account managment
+        if self.company_type == 'person' and self.stage_id.id == 16 and self.first_email == False:
+            msg = msg + ' - 1st email (activation) \n'
+        if self.company_type == 'person' and self.stage_id.id == 16 and self.service_completed == False:
+            msg = msg + ' - Services completed \n'
+        if self.company_type == 'person' and self.stage_id.id == 16 and self.price_completed == False:
+            msg = msg + ' - Prices completed \n'
+        if self.company_type == 'person' and self.stage_id.id == 16 and self.cv_completed == False:
+            msg = msg + ' - CV/experiences completed \n'
+        if self.company_type == 'person' and self.stage_id.id == 16 and self.duration_completed == False:
+            msg = msg + ' - Duration completed \n'
+        if self.company_type == 'person' and self.stage_id.id == 16 and self.personal_message_completed == False:
+            msg = msg + ' - Personal message completed \n'
+        if self.company_type == 'person' and self.stage_id.id == 16 and self.profile_picture == False:
+            msg = msg + ' - Profile picture \n'
+        if self.company_type == 'person' and self.stage_id.id == 16 and self.photo_practice == False:
+            msg = msg + ' - Photo Practice \n'
+        if self.company_type == 'person' and self.stage_id.id == 16 and self.marketing_kit == False:
+            msg = msg + ' - Marketing kit \n'
+        if self.company_type == 'person' and self.stage_id.id == 16 and self.synchronisation_completed == False:
+            msg = msg + ' - Synchronization \n'
+        if self.company_type == 'person' and self.stage_id.id == 16 and self.backlink == False:
+            msg = msg + ' - Backlink \n'
+        if self.company_type == 'person' and self.stage_id.id == 16 and self.google_profile == False:
+            msg = msg + ' - Google profile \n'
+        if self.company_type == 'person' and self.stage_id.id == 16 and self.voicemail == False:
+            msg = msg + ' - Voicemail \n'
+        if self.company_type == 'person' and self.stage_id.id == 16 and self.mail_signature == False:
+            msg = msg + ' - Mail signature \n'
+        if self.company_type == 'person' and self.stage_id.id == 16 and self.email_to_patient == False:
+            msg = msg + ' - Email to patient \n'
+        if self.company_type == 'person' and self.stage_id.id == 16 and self.translation == False:
+            msg = msg + ' - Translation \n'
+        if self.company_type == 'person' and self.stage_id.id == 16 and self.business_card == False:
+            msg = msg + ' - Manuel Sent \n'
+        if self.company_type == 'person' and self.stage_id.id == 16 and self.manuel_sent == False:
+            msg = msg + ' - Business cards \n'
+        if self.company_type == 'person' and self.stage_id.id == 16 and self.widget == False:
+            msg = msg + ' - Widget \n'
+        if self.company_type == 'person' and self.stage_id.id == 16 and self.voice_mail == False:
+            msg = msg + ' - Voicemail + email signature \n'
+        if self.company_type == 'person' and self.stage_id.id == 16 and self.website_ok == False:
+            msg = msg + ' - Website \n'
+        if self.company_type == 'person' and self.stage_id.id == 16 and self.customer_service_number == False:
+            msg = msg + ' - Customer service number on google profile  \n'
+        if self.company_type == 'person' and self.stage_id.id == 16 and self.website_backlink == False:
+            msg = msg + ' - Backlink on website \n'
+
+        ## Lost paying, tab lost
+        if self.company_type == 'person' and self.stage_id.id == 17 and self.date_lost == False:
+            msg = msg + ' - Lost Date \n'
+        if self.company_type == 'person' and self.stage_id.id == 17 and self.reason_lost == False:
+            msg = msg + ' - Lost Reason \n'
+
+
+
+
+       ##
         if msg:
             raise ValidationError('To move to this step you first need to fill those fields : \n' + msg)
-
-        # elif self.stage_id.id in (8,16) and file_attached ==0 :
-        #     raise exceptions.Warning(
-        #         _('To move to this step you first need to upload at least one file'))
-
-        ###############
-        # elif self.stage_id.id == 16 and self.backlink == False:
-        #     raise exceptions.Warning(
-        #         _('To move to this step you first need to fill field backlink'))
-        #
-        # elif self.stage_id.id == 16 and self.voicemail == False:
-        #     raise exceptions.Warning(
-        #         _('To move to this step you first need to fill field Voicemail'))
-        #
-        # elif self.stage_id.id == 16 and self.mail_signature == False:
-        #     raise exceptions.Warning(
-        #         _('To move to this step you first need to fill field Email signature '))
-        #
-        # elif self.stage_id.id == 16 and self.translation == False:
-        #     raise exceptions.Warning(
-        #         _('To move to this step you first need to fill field Translation'))
-        #
-        # elif self.stage_id.id == 16 and self.business_card == False:
-        #     raise exceptions.Warning(
-        #         _('To move to this step you first need to fill field Business card '))
-        #
-        # elif self.stage_id.id == 16 and self.marketing_kit == False:
-        #     raise exceptions.Warning(
-        #         _('To move to this step you first need to fill field Marketing kit'))
-        #
-        # elif self.stage_id.id == 16 and self.google_profile == False:
-        #     raise exceptions.Warning(
-        #         _('To move to this step you first need to fill field Google profile'))
-
 
         return {}
 
