@@ -476,8 +476,6 @@ class Partner(models.Model):
             msg = msg + ' - Upfront Payment \n'
         if self.company_type=='person' and self.stage_id.id in (8,16) and self.subscription_upfront_turnover == False:
             msg = msg + ' - Upfront turnover \n'
-        if self.company_type=='person' and self.stage_id.id in (8,16) and self.telesecretary_contract == False:
-            msg = msg + ' - Telesecretary contract \n'
         if self.company_type=='person' and self.stage_id.id in (8,16) and self.subsciption_part_condition == False:
             msg = msg + ' - Particular Conditions \n'
 
