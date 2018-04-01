@@ -57,6 +57,7 @@
                         <field name="personnality"/>
                         <field name="happiness" widget="priority"/>
                         <field name="doctor_admin"/>
+                        <field name="current_crm"/>
                     </group>
 
                 </group>

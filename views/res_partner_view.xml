@@ -40,14 +40,14 @@
                 <attribute name="required">1</attribute>
             </xpath>
 
-           <!--<field name="property_payment_term_id" position="after">-->
-                 <!--<field name="sent_by_mail" />-->
+            <!--<field name="property_payment_term_id" position="after">-->
+            <!--<field name="sent_by_mail" />-->
             <!--</field>-->
 
             <page name="sales_purchases" position="attributes">
                 <attribute name="invisible">1</attribute>
             </page>
-            <field name="image"  position="attributes">
+            <field name="image" position="attributes">
                 <attribute name="invisible">1</attribute>
             </field>
 
@@ -58,17 +58,20 @@
         <field name="inherit_id" ref="base.view_res_partner_filter"/>
         <field name="model">res.partner</field>
         <field type="xml" name="arch">
-             <filter name="customer" position="after">
+            <filter name="customer" position="after">
+                <field name="zip"/>
+                <filter string="My partners" name="my_partners"
+                        domain="[('business_developer_id','=',uid),('type','=','contact')]"/>
+                <filter string="Contact Adress Type" name="partner_adress" domain="[('type','!=','contact')]"/>
 
-                <filter string="My partners" name="my_partners" domain="[('business_developer_id','=',uid),('type','=','contact')]"/>
-                 <filter string="Contact Adress Type" name="partner_adress" domain="[('type','!=','contact')]"/>
-
-             </filter>
+            </filter>
             <group name="group_by" position="inside">
-                <filter name="business_developer" string="Business Developer" domain="[]" context="{'group_by' : 'business_developer_id'}"/>
+                <filter name="business_developer" string="Business Developer" domain="[]"
+                        context="{'group_by' : 'business_developer_id'}"/>
 
                 <filter name="stage" string="Stage" domain="[]" context="{'group_by' : 'stage_id'}"/>
-                <filter name="stage_target" string="Target Stage" domain="[]" context="{'group_by' : 'state_target'}" invisible="1"/>
+                <filter name="stage_target" string="Target Stage" domain="[]" context="{'group_by' : 'state_target'}"
+                        invisible="1"/>
                 <filter name="stage_account" string="Account Stage" domain="[]"
                         context="{'group_by' : 'state_account'}" invisible=""/>
             </group>
@@ -77,11 +80,11 @@
 
 
     <!-- WORKFLOW -->
-        <menuitem
-    id="menu_workflow"
-    name="Workflow"
-    parent="crm.crm_menu_root"
-    sequence="0"/>
+    <menuitem
+            id="menu_workflow"
+            name="Workflow"
+            parent="crm.crm_menu_root"
+            sequence="0"/>
 
     <!-- TARGET -->
 
@@ -307,13 +310,13 @@
         <field name="model">res.partner</field>
         <field type="xml" name="arch">
             <xpath expr="//tree[1]" position="inside">
-                 <field name="city"/>
+                <field name="city"/>
                 <field name="inami"/>
                 <field name="specialization" widget="many2many_tags"/>
                 <field name="subscription_type"/>
                 <field name="business_developer_id"/>
                 <field name="stage_id"/>
-                <field name="x_last_date_one"  string='Last contact Date'/>
+                <field name="x_last_date_one" string='Last contact Date'/>
                 <field name="comment"/>
 
             </xpath>

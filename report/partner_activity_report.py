@@ -4,97 +4,72 @@ from odoo import fields, models, tools, api
 from datetime import date, datetime, timedelta
 
 
-class MailActivity(models.Model):
-    _inherit = 'mail.activity'
-
-    state = fields.Selection([
-        ('overdue', 'Overdue'),
-        ('today', 'Today'),
-        ('planned', 'Planned')], 'State',
-        compute='_compute_state', store=True)
-
-    @api.depends('date_deadline')
-    def _compute_state(self):
-        today = date.today()
-        for record in self.filtered(lambda activity: activity.date_deadline):
-            date_deadline = fields.Date.from_string(record.date_deadline)
-            diff = (date_deadline - today)
-            if diff.days == 0:
-                record.state = 'today'
-            elif diff.days < 0:
-                record.state = 'overdue'
-            else:
-                record.state = 'planned'
-
 class ContactActivityReport(models.Model):
     """ CRM Lead Analysis """
 
-    _name = "contact.activity.report"
+    _name = "partner.activity.report"
     _auto = False
-    _description = "CRM Activity Analysis"
+    _description = "Calendar Activity Analysis"
     _rec_name = 'id'
 
-    date_deadline = fields.Date('Date', readonly=True)
-    author_id = fields.Many2one('res.partner', 'Created By', readonly=True)
-    user_id = fields.Many2one('res.users', 'Contact Created By', readonly=True)
-    summary = fields.Char('Summary', readonly=True)
-    activity_type_id = fields.Many2one('mail.activity.type', 'Activity Type', readonly=True)
-    country_id = fields.Many2one('res.country', 'Country', readonly=True)
-    company_id = fields.Many2one('res.company', 'Company', readonly=True)
-    stage_id = fields.Many2one('crm.stage', 'Stage', readonly=True)
-    partner_id = fields.Many2one('res.partner', 'Customer/contact', readonly=True)
-    state_id = fields.Many2one('res.country.state', 'State')
-
+    start = fields.Datetime('Date Start', readonly=True)
+    stop = fields.Datetime('Date Stop', readonly=True)
+    user_id = fields.Many2one('res.users', 'Created By', readonly=True)
+    description = fields.Char('Description', readonly=True)
+    event_type_activity = fields.Many2one('mail.activity.type', 'Activity Type', readonly=True)
+    partner_id = fields.Many2one('res.partner', 'Contact/Customer')
     business_developer_id = fields.Many2one('res.users', 'Business Developer', readonly=True)
-    intern_ids = fields.Many2one('hr.intern', 'Intern')
     state = fields.Selection([
-        ('overdue', 'Overdue'),
-        ('today', 'Today'),
-        ('planned', 'Planned')], 'State')
+        ('needsAction', 'Needs Action'),
+        ('tentative', 'Uncertain'),
+        ('declined', 'Declined'),
+        ('accepted', 'Accepted')], 'State')
     category = fields.Selection([
         ('default', 'Other')], default='default',
         string='Category')
 
-
     def _select(self):
         return """
+        
+            with users as ( 
+                select u.id,r.calendar_event_id from calendar_event_res_partner_rel r, res_users u where u.partner_id=r.res_partner_id
+                )
+            , partners as (
+                select r.res_partner_id ,r.calendar_event_id from calendar_event_res_partner_rel r where not exists ( select partner_id from res_users u where u.partner_id=r.res_partner_id)
+                )
             SELECT
-                m.id,
-                m.activity_type_id,
-                m.user_id as author_id,
-                m.date_deadline,
-                m.summary,
+                distinct m.id,
+                m.event_type_activity,
+                m.user_id,
+                m.start,
+                m.stop,
+                m.description,
                 m.state,
                 t.category,
-                l.id as partner_id,
-                l.create_uid as user_id,
-                l.country_id,
-                l.company_id,
-                l.stage_id,
-                l.business_developer_id,
-                l.intern_ids,
-                l.state_id
+                u.id as business_developer_id,
+                p.res_partner_id as partner_id
  
                 
                 
         """
 
-
     def _from(self):
         return """
-            FROM mail_activity AS m
+            FROM calendar_event_res_partner_rel r ,  users u, partners p, calendar_event AS m
         """
 
     def _join(self):
         return """
-            JOIN res_partner AS l ON m.res_id = l.id
-            JOIN mail_activity_type AS t ON m.activity_type_id = t.id
+            
+            JOIN mail_activity_type AS t ON m.event_type_activity = t.id
         """
 
     def _where(self):
         return """
             WHERE
-                m.res_model = 'res.partner' AND m.activity_type_id IS NOT NULL
+                m.event_type_activity IS NOT NULL
+                AND  u.calendar_event_id=p.calendar_event_id 
+                AND  u.calendar_event_id=m.id
         """
 
     @api.model_cr
@@ -108,5 +83,4 @@ class ContactActivityReport(models.Model):
                 %s
             )
         """ % (self._table, self._select(), self._from(), self._join(), self._where())
-        )
-
+                         )

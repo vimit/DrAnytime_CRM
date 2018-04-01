@@ -121,6 +121,12 @@ class Intern(models.Model):
     start_date = fields.Date('Start Date')
     end_date = fields.Date('End Date')
 
+class CurrentCRM(models.Model):
+    _name = 'current.crm'
+
+    name  = fields.Char('Name')
+    description = fields.Char('Description')
+
 class Partner(models.Model):
 
     _inherit = 'res.partner'
@@ -130,6 +136,7 @@ class Partner(models.Model):
     ###
 
     sent_by_mail = fields.Boolean('Send by paper mail')
+    current_crm = fields.Many2one('current.crm', 'Current CRM')
 
     # principal doctor information
     inami = fields.Char('INAMI / RIZIV')

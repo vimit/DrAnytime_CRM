@@ -13,45 +13,27 @@ class CallFtofTrackReport(models.Model):
     _description = "Activities track Analysis"
     _rec_name = 'id'
 
-    field = fields.Char('Changed Field', readonly=True)
-
     date = fields.Datetime('Date', readonly=True)
-    author_id = fields.Many2one('res.partner', 'Created By', readonly=True)
-
-    # user_id = fields.Many2one('res.users', 'Assigned a', readonly=True)
-    stage_id = fields.Many2one('crm.stage', 'Actual Stage', readonly=True)
-    country_id = fields.Many2one('res.country', 'Country', readonly=True)
-    state_id = fields.Many2one('res.country.state', 'State', readonly=True)
-    company_id = fields.Many2one('res.company', 'Company', readonly=True)
-    partner_id = fields.Many2one('res.partner', 'Customer/contact', readonly=True)
-    stage_signed = fields.Char('Stage SIGNED AGREEMENT', readonly=True)
-    ftof_div_call  = fields.Float('Call to F2F Conversion Rate', readonly=True)
-
-
+    ftof_div_call = fields.Float('Call to F2F Conversion Rate', group_operator='avg')
 
     def _select(self):
         return """
-        with ftof_values as ( select id,create_date from mail_message where mail_activity_type_id=5),
-        call_values as ( select id,create_date from mail_message where mail_activity_type_id=2)
-            SELECT
-                m.id,
-                m.field,
-                m.new_value_char as stage_signed,
-                mes.author_id as author_id,
-                mes.date,
-                l.id as partner_id,
-                l.country_id,
-                l.company_id,
-                l.state_id,
-                l.stage_id,
-                100*count(f.id)/count(c.id) as ftof_div_call              
-                
+       SELECT
+        c.id,
+        c.start as date,
+        (100* (select count(e.id) from calendar_event e, mail_activity_type t 
+                 where t.id=e.event_type_activity and t.category='meeting' and EXTRACT(YEAR FROM e.create_date)= EXTRACT(YEAR FROM c.start) 
+                    AND EXTRACT(MONTH FROM e.create_date)= EXTRACT(MONTH FROM c.start)  )
+                 /
+                 (select count(f.id) from calendar_event f, mail_activity_type t 
+                 where t.id=f.event_type_activity and t.name ilike '%call%'  and EXTRACT(YEAR FROM f.create_date)= EXTRACT(YEAR FROM c.start) 
+                    AND EXTRACT(MONTH FROM f.create_date)= EXTRACT(MONTH FROM c.start)) ) as ftof_div_call  
         """
 
 
     def _from(self):
         return """
-            FROM ftof_values AS f,call_values AS c, mail_tracking_value AS m
+            from calendar_event AS c
         """
 
     def _join(self):
@@ -63,13 +45,10 @@ class CallFtofTrackReport(models.Model):
     def _where(self):
         return """
             WHERE
-               EXTRACT(YEAR FROM m.create_date)= EXTRACT(YEAR FROM f.create_date) 
-               AND EXTRACT(MONTH FROM m.create_date)= EXTRACT(MONTH FROM f.create_date)
-               AND EXTRACT(YEAR FROM m.create_date)= EXTRACT(YEAR FROM c.create_date) 
-               AND EXTRACT(MONTH FROM m.create_date)= EXTRACT(MONTH FROM c.create_date)
-               
-               and mes.model = 'res.partner' AND m.field ='stage_id' AND new_value_char = 'SIGNED AGREEMENT' 
-        """
+               (select count(f.id) from calendar_event f, mail_activity_type t 
+                 where t.id=f.event_type_activity and t.name ilike '%call%'  and EXTRACT(YEAR FROM f.create_date)= EXTRACT(YEAR FROM c.start) 
+                    AND EXTRACT(MONTH FROM f.create_date)= EXTRACT(MONTH FROM c.start))!=0
+               """
     def _group(self):
         return """
             GROUP BY
@@ -96,9 +75,7 @@ class CallFtofTrackReport(models.Model):
                 %s
                 %s
                 %s
-                %s
-                %s
             )
-        """ % (self._table, self._select(), self._from(), self._join(), self._where(), self._group())
+        """ % (self._table, self._select(), self._from(), self._where())
         )
 

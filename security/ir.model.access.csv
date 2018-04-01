@@ -34,3 +34,5 @@ contact_activity_div_bd_report_root,contact.activity.div.bd.report.root,DrAnytim
 contact_div_bd_report_root,contact.div.bd.report.root,DrAnytime_CRM.model_contact_div_bd_report,,1,1,1,1
 stage_retired_track_report_root,stage.retired.track.report.root,DrAnytime_CRM.model_stage_retired_track_report,,1,1,1,1
 call_ftof_track_report_root,call.ftof.track.report.root,DrAnytime_CRM.model_call_ftof_track_report,,1,1,1,1
+access_current_crm_manager,current.crm.manager,DrAnytime_CRM.model_current_crm,sales_team.group_sale_manager,1,1,1,1
+access_current_crm_root,partner.specialization.root,DrAnytime_CRM.model_current_crm,,1,0,0,0

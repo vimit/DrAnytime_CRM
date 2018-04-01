@@ -23,27 +23,9 @@
             </field>
         </record>
 
-        <record id="signed_called_report_view_search" model="ir.ui.view">
-            <field name="name">signed.called.track.report.search</field>
-            <field name="model">signed.called.track.report</field>
-            <field name="arch" type="xml">
-                <search string="Signed Activity Convertion Rate">
-                    <!--<filter string="My Activities" name="activities_my" domain="[('author_id', '=', uid)]"/>-->
-                    <separator/>
-                    <field name="author_id" string="Created By"/>
-                    <group expand="1" string="Group By">
-                        <filter string="Modified By" name="group_by_salesperson" context="{'group_by':'author_id'}"/>
-                        <filter string="State" context="{'group_by':'state_id'}" />
-                        <filter string="Company" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
-                        <filter string="Stage" context="{'group_by':'stage_id'}"/>
-                        <filter string="Customer" name="group_by_contact" context="{'group_by':'partner_id'}" />
-                    </group>
-                </search>
-            </field>
-        </record>
 
        <record id="signed_called_report_action" model="ir.actions.act_window">
-           <field name="name">Signed Face to Face Activity Convertion Rate</field>
+           <field name="name">Signed Call Activity Convertion Rate</field>
            <field name="res_model">signed.called.track.report</field>
            <field name="view_type">form</field>
            <field name="view_mode">graph,pivot</field>
