@@ -40,7 +40,12 @@ class FtoFTrackReport(models.Model):
         return """
             FROM calendar_event AS c
         """
-
+    def _where(self):
+        return """
+            WHERE
+               (select count(e.id) from calendar_event e, mail_activity_type t 
+                 where t.id=e.event_type_activity and t.category='meeting' )!=0
+               """
 
     @api.model_cr
     def init(self):
@@ -49,7 +54,8 @@ class FtoFTrackReport(models.Model):
             CREATE OR REPLACE VIEW %s AS (
                 %s
                 %s
+                %s
             )
-        """ % (self._table, self._select(), self._from())
+        """ % (self._table, self._select(), self._from(), self._where())
         )
 

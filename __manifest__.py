@@ -6,8 +6,7 @@
     'category': 'Customization',
     'license': 'AGPL-3',
     'author': "RealDev ",
-    'depends': ['base', 'crm','web'],
-        # ,'sale_subscription'],
+    'depends': ['base', 'crm','web''sale_subscription'],
     'data': [
 
         'security/ir.model.access.csv',
@@ -17,8 +16,8 @@
         'views/target_report.xml',
         'views/calendar_view.xml',
 
-        # 'views/sale_subscription_view.xml',
-        # 'rview/subscription_report.xml',
+        'views/sale_subscription_view.xml',
+        'rview/subscription_report.xml',
 
         'static/src/xml/template.xml',
 
