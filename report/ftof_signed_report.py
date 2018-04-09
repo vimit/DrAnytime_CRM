@@ -23,14 +23,15 @@ class FtoFTrackReport(models.Model):
         
         SELECT
             c.id,
-            c.start as date,
+            c.create_date as date,
             (100* (select count(id) 
                    from mail_tracking_value m
                     where field ='stage_id' AND new_value_char = 'SIGNED AGREEMENT' 
-                    and EXTRACT(YEAR FROM m.create_date)= EXTRACT(YEAR FROM c.start) 
-                    AND EXTRACT(MONTH FROM m.create_date)= EXTRACT(MONTH FROM c.start) )
+                    and EXTRACT(YEAR FROM m.create_date)= EXTRACT(YEAR FROM c.create_date) 
+                    AND EXTRACT(MONTH FROM m.create_date)= EXTRACT(MONTH FROM c.create_date) )
                 /(select count(e.id) from calendar_event e, mail_activity_type t 
-                 where t.id=e.event_type_activity and t.category='meeting' )) as ftof_signed            
+                 where EXTRACT(YEAR FROM e.start)= EXTRACT(YEAR FROM c.create_date) 
+                    AND EXTRACT(MONTH FROM e.start)= EXTRACT(MONTH FROM c.create_date) )) as ftof_signed            
       
     
         """
@@ -38,13 +39,14 @@ class FtoFTrackReport(models.Model):
 
     def _from(self):
         return """
-            FROM calendar_event AS c
+            FROM mail_tracking_value AS c
         """
     def _where(self):
         return """
             WHERE
-               (select count(e.id) from calendar_event e, mail_activity_type t 
-                 where t.id=e.event_type_activity and t.category='meeting' )!=0
+               (select count(e.id) from calendar_event e
+                 where EXTRACT(YEAR FROM e.start)= EXTRACT(YEAR FROM c.create_date) 
+                    AND EXTRACT(MONTH FROM e.start)= EXTRACT(MONTH FROM c.create_date)  )!=0
                """
 
     @api.model_cr

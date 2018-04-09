@@ -20,27 +20,45 @@ class CallforSignedTrackReport(models.Model):
        
             SELECT
             c.id,
-            c.start as date,
+            c.create_date as date,
             (100* (select count(id) 
                    from mail_tracking_value m
                     where field ='stage_id' AND new_value_char = 'SIGNED AGREEMENT' 
-                    and EXTRACT(YEAR FROM m.create_date)= EXTRACT(YEAR FROM c.start) 
-                    AND EXTRACT(MONTH FROM m.create_date)= EXTRACT(MONTH FROM c.start) )
-                /(select count(e.id) from calendar_event e, mail_activity_type t 
-                 where t.id=e.event_type_activity and t.name ilike '%call%' )) as called_signed            
-                
+                    and EXTRACT(YEAR FROM m.create_date)= EXTRACT(YEAR FROM c.create_date) 
+                    AND EXTRACT(MONTH FROM m.create_date)= EXTRACT(MONTH FROM c.create_date) )
+                /
+               (( select count(p.id)
+from  call_pitch p
+where
+ ( EXTRACT(YEAR FROM p.date_pitch)= EXTRACT(YEAR FROM c.create_date) 
+                    AND EXTRACT(MONTH FROM p.date_pitch)= EXTRACT(MONTH FROM c.create_date) )) 
+                    +
+                    ( select count(a.id)
+from call_attempt a
+where
+EXTRACT(YEAR FROM a.date_attempt)= EXTRACT(YEAR FROM c.create_date) 
+                    AND EXTRACT(MONTH FROM a.date_attempt)= EXTRACT(MONTH FROM c.create_date)) ))as called_signed
         """
 
     def _from(self):
         return """
-           FROM calendar_event AS c
+           FROM mail_tracking_value AS c
         """
 
     def _where(self):
         return """
             WHERE
-               (select count(e.id) from calendar_event e, mail_activity_type t 
-                 where t.id=e.event_type_activity and t.name ilike '%call%' )!=0
+              (( select count(p.id)
+from  call_pitch p
+where
+ ( EXTRACT(YEAR FROM p.date_pitch)= EXTRACT(YEAR FROM c.create_date) 
+                    AND EXTRACT(MONTH FROM p.date_pitch)= EXTRACT(MONTH FROM c.create_date) )) 
+                    +
+                    ( select count(a.id)
+from call_attempt a
+where
+EXTRACT(YEAR FROM a.date_attempt)= EXTRACT(YEAR FROM c.create_date) 
+                    AND EXTRACT(MONTH FROM a.date_attempt)= EXTRACT(MONTH FROM c.create_date)) ) !=0
                """
 
     @api.model_cr

@@ -40,9 +40,9 @@
                 <attribute name="required">1</attribute>
             </xpath>
 
-            <!--<field name="property_payment_term_id" position="after">-->
-            <!--<field name="sent_by_mail" />-->
-            <!--</field>-->
+            <field name="property_payment_term_id" position="after">
+            <field name="sent_by_mail" />
+            </field>
 
             <page name="sales_purchases" position="attributes">
                 <attribute name="invisible">1</attribute>

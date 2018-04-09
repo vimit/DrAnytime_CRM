@@ -21,13 +21,21 @@ class CallFtofTrackReport(models.Model):
        SELECT
         c.id,
         c.start as date,
-        (100* (select count(e.id) from calendar_event e, mail_activity_type t 
-                 where t.id=e.event_type_activity and t.category='meeting' and EXTRACT(YEAR FROM e.create_date)= EXTRACT(YEAR FROM c.start) 
-                    AND EXTRACT(MONTH FROM e.create_date)= EXTRACT(MONTH FROM c.start)  )
+        (100* (select count(e.id) from calendar_event e
+                 where EXTRACT(YEAR FROM e.start)= EXTRACT(YEAR FROM c.start) 
+                    AND EXTRACT(MONTH FROM e.start)= EXTRACT(MONTH FROM c.start)   )
                  /
-                 (select count(f.id) from calendar_event f, mail_activity_type t 
-                 where t.id=f.event_type_activity and t.name ilike '%call%'  and EXTRACT(YEAR FROM f.create_date)= EXTRACT(YEAR FROM c.start) 
-                    AND EXTRACT(MONTH FROM f.create_date)= EXTRACT(MONTH FROM c.start)) ) as ftof_div_call  
+                 (( select count(p.id)
+from  call_pitch p
+where
+ ( EXTRACT(YEAR FROM p.date_pitch)= EXTRACT(YEAR FROM c.start) 
+                    AND EXTRACT(MONTH FROM p.date_pitch)= EXTRACT(MONTH FROM c.start) )) 
+                    +
+                    ( select count(a.id)
+from call_attempt a
+where
+EXTRACT(YEAR FROM a.date_attempt)= EXTRACT(YEAR FROM c.start) 
+                    AND EXTRACT(MONTH FROM a.date_attempt)= EXTRACT(MONTH FROM c.start)) ) ) as ftof_div_call  
         """
 
 
@@ -36,36 +44,23 @@ class CallFtofTrackReport(models.Model):
             from calendar_event AS c
         """
 
-    def _join(self):
-        return """
-            JOIN mail_message AS mes ON mes.id = m.mail_message_id
-            JOIN res_partner AS l ON mes.res_id = l.id
-        """
 
     def _where(self):
         return """
             WHERE
-               (select count(f.id) from calendar_event f, mail_activity_type t 
-                 where t.id=f.event_type_activity and t.name ilike '%call%'  and EXTRACT(YEAR FROM f.create_date)= EXTRACT(YEAR FROM c.start) 
-                    AND EXTRACT(MONTH FROM f.create_date)= EXTRACT(MONTH FROM c.start))!=0
+               (( select count(p.id)
+from  call_pitch p
+where
+ ( EXTRACT(YEAR FROM p.date_pitch)= EXTRACT(YEAR FROM c.start) 
+                    AND EXTRACT(MONTH FROM p.date_pitch)= EXTRACT(MONTH FROM c.start) )) 
+                    +
+                    ( select count(a.id)
+from call_attempt a
+where
+EXTRACT(YEAR FROM a.date_attempt)= EXTRACT(YEAR FROM c.start) 
+                    AND EXTRACT(MONTH FROM a.date_attempt)= EXTRACT(MONTH FROM c.start)) )!=0
                """
-    def _group(self):
-        return """
-            GROUP BY
-                m.id,
-                m.field,
-                m.new_value_char,
-                mes.author_id,
-                mes.date,
-                l.id ,
-                l.country_id,
-                l.company_id,
-                l.state_id,
-                l.stage_id,
-                f.id,
-                c.id
-            
-        """
+
 
     @api.model_cr
     def init(self):
