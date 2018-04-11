@@ -456,91 +456,91 @@ class Partner(models.Model):
             msg = msg + ' - TIN \n'
 
         ## individual contact
-        if self.company_type=='person' and self.stage_id.id  in (8,16) and self.parent_id and self.parent_id.street== False:
+        if self.stage_id.id  in (8,16) and self.parent_id and self.parent_id.street== False:
             msg = msg + ' - Invoicing Address (Company Adress) \n'
-        if self.company_type=='person' and self.stage_id.id  in (8,16) and self.inami == False:
+        if self.stage_id.id  in (8,16) and self.inami == False:
             msg = msg + ' - INAMI \n'
-        if self.company_type=='person' and self.stage_id.id in (8,16) and self.subscription_type == False:
+        if self.stage_id.id in (8,16) and self.subscription_type == False:
             msg = msg + ' - Subscription Type \n'
         if self.stage_id.id in (8,16) and not self.title and self.is_company != True:
             msg = msg + ' - Title \n'
         if self.stage_id.id in (8,16) and self.specialization == False:
             msg = msg + ' - Specialization \n'
         ### Prospection process
-        if self.company_type=='person' and self.stage_id.id in (8,16) and self.date_signed == False:
+        if self.stage_id.id in (8,16) and self.date_signed == False:
             msg = msg + ' - Date(Signed) \n'
-        if self.company_type=='person' and self.stage_id.id in (8, 16) and self.bd_signed == False:
+        if self.stage_id.id in (8, 16) and self.bd_signed == False:
             msg = msg + ' - Business Developer (Signed) \n'
-        if self.company_type=='person' and self.stage_id.id in (8, 16) and self.comment_signed == False:
+        if self.stage_id.id in (8, 16) and self.comment_signed == False:
             msg = msg + ' - Comment (Signed) \n'
 
         ### Subscription details
-        if self.company_type=='person' and self.stage_id.id in (8,16) and self.subscription_month == False:
+        if self.stage_id.id in (8,16) and self.subscription_month == False:
             msg = msg + ' - Monthly subscription \n'
-        if self.company_type=='person' and self.stage_id.id in (8,16) and self.subscription_commitment == False:
+        if self.stage_id.id in (8,16) and self.subscription_commitment == False:
             msg = msg + ' - Commitment \n'
-        if self.company_type=='person' and self.stage_id.id in (8,16) and self.subscription_upfront_payment == False:
+        if self.stage_id.id in (8,16) and self.subscription_upfront_payment == False:
             msg = msg + ' - Upfront Payment \n'
-        if self.company_type=='person' and self.stage_id.id in (8,16) and self.subscription_upfront_turnover == False:
+        if self.stage_id.id in (8,16) and self.subscription_upfront_turnover == False:
             msg = msg + ' - Upfront turnover \n'
-        if self.company_type=='person' and self.stage_id.id in (8,16) and self.subsciption_part_condition == False:
+        if self.stage_id.id in (8,16) and self.subsciption_part_condition == False:
             msg = msg + ' - Particular Conditions \n'
 
         ## stage activated and only individuals
-        if self.company_type=='person' and self.stage_id.id == 16 and self.doctor_admin == False:
+        if self.stage_id.id == 16 and self.doctor_admin == False:
             msg = msg + ' - Doctor AdminID \n'
         ### stage account managment
-        if self.company_type == 'person' and self.stage_id.id == 16 and self.first_email == False:
+        if  self.stage_id.id == 16 and self.first_email == False:
             msg = msg + ' - 1st email (activation) \n'
-        if self.company_type == 'person' and self.stage_id.id == 16 and self.service_completed == False:
+        if  self.stage_id.id == 16 and self.service_completed == False:
             msg = msg + ' - Services completed \n'
-        if self.company_type == 'person' and self.stage_id.id == 16 and self.price_completed == False:
+        if  self.stage_id.id == 16 and self.price_completed == False:
             msg = msg + ' - Prices completed \n'
-        if self.company_type == 'person' and self.stage_id.id == 16 and self.cv_completed == False:
+        if  self.stage_id.id == 16 and self.cv_completed == False:
             msg = msg + ' - CV/experiences completed \n'
-        if self.company_type == 'person' and self.stage_id.id == 16 and self.duration_completed == False:
+        if  self.stage_id.id == 16 and self.duration_completed == False:
             msg = msg + ' - Duration completed \n'
-        if self.company_type == 'person' and self.stage_id.id == 16 and self.personal_message_completed == False:
+        if  self.stage_id.id == 16 and self.personal_message_completed == False:
             msg = msg + ' - Personal message completed \n'
-        if self.company_type == 'person' and self.stage_id.id == 16 and self.profile_picture == False:
+        if  self.stage_id.id == 16 and self.profile_picture == False:
             msg = msg + ' - Profile picture \n'
-        if self.company_type == 'person' and self.stage_id.id == 16 and self.photo_practice == False:
+        if  self.stage_id.id == 16 and self.photo_practice == False:
             msg = msg + ' - Photo Practice \n'
-        if self.company_type == 'person' and self.stage_id.id == 16 and self.marketing_kit == False:
+        if  self.stage_id.id == 16 and self.marketing_kit == False:
             msg = msg + ' - Marketing kit \n'
-        if self.company_type == 'person' and self.stage_id.id == 16 and self.synchronisation_completed == False:
+        if  self.stage_id.id == 16 and self.synchronisation_completed == False:
             msg = msg + ' - Synchronization \n'
-        if self.company_type == 'person' and self.stage_id.id == 16 and self.backlink == False:
+        if  self.stage_id.id == 16 and self.backlink == False:
             msg = msg + ' - Backlink \n'
-        if self.company_type == 'person' and self.stage_id.id == 16 and self.google_profile == False:
+        if  self.stage_id.id == 16 and self.google_profile == False:
             msg = msg + ' - Google profile \n'
-        if self.company_type == 'person' and self.stage_id.id == 16 and self.voicemail == False:
+        if  self.stage_id.id == 16 and self.voicemail == False:
             msg = msg + ' - Voicemail \n'
-        if self.company_type == 'person' and self.stage_id.id == 16 and self.mail_signature == False:
+        if  self.stage_id.id == 16 and self.mail_signature == False:
             msg = msg + ' - Mail signature \n'
-        if self.company_type == 'person' and self.stage_id.id == 16 and self.email_to_patient == False:
+        if  self.stage_id.id == 16 and self.email_to_patient == False:
             msg = msg + ' - Email to patient \n'
-        if self.company_type == 'person' and self.stage_id.id == 16 and self.translation == False:
+        if  self.stage_id.id == 16 and self.translation == False:
             msg = msg + ' - Translation \n'
-        if self.company_type == 'person' and self.stage_id.id == 16 and self.business_card == False:
+        if  self.stage_id.id == 16 and self.business_card == False:
             msg = msg + ' - Manuel Sent \n'
-        if self.company_type == 'person' and self.stage_id.id == 16 and self.manuel_sent == False:
+        if  self.stage_id.id == 16 and self.manuel_sent == False:
             msg = msg + ' - Business cards \n'
-        if self.company_type == 'person' and self.stage_id.id == 16 and self.widget == False:
+        if  self.stage_id.id == 16 and self.widget == False:
             msg = msg + ' - Widget \n'
-        if self.company_type == 'person' and self.stage_id.id == 16 and self.voice_mail == False:
+        if  self.stage_id.id == 16 and self.voice_mail == False:
             msg = msg + ' - Voicemail + email signature \n'
-        if self.company_type == 'person' and self.stage_id.id == 16 and self.website_ok == False:
+        if  self.stage_id.id == 16 and self.website_ok == False:
             msg = msg + ' - Website \n'
-        if self.company_type == 'person' and self.stage_id.id == 16 and self.customer_service_number == False:
+        if  self.stage_id.id == 16 and self.customer_service_number == False:
             msg = msg + ' - Customer service number on google profile  \n'
-        if self.company_type == 'person' and self.stage_id.id == 16 and self.website_backlink == False:
+        if  self.stage_id.id == 16 and self.website_backlink == False:
             msg = msg + ' - Backlink on website \n'
 
         ## Lost paying, tab lost
-        if self.company_type == 'person' and self.stage_id.id == 17 and self.date_lost == False:
+        if  self.stage_id.id == 17 and self.date_lost == False:
             msg = msg + ' - Lost Date \n'
-        if self.company_type == 'person' and self.stage_id.id == 17 and self.reason_lost == False:
+        if  self.stage_id.id == 17 and self.reason_lost == False:
             msg = msg + ' - Lost Reason \n'
 
 
