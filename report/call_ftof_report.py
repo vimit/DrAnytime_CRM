@@ -21,9 +21,10 @@ class CallFtofTrackReport(models.Model):
        SELECT
         c.id,
         c.start as date,
-        (100* (select count(e.id) from calendar_event e
+        (100* (select count(e.id) from calendar_event e, mail_activity_type t 
                  where EXTRACT(YEAR FROM e.start)= EXTRACT(YEAR FROM c.start) 
-                    AND EXTRACT(MONTH FROM e.start)= EXTRACT(MONTH FROM c.start)   )
+                    AND EXTRACT(MONTH FROM e.start)= EXTRACT(MONTH FROM c.start)  
+                     AND  t.id=e.event_type_activity and t.category='meeting')
                  /
                  (( select count(p.id)
 from  call_pitch p

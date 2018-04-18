@@ -31,7 +31,8 @@ class FtoFTrackReport(models.Model):
                     AND EXTRACT(MONTH FROM m.create_date)= EXTRACT(MONTH FROM c.create_date) )
                 /(select count(e.id) from calendar_event e, mail_activity_type t 
                  where EXTRACT(YEAR FROM e.start)= EXTRACT(YEAR FROM c.create_date) 
-                    AND EXTRACT(MONTH FROM e.start)= EXTRACT(MONTH FROM c.create_date) )) as ftof_signed            
+                    AND EXTRACT(MONTH FROM e.start)= EXTRACT(MONTH FROM c.create_date) 
+                    AND  t.id=e.event_type_activity and t.category='meeting')) as ftof_signed            
       
     
         """
@@ -44,9 +45,10 @@ class FtoFTrackReport(models.Model):
     def _where(self):
         return """
             WHERE
-               (select count(e.id) from calendar_event e
+               (select count(e.id) from calendar_event e, mail_activity_type t
                  where EXTRACT(YEAR FROM e.start)= EXTRACT(YEAR FROM c.create_date) 
-                    AND EXTRACT(MONTH FROM e.start)= EXTRACT(MONTH FROM c.create_date)  )!=0
+                    AND EXTRACT(MONTH FROM e.start)= EXTRACT(MONTH FROM c.create_date) 
+                     AND  t.id=e.event_type_activity and t.category='meeting')!=0
                """
 
     @api.model_cr
