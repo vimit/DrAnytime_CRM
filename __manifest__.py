@@ -2,7 +2,7 @@
 
 {
     'name': 'DoctorAnyTime workflow',
-    'version': '11.2.7',
+    'version': '11.2.8',
     'category': 'Customization',
     'license': 'AGPL-3',
     'author': "RealDev ",
@@ -30,6 +30,7 @@
         'rview/ftof_signed_report_views.xml',
         'rview/call_ftof_report_views.xml',
         'rview/called_signed_report_views.xml',
+        'rview/call_div_bd_report_views.xml',
 
     ],
     'installable': True,

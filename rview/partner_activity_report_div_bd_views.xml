@@ -7,7 +7,7 @@
             <field name="arch" type="xml">
                 <graph string="Activities Analysis" stacked="True">
                     <field name="count_div_bd" type="measure"/>
-                    <field name="start" interval="month" type="col"/>
+                    <field name="date" interval="month" type="col"/>
 
                 </graph>
             </field>
@@ -19,31 +19,13 @@
             <field name="arch" type="xml">
                 <pivot string="Activities Analysis" disable_linking="True">
                     <field name="count_div_bd" type="measure"/>
-                    <field name="start" interval="month" type="col"/>
+                    <field name="date" interval="month" type="col"/>
 
                 </pivot>
             </field>
         </record>
 
-        <record id="crm_activity_div_bd_report_view_search" model="ir.ui.view">
-            <field name="name">contact.activity.report.search</field>
-            <field name="model">contact.activity.div.bd.report</field>
-            <field name="arch" type="xml">
-                <search string="Activities Analysis">
-                    <filter string="My Activities" name="activities_my" domain="[('user_id', '=', uid)]"/>
-                    <separator/>
-                    <field name="user_id" string="Created By"/>
-                    <group expand="1" string="Group By">
-                        <filter string="Created By" name="group_by_salesperson" context="{'group_by':'user_id'}"/>
-                        <filter string="Category" name="group_by_category" context="{'group_by':'category'}" />
-                        <filter string="Business developer" name="group_by_business_developer" context="{'group_by':'business_developer_id'}" />
-                        <filter string="Activity Type" name="group_by_activity_type" context="{'group_by':'event_type_activity'}" />
 
-
-                    </group>
-                </search>
-            </field>
-        </record>
 
        <record id="crm_activity_div_bd_report_action" model="ir.actions.act_window">
            <field name="name">Activities Analysis</field>
