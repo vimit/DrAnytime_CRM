@@ -368,12 +368,12 @@ class Partner(models.Model):
     stage_id = fields.Many2one('crm.stage', string='Status', index=True, track_visibility='onchange' ,
         group_expand='_read_group_all_states' , default=lambda self: self._default_stage_id())
 
-    state_target = fields.Many2one('crm.stage',  string='Status',
-         group_expand='_read_group_target_states',track_visibility=False)
+    state_target = fields.Many2one('crm.stage',  string='Target Status',
+         group_expand='_read_group_target_states',track_visibility=False, default=lambda self: self._default_stage_id())
 
-    state_account = fields.Many2one('crm.stage',  string='Status',
-         group_expand='_read_group_account_states',  track_visibility=False)
-    state_contact = fields.Many2one('crm.stage', string='Status',track_visibility=False)
+    state_account = fields.Many2one('crm.stage',  string='Account Status',
+         group_expand='_read_group_account_states',  track_visibility=False, default=lambda self: self._default_stage_id())
+    # state_contact = fields.Many2one('crm.stage', string='Status',track_visibility=False, default=lambda self: self._default_stage_id())
 
     stage_sequence = fields.Integer(related='stage_id.sequence', string='Status Sequence', store=True, readonly=True)
 

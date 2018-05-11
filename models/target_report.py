@@ -11,4 +11,4 @@ class TargetReport(models.Model):
                    (8, 'August'), (9, 'September'), (10, 'October'), (11, 'November'), (12, 'December')],
         string='Month')
     target_number = fields.Float('Target')
-    target_bd = fields.Float('#BD')
+    target_bd = fields.Float('#BD', group_operator='avg')
