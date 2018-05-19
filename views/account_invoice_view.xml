@@ -8,13 +8,28 @@
                 <field name="payment_term_id" position="after">
                     <field name="sent_by_mail"/>
                     <field name="adress_email_to_send"/>
+                     <field name="subscription_id" attrs="{'invisible': [('subscription_id','=', False)]}" readonly="1" />
+
                 </field>
                 <button name="action_invoice_sent" position="before">
                      <button name="action_send_mail" type="object" string="Send by paper mail" attrs="{'invisible':['|',('sent_by_mail','=',True), ('state', 'not in', ('open','paid'))]}" class="oe_highlight o_invoice_send" groups="base.group_user"/>
 
              </button>
+
             </field>
     </record>
+
+    <template id="external_layout_footer_inherit" inherit_id="account.report_invoice_document">
+		<xpath expr="//div[@class='page']" position="after">
+            <div>
+            <p t-if=" not o.subscription_id.template_id.payment_mandatory">
+                <strong><u>Informations Banquaires:</u></strong><br/>
+                <b>BNP Paribas Fortis IBAN:</b> BE61 0017 9172 7517 <br/>
+               <b> SWIFT / BIC:</b>  GEBABEBB</p>
+            </div>
+        </xpath>
+    </template>
+
 
 
 </odoo>

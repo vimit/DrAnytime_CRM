@@ -8,8 +8,7 @@ class AccountInvoice(models.Model):
 
     sent_by_mail = fields.Boolean('Send by paper mail')
     adress_email_to_send = fields.Char('Adress Email of Agent', default='info@winseed.be')
-
-
+    subscription_id = fields.Many2one('sale.subscription', 'Subscription')
 
     @api.onchange('partner_id')
     def onchange_send_mail(self):

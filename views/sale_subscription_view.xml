@@ -6,6 +6,7 @@
         <field name="inherit_id" ref="sale_subscription.sale_subscription_view_form"/>
             <field name="arch" type="xml">
                 <field name="date" position="after">
+                    <field name="last_invoice_date"/>
                     <field name="sent_by_mail"/>
                 </field>
             </field>

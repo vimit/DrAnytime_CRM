@@ -20,14 +20,18 @@
                         <field name="lang"/>
                         <field name="inami"/>
                         <field name="subscription_type"/>
+                        <field name="contact_person" attrs="{'invisible': [('is_company','=', False)]}"/>
                         <field name="business_developer_id"/>
-                        <field name="intern_ids" />
+                        <field name="intern_ids"/>
+
                     </group>
                     <group>
                         <field name="type" attrs="{'invisible': [('parent_id','=', False)]}"
                                groups="base.group_no_one"/>
-                        <label for="street" string="Address" attrs="{'invisible': [('type', '=', 'contact')]}"/><br/>
-                        <label for="street" string="Invoicing Address" attrs="{'invisible': [('type', '!=', 'contact')]}"/>
+                        <label for="street" string="Address" attrs="{'invisible': [('type', '=', 'contact')]}"/>
+                        <br/>
+                        <label for="street" string="Invoicing Address"
+                               attrs="{'invisible': [('type', '!=', 'contact')]}"/>
                         <div class="o_address_format">
                             <div class="oe_edit_only">
                                 <button name="open_parent" type="object" string="(edit)" class="oe_link"
@@ -64,101 +68,105 @@
 
 
             </xpath>
-            <!--<xpath expr="//form[1]/sheet[1]/group[1]" position="attributes">-->
-            <!--<attribute name="invisible">1</attribute>-->
-            <!--</xpath>-->
 
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]" position="before">
                 <page name="prospection" string="Prospection Process" autofocus="autofocus">
                     <field name="stage_sequence" invisible="1"/>
 
-                    <div name="call_attempt" attrs="{'invisible': [('stage_sequence', '&lt;',2)]}" >
+                    <div name="call_attempt" attrs="{'invisible': [('stage_sequence', '&lt;',2)]}">
                         <div class="o_horizontal_separator">Call Attempt</div>
-                        <field name="call_attempt_ids"  mode="kanban" context="{'default_partner_id': active_id }">
-                                <kanban >
-                                    <field name="date_attempt"/>
-                                    <field name="bd_attempt"/>
-                                    <field name="intern_attempt"/>
-                                    <field name="partner_id" />
-                                    <field name="name" />
-                                    <field name="description" />
-                                    <templates>
-                                        <t t-name="kanban-box">
-                                                <div class="oe_kanban_details oe_kanban_global_click">
-                                                    <a t-if="!read_only_mode" type="delete" class="fa fa-times pull-right"/>
-                                                    <strong>Date: </strong>
-                                                    <field name="date_attempt"/><br/>
-                                                    <strong>Business Developer: </strong>
-                                                    <field name="bd_attempt"/><br/>
-                                                        <strong>Intern: </strong>
-                                                    <field name="intern_attempt"/><br/>
-                                                    <strong>Commentaire: </strong>
-                                                    <field name="description"/>
-                                                </div>
-                                        </t>
-                                    </templates>
-                                </kanban>
-                                <form string="ATTEMPT OF CONTACT">
-                                    <group>
-                                        <group>
-                                            <field name="name" invisible="1"/>
-                                            <field name="partner_id" />
-                                            <field name="description"/>
-                                        </group>
-                                        <group>
+                        <field name="call_attempt_ids" mode="kanban" context="{'default_partner_id': active_id }">
+                            <kanban>
+                                <field name="date_attempt"/>
+                                <field name="bd_attempt"/>
+                                <field name="intern_attempt"/>
+                                <field name="partner_id"/>
+                                <field name="name"/>
+                                <field name="description"/>
+                                <templates>
+                                    <t t-name="kanban-box">
+                                        <div class="oe_kanban_details oe_kanban_global_click">
+                                            <a t-if="!read_only_mode" type="delete" class="fa fa-times pull-right"/>
+                                            <strong>Date:</strong>
                                             <field name="date_attempt"/>
+                                            <br/>
+                                            <strong>Business Developer:</strong>
                                             <field name="bd_attempt"/>
+                                            <br/>
+                                            <strong>Intern:</strong>
                                             <field name="intern_attempt"/>
-                                        </group>
+                                            <br/>
+                                            <strong>Commentaire:</strong>
+                                            <field name="description"/>
+                                        </div>
+                                    </t>
+                                </templates>
+                            </kanban>
+                            <form string="ATTEMPT OF CONTACT">
+                                <group>
+                                    <group>
+                                        <field name="name" invisible="1"/>
+                                        <field name="partner_id"/>
+                                        <field name="description"/>
                                     </group>
-                                </form>
-                            </field>
+                                    <group>
+                                        <field name="date_attempt"/>
+                                        <field name="bd_attempt"/>
+                                        <field name="intern_attempt"/>
+                                    </group>
+                                </group>
+                            </form>
+                        </field>
                     </div>
                     <div name="Call_Pitch" attrs="{'invisible': [('stage_sequence', '&lt;',3)]}">
                         <div class="o_horizontal_separator">Call Pitch</div>
-                        <field name="call_pitch_ids"  mode="kanban" context="{'default_partner_id': active_id }">
-                                <kanban >
-                                    <field name="date_pitch"/>
-                                    <field name="bd_pitch"/>
-                                    <field name="intern_pitch"/>
-                                    <field name="partner_id" />
-                                    <field name="name" />
-                                    <field name="sd_call_pitch" />
-                                    <field name="comment_call_pitch" />
-                                    <templates>
-                                        <t t-name="kanban-box">
-                                                <div class="oe_kanban_details oe_kanban_global_click">
-                                                    <a t-if="!read_only_mode" type="delete" class="fa fa-times pull-right"/>
-                                                    <strong>Secretary / Doctor: </strong>
-                                                    <field name="sd_call_pitch"/><br/>
-                                                    <strong>Date: </strong>
-                                                    <field name="date_pitch"/><br/>
-                                                    <strong>Business Developer: </strong>
-                                                    <field name="bd_pitch"/><br/>
-                                                        <strong>Intern: </strong>
-                                                        <field name="intern_pitch"/><br/>
-                                                    <strong>Comment: </strong>
-                                                    <field name="comment_call_pitch"/>
-                                                </div>
-                                        </t>
-                                    </templates>
-                                </kanban>
-                                <form string="CALL PITCH">
-                                    <group>
-                                        <group>
-                                            <field name="name" invisible="1"/>
-                                            <field name="partner_id" />
-                                            <field name="sd_call_pitch" />
-                                            <field name="comment_call_pitch" />
-                                        </group>
-                                        <group>
+                        <field name="call_pitch_ids" mode="kanban" context="{'default_partner_id': active_id }">
+                            <kanban>
+                                <field name="date_pitch"/>
+                                <field name="bd_pitch"/>
+                                <field name="intern_pitch"/>
+                                <field name="partner_id"/>
+                                <field name="name"/>
+                                <field name="sd_call_pitch"/>
+                                <field name="comment_call_pitch"/>
+                                <templates>
+                                    <t t-name="kanban-box">
+                                        <div class="oe_kanban_details oe_kanban_global_click">
+                                            <a t-if="!read_only_mode" type="delete" class="fa fa-times pull-right"/>
+                                            <strong>Secretary / Doctor:</strong>
+                                            <field name="sd_call_pitch"/>
+                                            <br/>
+                                            <strong>Date:</strong>
                                             <field name="date_pitch"/>
+                                            <br/>
+                                            <strong>Business Developer:</strong>
                                             <field name="bd_pitch"/>
+                                            <br/>
+                                            <strong>Intern:</strong>
                                             <field name="intern_pitch"/>
-                                        </group>
+                                            <br/>
+                                            <strong>Comment:</strong>
+                                            <field name="comment_call_pitch"/>
+                                        </div>
+                                    </t>
+                                </templates>
+                            </kanban>
+                            <form string="CALL PITCH">
+                                <group>
+                                    <group>
+                                        <field name="name" invisible="1"/>
+                                        <field name="partner_id"/>
+                                        <field name="sd_call_pitch"/>
+                                        <field name="comment_call_pitch"/>
                                     </group>
-                                </form>
-                            </field>
+                                    <group>
+                                        <field name="date_pitch"/>
+                                        <field name="bd_pitch"/>
+                                        <field name="intern_pitch"/>
+                                    </group>
+                                </group>
+                            </form>
+                        </field>
                     </div>
 
                     <div name="Call_Back" attrs="{'invisible': [('stage_sequence', '&lt;',4)]}">
@@ -167,7 +175,7 @@
                             <field name="date_call_back_one" string="Date"/>
                             <field name="bd_call_back_one" string="Business Developer"/>
                             <field name="intern_call_back_one" string="Intern"/>
-                            <field name="comment_call_back_one"  string="Comment"/>
+                            <field name="comment_call_back_one" string="Comment"/>
                         </group>
 
                     </div>
@@ -212,45 +220,48 @@
 
                     <div name="Meeting" attrs="{'invisible': [('stage_sequence', '&lt;',7)]}">
                         <div class="o_horizontal_separator">Meeting</div>
-                        <field name="contact_meeting_ids"  mode="kanban" context="{'default_partner_id': active_id }">
-                                <kanban >
-                                    <field name="date_meeting"/>
-                                    <field name="bd_meeting"/>
-                                    <field name="intern_meeting"/>
-                                    <field name="partner_id" />
-                                    <field name="name" />
-                                    <field name="comment_meeting" />
-                                    <templates>
-                                        <t t-name="kanban-box">
-                                                <div class="oe_kanban_details oe_kanban_global_click">
-                                                    <a t-if="!read_only_mode" type="delete" class="fa fa-times pull-right"/>
-                                                    <strong>Date: </strong>
-                                                    <field name="date_meeting"/><br/>
-                                                    <strong>Business Developer: </strong>
-                                                    <field name="bd_meeting"/><br/>
-                                                        <strong>Intern: </strong>
-                                                    <field name="intern_meeting"/><br/>
-                                                    <strong>Comment: </strong>
-                                                    <field name="comment_meeting"/>
-                                                </div>
-                                        </t>
-                                    </templates>
-                                </kanban>
-                                <form string="MEETING">
-                                    <group>
-                                        <group>
-                                            <field name="name" invisible="1"/>
-                                            <field name="partner_id" />
-                                            <field name="comment_meeting" />
-                                        </group>
-                                        <group>
+                        <field name="contact_meeting_ids" mode="kanban" context="{'default_partner_id': active_id }">
+                            <kanban>
+                                <field name="date_meeting"/>
+                                <field name="bd_meeting"/>
+                                <field name="intern_meeting"/>
+                                <field name="partner_id"/>
+                                <field name="name"/>
+                                <field name="comment_meeting"/>
+                                <templates>
+                                    <t t-name="kanban-box">
+                                        <div class="oe_kanban_details oe_kanban_global_click">
+                                            <a t-if="!read_only_mode" type="delete" class="fa fa-times pull-right"/>
+                                            <strong>Date:</strong>
                                             <field name="date_meeting"/>
+                                            <br/>
+                                            <strong>Business Developer:</strong>
                                             <field name="bd_meeting"/>
+                                            <br/>
+                                            <strong>Intern:</strong>
                                             <field name="intern_meeting"/>
-                                        </group>
+                                            <br/>
+                                            <strong>Comment:</strong>
+                                            <field name="comment_meeting"/>
+                                        </div>
+                                    </t>
+                                </templates>
+                            </kanban>
+                            <form string="MEETING">
+                                <group>
+                                    <group>
+                                        <field name="name" invisible="1"/>
+                                        <field name="partner_id"/>
+                                        <field name="comment_meeting"/>
                                     </group>
-                                </form>
-                            </field>
+                                    <group>
+                                        <field name="date_meeting"/>
+                                        <field name="bd_meeting"/>
+                                        <field name="intern_meeting"/>
+                                    </group>
+                                </group>
+                            </form>
+                        </field>
                     </div>
 
                     <div name="Offer" attrs="{'invisible': [('stage_sequence', '&lt;',8)]}">
@@ -285,7 +296,7 @@
                                 <field name="bd_signed" string="Business Developer"/>
                                 <field name="intern_signed" string="Intern"/>
                                 <field name="comment_signed" string="Comment"/>
-                                <field name="subscription_type" />
+                                <field name="subscription_type"/>
                             </group>
                         </group>
                     </div>
@@ -298,7 +309,7 @@
                             <field name="first_email"/>
                         </group>
                         <group>
-                            <field name="comment_first_email" string="Comment"/>
+                            <field name="comment_first_email" string="Comment" />
                         </group>
                         <group>
                             <field name="service_completed"/>
@@ -422,7 +433,8 @@
                         </group>
                         <group>
                             <field name="comment_website_ok" string="Comment"/>
-                        </group><group>
+                        </group>
+                        <group>
                             <field name="customer_service_number"/>
                         </group>
                         <group>
@@ -472,11 +484,11 @@
                 <page name="subscription_detail" string="Subscription Detail">
                     <group>
                         <group>
-                            <field name="subscription_month"  widget='monetary'/>
+                            <field name="subscription_month" widget='monetary'/>
                             <field name="subscription_commitment"/>
                             <field name="subscription_upfront_payment"/>
-                            <field name="subscription_upfront_turnover"  widget='monetary'/>
-                            <field name="telesecretary_contract"  widget='monetary'/>
+                            <field name="subscription_upfront_turnover" widget='monetary'/>
+                            <field name="telesecretary_contract" widget='monetary'/>
                             <field name="subsciption_part_condition"/>
 
                         </group>
@@ -484,10 +496,33 @@
                 </page>
                 <page name="lost_detail" string="Lost">
                     <group>
-                            <field name="date_lost" string="Date"/>
+                        <field name="date_lost" string="Date"/>
                         <field name="reason_lost"/>
                     </group>
                 </page>
+
+            </xpath>
+
+
+              <xpath expr="//field[@name='child_ids']" position="attributes">
+                    <attribute name="mode">tree</attribute>
+            </xpath>
+
+<xpath expr="//field[@name='child_ids']" position="inside">
+
+                     <tree>
+                                  <field name="name"/>
+                        <field name="street"/>
+                        <field name="street2"/>
+                        <field name="city"/>
+                        <field name="state_id"/>
+                        <field name="zip"/>
+                        <field name="parent_id" invisible="1"/>
+                        <field name="country_id" invisible="1"/>
+                        <field name="supplier" invisible="1"/>
+                        <field name="customer" invisible="1"/>
+                        <field name="lang" invisible="1"/>
+                                </tree>
 
             </xpath>
 

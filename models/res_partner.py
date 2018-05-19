@@ -132,8 +132,12 @@ class Partner(models.Model):
     _inherit = 'res.partner'
 
 
+    # child_ids = fields.Many2many('res.partner','res_partner_child_rel', 'parent_id','child_id', string='Contacts', domain=[
+    #     ('active', '=', True)])  # force "active_test" domain to bypass _search() override
 
     ###
+    contact_person = fields.Char('Contact Person')
+    #
 
     sent_by_mail = fields.Boolean('Send by paper mail')
     current_crm = fields.Many2one('current.crm', 'Current CRM')
