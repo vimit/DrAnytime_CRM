@@ -21,7 +21,7 @@ class SaleSubscription(models.Model):
     state = fields.Selection([('draft','New'),('open','Active'),('pending','To Renew'),('close','Closed'),('cancel','Cancelled')],string='Status', required=True, track_visibility='onchange',copy=False, default='draft')
     last_invoice_date = fields.Date('Last Invoice Date')
 
-    payment_token_id = fields.Many2one('payment.token', 'Payment Token',
+    payment_token_id = fields.Many2one('payment.token', 'Payment Token',readonly=False,
                                        help='If not set, the default payment token of the partner will be used.',
                                        domain="[('partner_id','=',partner_id)]", oldname='payment_method_id', compute="payment_token", store=True)
 

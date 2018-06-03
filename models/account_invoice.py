@@ -19,6 +19,13 @@ class AccountInvoice(models.Model):
     def action_send_mail(self):
         self.sent_by_mail = True
 
+    @api.constrains('reference', 'reference_type')
+    def _check_communication(self):
+        for inv in self:
+            if inv.reference_type == 'bba' and not self.check_bbacomm(inv.reference):
+                print('Message: Invalid BBA Structured Communication ! ')
+                # raise ValidationError(_('Invalid BBA Structured Communication !'))
+
     def check_bbacomm(self, val):
         supported_chars = '0-9+*/ '
         pattern = re.compile('[^' + supported_chars + ']')
