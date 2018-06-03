@@ -55,11 +55,8 @@
                 % endif
                 </p>
 
-                <p>
-                  Your subscription ${ctx.get('code')} is still valid but will be <b>suspended</b>
-                  on ${ctx.get('date_close')} unless the payment succeeds in the mean time (we will retry once every day).
-                  Please double-check that you have sufficient funds.
-                </p>
+                 <p>You can view your subscription online by going to our <a style=" color: #875A7B;" href="/my/home">Online Portal</a> or by following this link
+                </p><p style="text-align: center;"><a style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px" href="/my/subscription/${object.subscription_id.id}/${object.subscription_id.uuid}">View Subscription</a></p>
 
                 <br/>
                 <p>If you have any question, do not hesitate to contact us.</p>
