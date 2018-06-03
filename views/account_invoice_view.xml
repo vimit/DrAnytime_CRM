@@ -23,7 +23,7 @@
 		<xpath expr="//div[@class='page']" position="after">
             <div>
             <p t-if=" not o.subscription_id.template_id.payment_mandatory">
-                <strong><u>Informations Banquaires:</u></strong><br/>
+                <strong><u>Informations Bancaires:</u></strong><br/>
                 <b>BNP Paribas Fortis IBAN:</b> BE61 0017 9172 7517 <br/>
                <b> SWIFT / BIC:</b>  GEBABEBB</p>
             </div>

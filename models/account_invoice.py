@@ -65,6 +65,7 @@ class AccountInvoice(models.Model):
                                               help="Remaining amount due in the currency of the company.", digits=dp.get_precision('Account'))
 
 
+
 class AccountInvoiceLine(models.Model):
     _inherit = "account.invoice.line"
 
