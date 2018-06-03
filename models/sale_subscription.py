@@ -23,20 +23,15 @@ class SaleSubscription(models.Model):
 
     payment_token_id = fields.Many2one('payment.token', 'Payment Token',
                                        help='If not set, the default payment token of the partner will be used.',
-                                       domain="[('partner_id','=',partner_id)]", oldname='payment_method_id')
-
-
-    # payment_token_id = fields.Many2one('payment.token', 'Payment Token',
-    #                                    help='If not set, the default payment token of the partner will be used.',
-    #                                    domain="[('partner_id','=',partner_id)]", oldname='payment_method_id', compute="payment_token", store=True)
+                                       domain="[('partner_id','=',partner_id)]", oldname='payment_method_id', compute="payment_token", store=True)
 
 
     ## set partner saved payment token
-    # @api.depends('recurring_next_date')
-    # @api.one
-    # def payment_token(self):
-    #     print('app too')
-    #     self.payment_token_id = self.env['payment.token'].search([('partner_id', '=', self.partner_id.id)], limit=1, order='id desc').id
+    @api.depends('recurring_next_date')
+    @api.one
+    def payment_token(self):
+        print('app too')
+        self.payment_token_id = self.env['payment.token'].search([('partner_id', '=', self.partner_id.id)], limit=1, order='id desc').id
 
 
     ## send post mail onchange function
