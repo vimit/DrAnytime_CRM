@@ -2,6 +2,7 @@
 
 from odoo import api, fields, models
 from odoo.addons import decimal_precision as dp
+import re
 
 class AccountInvoice(models.Model):
     _inherit = "account.invoice"
@@ -17,6 +18,19 @@ class AccountInvoice(models.Model):
     @api.multi
     def action_send_mail(self):
         self.sent_by_mail = True
+
+    def check_bbacomm(self, val):
+        supported_chars = '0-9+*/ '
+        pattern = re.compile('[^' + supported_chars + ']')
+        if pattern.findall(val or ''):
+            ## automatic payment error, donc return mis en True
+            return True
+        bbacomm = re.sub('\D', '', val or '')
+        if len(bbacomm) == 12:
+            base = int(bbacomm[:10])
+            mod = base % 97 or 97
+            if mod == int(bbacomm[-2:]):
+                return True
 
     @api.one
     @api.depends('invoice_line_ids.price_subtotal', 'tax_line_ids.amount', 'tax_line_ids.amount_rounding',
