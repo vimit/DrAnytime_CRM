@@ -2,10 +2,10 @@
 
 {
     'name': 'DoctorAnyTime workflow',
-    'version': '11.3.1',
+    'version': '11.3.2',
     'category': 'Customization',
     'license': 'AGPL-3',
-    'author': "RealDev ",
+    'author': "RealDev",
     'depends': ['base', 'crm','web' ,'sale_subscription'],
     'data': [
 
@@ -15,6 +15,7 @@
         'views/account_invoice_view.xml',
         'views/target_report.xml',
         'views/calendar_view.xml',
+        'views/subscription_forecast_view.xml',
 
         'views/sale_subscription_view.xml',
         'rview/subscription_report.xml',

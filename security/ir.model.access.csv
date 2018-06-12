@@ -38,3 +38,4 @@ access_current_crm_manager,current.crm.manager,DrAnytime_CRM.model_current_crm,s
 access_current_crm_root,partner.specialization.root,DrAnytime_CRM.model_current_crm,,1,0,0,0
 signed_called_track_report_root,signed.called.track.report.root,DrAnytime_CRM.model_signed_called_track_report,,1,1,1,1
 partner_activity_report_root,partner.activity.report.root,DrAnytime_CRM.model_partner_activity_report,,1,1,1,1
+subscription_forecast_root,subscription.forecast.root,DrAnytime_CRM.model_subscription_forecast,,1,1,1,1
