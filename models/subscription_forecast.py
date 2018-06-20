@@ -3,7 +3,7 @@
 from odoo import api, fields, models, _
 from datetime import date, datetime, timedelta, time
 import dateutil.parser
-
+from odoo.tools import format_date
 from dateutil.relativedelta import relativedelta
 
 class SubscriptionForecast(models.Model):
@@ -30,38 +30,44 @@ class SaleSubscription(models.Model):
 
     subscription_forecast_ids = fields.One2many('subscription.forecast','subscription_id','Subscription Forecast'
                                                 , compute='subscription_forecast_report',store=True)
-    @api.multi
-    @api.depends('recurring_next_date')
+    # @api.multi
+    @api.depends('recurring_next_date','state')
     def subscription_forecast_report(self):
-        if self.state == 'open':
+
+        today = datetime.today().strftime('%Y-%m-%d')
+        today_year = '%02d' % datetime.strptime(today, '%Y-%m-%d').year
+
+        for subscription in self:
             sub_forecast = []
-            today = datetime.today().strftime('%Y-%m-%d')
-            today_year = datetime.strptime(today, '%Y-%m-%d').strftime('%y')
+            if subscription.state == 'open':
+                periods = {'daily': 'days', 'weekly': 'weeks', 'monthly': 'months', 'yearly': 'years'}
+                new_date = subscription.recurring_next_date or self.default_get(['recurring_next_date'])[
+                    'recurring_next_date']
+                months = '%02d' % datetime.strptime(new_date, '%Y-%m-%d').month
+                years = '%02d' % datetime.strptime(new_date, '%Y-%m-%d').year
 
-            date_subscription = self.recurring_next_date
-            date_subscription = str(date_subscription)
-            months = datetime.strptime(date_subscription, '%Y-%m-%d').strftime('%m')
-            years = datetime.strptime(date_subscription, '%Y-%m-%d').strftime('%y')
-            n = self.template_id.recurring_interval
-            if years == today_year:
-                sub_forecast.append((0, 0, {
-                    'subscription_id': self.id,
-                    'date': date_subscription,
-
-                }))
-
-            while int(months) < 12 and years == today_year :
-                date_subscription = (datetime.strptime(date_subscription, '%Y-%m-%d') + relativedelta(months=n)).strftime('%Y-%m-%d')
-                months = datetime.strptime(date_subscription, '%Y-%m-%d').strftime('%m')
-                years =  datetime.strptime(date_subscription, '%Y-%m-%d').strftime('%y')
-                print('date_subscription-----',date_subscription)
-                if years == today_year :
+                if years == today_year:
                     sub_forecast.append((0, 0, {
                         'subscription_id': self.id,
-                        'date': date_subscription,
+                        'date': new_date,
 
                     }))
-            self.subscription_forecast_ids = sub_forecast
+
+                while int(months) < 12 and years == today_year:
+                    new_date = (fields.Date.from_string(new_date) + relativedelta(
+                        **{periods[subscription.recurring_rule_type]: subscription.recurring_interval})).strftime('%Y-%m-%d')
+
+                    months = '%02d' % datetime.strptime(str(new_date), '%Y-%m-%d').month
+                    years = '%02d' % datetime.strptime(str(new_date), '%Y-%m-%d').year
+
+                    if years == today_year:
+                        sub_forecast.append((0, 0, {
+                            'subscription_id': self.id,
+                            'date': new_date,
+
+                        }))
+                self.subscription_forecast_ids = sub_forecast
+
 
     @api.multi
     def process_forecast(self):
