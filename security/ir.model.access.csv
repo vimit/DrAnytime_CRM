@@ -15,8 +15,6 @@ access_services_root,partner.services.root,DrAnytime_CRM.model_partner_services,
 access_expertise_root,partner.expertise.root,DrAnytime_CRM.model_partner_expertise,,1,0,0,0
 access_studies_root,partner.studies.root,DrAnytime_CRM.model_partner_studies,,1,0,0,0
 access_experience_root,partner.experience.root,DrAnytime_CRM.model_partner_experience,,1,0,0,0
-access_contact_activity_report_report_user,contact.activity.report,DrAnytime_CRM.model_contact_activity_report,sales_team.group_sale_salesman,1,0,0,0
-access_contact_activity_report_report_manager,contact.activity.report,DrAnytime_CRM.model_contact_activity_report,sales_team.group_sale_manager,1,1,1,1
 access_stage_track_report_user,stage.track.report,DrAnytime_CRM.model_stage_track_report,sales_team.group_sale_salesman,1,0,0,0
 access_stage_track_report__manager,stage.track.report,DrAnytime_CRM.model_stage_track_report,sales_team.group_sale_manager,1,1,1,1
 call_attempt_manager,call.attempt.manager,DrAnytime_CRM.model_call_attempt,sales_team.group_sale_manager,1,1,1,1
@@ -28,7 +26,6 @@ contact_meeting_root,contact.meeting.root,DrAnytime_CRM.model_contact_meeting,,1
 contact_intern_manager,contact.intern.manager,DrAnytime_CRM.model_hr_intern,sales_team.group_sale_manager,1,1,1,1
 contact_intern_root,contact.intern.root,DrAnytime_CRM.model_hr_intern,,1,1,1,1
 contact_sub_report_root,contact.sub.report.root,DrAnytime_CRM.model_contact_sub_report,,1,1,1,1
-signed_call_track_report_root,signed.call.track.report.root,DrAnytime_CRM.model_signed_call_track_report,,1,1,1,1
 signed_ftof_track_report_root,signed.ftof.track.report.root,DrAnytime_CRM.model_signed_ftof_track_report,,1,1,1,1
 contact_activity_div_bd_report_root,contact.activity.div.bd.report.root,DrAnytime_CRM.model_contact_activity_div_bd_report,,1,1,1,1
 contact_div_bd_report_root,contact.div.bd.report.root,DrAnytime_CRM.model_contact_div_bd_report,,1,1,1,1

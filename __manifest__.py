@@ -2,7 +2,7 @@
 
 {
     'name': 'DoctorAnyTime workflow',
-    'version': '11.3.2',
+    'version': '11.3.3',
     'category': 'Customization',
     'license': 'AGPL-3',
     'author': "RealDev",
@@ -10,18 +10,23 @@
     'data': [
 
         'security/ir.model.access.csv',
-        'views/res_partner_fields_view.xml',
         'views/res_partner_view.xml',
+        'views/res_partner_fields_view.xml',
         'views/account_invoice_view.xml',
         'views/target_report.xml',
         'views/calendar_view.xml',
-        'views/subscription_forecast_view.xml',
-
         'views/sale_subscription_view.xml',
-        'rview/subscription_report.xml',
+        'views/subscription_forecast_view.xml',
+        'views/invoice_interest_view.xml',
+
+        'data/invoice_reminder_template.xml',
+        'data/interest_scheduled_action.xml',
+
 
         'static/src/xml/template.xml',
 
+
+        'rview/subscription_report.xml',
         'rview/partner_activity_report_views.xml',
         'rview/stage_track_report_views.xml',
         'rview/partner_sub_report_views.xml',
