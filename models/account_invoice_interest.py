@@ -45,7 +45,7 @@ class account_invoice(models.Model):
             diff = (date1 - date2).days
             print('diff--', diff)
 
-            if diff == 20 or diff % 30 == 0:
+            if (diff == 20 or diff % 30 == 0) and diff !=0 :
                 print('email envoyé--',account.id)
                 _, template_id = imd_res.get_object_reference('DrAnytime_CRM',
                                                               'email_invoice_reminder')
@@ -77,7 +77,7 @@ class account_invoice(models.Model):
             if diff == 20 or diff % 30 == 0:
                 total_interest = (account.amount_untaxed * (account.annual_interest/365)  * diff)/100
                 print('int1-----',total_interest)
-            if diff >= 60 and diff % 30 == 0:
+            if (diff >= 60 and diff % 30 == 0) and diff !=0 :
                 second_interest = (account.amount_untaxed * (account.second_interest /365)  * diff)/ 100
                 if second_interest < account.amount_limit_second_interest:
                     total_interest = total_interest + account.amount_limit_second_interest
