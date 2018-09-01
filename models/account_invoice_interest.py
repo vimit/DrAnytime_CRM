@@ -26,6 +26,33 @@ class account_invoice(models.Model):
     second_interest = fields.Float(string="Second interest %", related="payment_term_id.second_interest")
     amount_limit_second_interest = fields.Float(string="Lump Amount", related="payment_term_id.amount_limit_second_interest")
 
+    # envoie email du rappel automatically
+    @api.model
+    def process_send_reminder(self):
+        self.send_reminders()
+
+    @api.multi
+    def send_reminders(self):
+        account_invoices = self.search([('type', '=', 'out_invoice'), ('state', '=', 'open')])
+        template_res = self.env['mail.template']
+        imd_res = self.env['ir.model.data']
+        for account in account_invoices:
+            d = datetime.today().strftime('%Y-%m-%d')
+            date = dateutil.parser.parse(d).date()
+            dd = date.strftime("%Y-%m-%d")
+            date1 = datetime.strptime(dd, '%Y-%m-%d').date()
+            date2 = datetime.strptime(account.date_due, '%Y-%m-%d').date()
+            diff = (date1 - date2).days
+            print('diff--', diff)
+
+            if diff == 20 or diff % 30 == 0:
+                print('email envoyé--',account.id)
+                _, template_id = imd_res.get_object_reference('DrAnytime_CRM',
+                                                              'email_invoice_reminder')
+                template = template_res.browse(template_id)
+                template.send_mail(account.id)
+
+
     # This function is called when the scheduler goes on
     @api.model
     def process_scheduler_interest(self):
@@ -42,6 +69,7 @@ class account_invoice(models.Model):
             dd = date.strftime("%Y-%m-%d")
             date1 = datetime.strptime(dd, '%Y-%m-%d').date()
             date2 = datetime.strptime(account.date_due, '%Y-%m-%d').date()
+            print('ddddda--',date2)
             diff = (date1 - date2).days
 
             print('diff------',diff)
@@ -76,10 +104,7 @@ class account_invoice(models.Model):
                     'amount_total_signed': account.amount_untaxed + total_interest + account.amount_tax,
                     'amount_residual' : account.amount_untaxed + total_interest + account.amount_tax,
                 }
-                _, template_id = imd_res.get_object_reference('DrAnytime_CRM',
-                                                              'email_invoice_reminder')
-                template = template_res.browse(template_id)
-                template.send_mail(account.id)
+
 
             else:
                 vals=({
@@ -110,6 +135,8 @@ class account_invoice(models.Model):
             date1 = datetime.strptime(dd, '%Y-%m-%d').date()
             date2 = datetime.strptime(self.date_due, '%Y-%m-%d').date()
             diff = (date1 - date2).days
+            print('ddddda--',date2)
+            print('ddddda--',date1)
 
             total_interest = 0
             if diff == 20 or diff // 30 > 0:
@@ -119,7 +146,7 @@ class account_invoice(models.Model):
                 second_interest = (self.amount_untaxed * (self.second_interest/365) * diff) / 100
                 print('---ss----',(self.second_interest/365) * 60)
                 if second_interest < self.amount_limit_second_interest:
-                    total_interest = total_interest + self.amount_limit_second_interest
+                    total_interest = total_interest + (self.amount_limit_second_interest * ((diff // 30) -1))
                 else:
                     total_interest = total_interest + second_interest
             print('1---',total_interest)

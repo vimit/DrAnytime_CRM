@@ -2,7 +2,7 @@
 
 {
     'name': 'DoctorAnyTime workflow',
-    'version': '11.3.3',
+    'version': '11.3.4',
     'category': 'Customization',
     'license': 'AGPL-3',
     'author': "RealDev",
@@ -22,6 +22,7 @@
         'data/invoice_reminder_template.xml',
         'data/interest_scheduled_action.xml',
         'data/account_data.xml',
+        'data/reminder_scheduled_action.xml',
 
 
         'static/src/xml/template.xml',
