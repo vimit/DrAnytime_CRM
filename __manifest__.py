@@ -6,7 +6,7 @@
     'category': 'Customization',
     'license': 'AGPL-3',
     'author': "RealDev",
-    'depends': ['base', 'crm','web' ,'sale_subscription'],
+    'depends': ['base', 'crm','web' ,'sale_subscription','l10n_be'],
     'data': [
 
         'security/ir.model.access.csv',
@@ -21,6 +21,7 @@
 
         'data/invoice_reminder_template.xml',
         'data/interest_scheduled_action.xml',
+        'data/account_data.xml',
 
 
         'static/src/xml/template.xml',
