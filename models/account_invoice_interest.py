@@ -45,7 +45,7 @@ class account_invoice(models.Model):
             diff = (date1 - date2).days
             print('diff--', diff)
 
-            if (diff == 10 or diff == 20 or diff == 30 or diff == 40 or diff == 50  or ( diff >= 60 and diff % 20 == 0)) and diff !=0 :
+            if (diff == 10 or diff == 20 or diff == 30 or diff == 40 or diff == 50  or ( diff >= 70 and (diff+10) % 20 == 0)) and diff !=0 :
                 print('email envoyé--',account.id)
                 _, template_id = imd_res.get_object_reference('DrAnytime_CRM',
                                                               'email_invoice_reminder')
