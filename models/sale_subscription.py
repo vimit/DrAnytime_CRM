@@ -25,6 +25,9 @@ class SaleSubscription(models.Model):
                                        help='If not set, the default payment token of the partner will be used.',
                                        domain="[('partner_id','=',partner_id)]", oldname='payment_method_id', compute="payment_token", store=True)
 
+    city = fields.Char(related='partner_id.city', store=True, readonly=True)
+    zip = fields.Char(related='partner_id.zip', store=True, readonly=True)
+
 
     ## set partner saved payment token
     @api.depends('recurring_next_date')

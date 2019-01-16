@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+     <record id="sale_subscription_view_search_inherit" model="ir.ui.view">
+            <field name="name">sale.subscription.search</field>
+            <field name="model">sale.subscription</field>
+        <field name="inherit_id" ref="sale_subscription.sale_subscription_view_search"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="city"/>
+                    <field name="zip"/>
+                </field>
+            </field>
+    </record>
+
     <record id="sale_subscription_view_form_inherit" model="ir.ui.view">
             <field name="name">sale.subscription.form</field>
             <field name="model">sale.subscription</field>
@@ -10,8 +22,18 @@
                     <field name="sent_by_mail"/>
                 </field>
             </field>
+    </record><record id="sale_subscription_view_list_inherit" model="ir.ui.view">
+            <field name="name">sale.subscription.tree</field>
+            <field name="model">sale.subscription</field>
+        <field name="inherit_id" ref="sale_subscription.sale_subscription_view_list"/>
+            <field name="arch" type="xml">
+                <field name="user_id" position="after">
+                    <field name="city"/>
+                    <field name="zip"/>
+                </field>
+            </field>
     </record>
-
+<data noupdate="1">
      <record id="email_payment_failure" model="mail.template">
         <field name="name">Website Subscription: Payment FAILURE</field>
         <field name="email_from">${(object.user_id.email or object.company_id.email or 'noreply@localhost')|safe}</field>
@@ -78,6 +100,6 @@
     </table>
 </div>]]></field>
     </record>
-
+</data>
 
 </odoo>
