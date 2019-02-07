@@ -27,6 +27,8 @@ class SaleSubscription(models.Model):
 
     city = fields.Char(related='partner_id.city', store=True, readonly=True)
     zip = fields.Char(related='partner_id.zip', store=True, readonly=True)
+    recurring_amount_tax = fields.Float('Taxes', compute="_tax_amount_all")
+    recurring_amount_total = fields.Float('Total', compute="_amount_all", store=True)
 
 
     ## set partner saved payment token
@@ -233,6 +235,23 @@ class SaleSubscription(models.Model):
                                 raise
 
         return invoices
+
+    @api.depends('recurring_invoice_line_ids', 'recurring_total')
+    def _tax_amount_all(self):
+        for account in self:
+            account_sudo = account.sudo()
+            val = val1 = 0.0
+            cur = account_sudo.pricelist_id.currency_id
+            for line in account_sudo.recurring_invoice_line_ids:
+                val1 += line.price_subtotal
+                val += line._amount_line_tax()
+            account.recurring_amount_tax = cur.round(val)
+
+    @api.depends('recurring_invoice_line_ids', 'recurring_total','recurring_amount_tax')
+    def _amount_all(self):
+        for account in self:
+            account_sudo = account.sudo()
+            account.recurring_amount_total = account.recurring_amount_tax + account.recurring_total
 
 
 

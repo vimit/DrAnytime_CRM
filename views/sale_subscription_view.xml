@@ -31,6 +31,9 @@
                     <field name="city"/>
                     <field name="zip"/>
                 </field>
+                <xpath expr="//field[@name='recurring_total']" position="replace">
+                    <field name="recurring_amount_total" sum="Total Tax Included" widget="monetary"/>
+                </xpath>
             </field>
     </record>
 <data noupdate="1">
