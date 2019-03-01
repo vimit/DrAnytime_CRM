@@ -131,6 +131,8 @@ class Partner(models.Model):
 
     _inherit = 'res.partner'
 
+    customer = fields.Boolean(string='Is a Customer', default=False,
+                              help="Check this box if this contact is a customer.")
 
     # child_ids = fields.Many2many('res.partner','res_partner_child_rel', 'parent_id','child_id', string='Contacts', domain=[
     #     ('active', '=', True)])  # force "active_test" domain to bypass _search() override
